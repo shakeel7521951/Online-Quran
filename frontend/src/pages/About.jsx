@@ -4,8 +4,13 @@ import Intro from '../components/about/Intro';
 import Mission from '../components/about/Mission';
 import Vision from '../components/about/Vision';
 import Testomonial from '../components/about/Testomonial';
+import Lenis from "lenis"
+import MoveTo from '../components/about/MoveTo';
 
 const About = () => {
+    const lenis=new Lenis({
+        autoRaf:true
+    })
   return (
     <div>
         <Hero/>
@@ -13,6 +18,7 @@ const About = () => {
         <Mission/>
         <Vision/>
         <Testomonial/>
+        <MoveTo/>
     </div>
   )
 }

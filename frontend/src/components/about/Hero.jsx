@@ -3,6 +3,7 @@ import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
 import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
+import { motion } from "framer-motion";
 
 const swiperAry = [
   {
@@ -51,10 +52,22 @@ const Hero = () => {
     <div className="w-full max-w-6xl mx-auto py-12 px-4">
       {/* Title */}
       <div className="text-center mb-12">
-       <h1 className="text-3xl font-semibold text-gray-600 font-sans max-w-2xl mx-auto">About Online Quran Academy</h1>
-        <p className="text-md font-semibold text-gray-400 mt-4" >
+        <motion.h1
+          className="text-3xl font-semibold text-gray-600 font-serif max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          About Online Quran Academy
+        </motion.h1>
+        <motion.p
+          className="text-md font-semibold text-gray-400 mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
           Discover the beautiful journey of learning Quran with our expert teachers and innovative platform
-        </p>
+        </motion.p>
       </div>
 
       {/* Swiper */}
@@ -75,13 +88,32 @@ const Hero = () => {
 
               {/* Content Centered */}
               <div className="relative z-10 flex flex-col h-full justify-center items-center text-white text-center w-full px-4">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">{item.heading}</h2>
-                <p className="text-lg md:text-xl opacity-95 max-w-md mx-auto">{item.desc}</p>
-                <div className="mt-8">
+                <motion.h2
+                  className="text-3xl md:text-4xl font-bold mb-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  {item.heading}
+                </motion.h2>
+                <motion.p
+                  className="text-lg md:text-xl opacity-95 max-w-md mx-auto"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 1 }}
+                >
+                  {item.desc}
+                </motion.p>
+                <motion.div
+                  className="mt-8"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                >
                   <button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
                     Start Learning
                   </button>
-                </div>
+                </motion.div>
               </div>
             </div>
           ))}
@@ -92,9 +124,6 @@ const Hero = () => {
         <div className="swiper-button-prev !text-white !left-6 after:!text-2xl"></div>
         <div className="swiper-button-next !text-white !right-6 after:!text-2xl"></div>
       </div>
-
-      {/* Extra Info Cards */}
-     
     </div>
   );
 };

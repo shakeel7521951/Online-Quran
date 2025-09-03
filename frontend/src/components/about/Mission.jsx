@@ -47,7 +47,7 @@ const Mission = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-amber-50 py-16 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-[#A97635]-50 to-amber-50 py-16 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">

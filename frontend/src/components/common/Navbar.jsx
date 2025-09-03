@@ -20,8 +20,8 @@ const Navbar = () => {
   const[menuicon,setmenuicon]=useState(true);
   return (
     
-      <nav className='navbar m-2'>
-        <div className="nav-container   flex rounded-xl text-white bg-gradient-to-r from-[#3a291c] to-[#EBC693]  sm:flex justify-between items-center w-full sm:w-[95%] mx-auto py-2 px-5  shadow-sm">
+      <nav className='navbar m-2  '>
+        <div className="nav-container      flex rounded-xl text-white bg-gradient-to-r from-[#3a291c] to-[#EBC693]  sm:flex justify-between items-center w-full sm:w-[95%] mx-auto py-2 px-5  shadow-sm">
           <div>
           <Link>  <h1 className='flex items-center gap-1'>
               <img className='w-20 rounded-sm' src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UXVyYW58ZW58MHx8MHx8fDA%3D" alt="" />
@@ -53,7 +53,7 @@ const Navbar = () => {
         
         {/* Mobile Div  */}
         {menu && (
- <div className='h-screen sm:hidden bg-gradient-to-b text-white fixed from-green-600  to-yellow-300  top-20 pt-10 w-full sm:w-sm right-0 border'>
+ <div className='h-screen sm:hidden  text-white  fixed  bg-gradient-to-r from-[#3a291c] to-[#EBC693] z-40  top-20 pt-10 w-full sm:w-sm right-0 border'>
             <ul className=' flex flex-col items-center gap-10 '>
             {navItems.map((item)=>(
                <li key={item.id} className='font-semibold'>
@@ -67,13 +67,13 @@ const Navbar = () => {
           </div>
 
           <div className='flex gap-3 justify-center mt-10'>
-            <div className='p-2 bg-green-600 text-white border rounded-full'>
+            <div className='p-2 bg-[#ecc38c] text-black border rounded-full'>
               <FaFacebookF />
             </div>
-            <div className='p-2  bg-green-600 text-white border rounded-full'>
+            <div className='p-2  bg-[#ecc38c] text-black border rounded-full'>
               <FaWhatsapp  />
             </div>
-            <div className='p-2  bg-green-600 text-white border rounded-full'>
+            <div className='p-2  bg-[#ecc38c] text-black border rounded-full'>
               <AiOutlineYoutube  />
             </div>
             
