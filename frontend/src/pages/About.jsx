@@ -7,6 +7,7 @@ import Testomonial from '../components/about/Testomonial';
 import Lenis from "lenis"
 
 import MoveTo from '../components/about/MoveTo';
+import TeachingMethod from '../components/about/TeachingMethod';
 
 const About = () => {
     const lenis=new Lenis({
@@ -16,6 +17,7 @@ const About = () => {
     <div>
         <Hero/>
         <Intro/>
+        <TeachingMethod/>
         <Mission/>
         <Vision/>
         <Testomonial/>
