@@ -5,6 +5,10 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import About from "./pages/About";
+import Login from "./components/common/Login";
+import Signup from "./components/common/Signup";
+import Contact from "./pages/Contact";
+
 
 const MainFunction = () => {
   return (
@@ -22,7 +26,11 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/services", element: <Services /> },
-      {path:"/about",element:<About/>}
+      {path:"/about",element:<About/>},
+      {path:"/login",element:<Login/>},
+      {path:"/signup",element:<Signup/>},
+      {path:"/contact",element:<Contact/>},
+      
     ],
   },
 ]);
