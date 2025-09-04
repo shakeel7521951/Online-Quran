@@ -67,7 +67,7 @@ const Navbar = () => {
            
           </ul>
             <div className='flex justify-center mt-10' >
-            <Link><button className='px-7  py-2 cursor-pointer  text-white font-semibold'>Sign In</button></Link>
+            <Link to="/login"><button className='px-7  py-2 cursor-pointer  text-white font-semibold'>Sign In</button></Link>
           </div>
 
           <div className='flex gap-3 justify-center mt-10'>
