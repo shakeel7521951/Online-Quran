@@ -28,7 +28,8 @@ const Navbar = () => {
               آنلان قرآن
             </h1></Link>
           </div>
-          <ul className='md:flex hidden md:block gap-10 '>
+          <div className='md:block'>
+          <ul className='md:flex hidden  gap-10 '>
             {navItems.map((item)=>(
                <li key={item.id} className='font-semibold  '>
               <Link to={item.path}>{item.name}</Link>
@@ -36,6 +37,7 @@ const Navbar = () => {
             ))}
            
           </ul>
+          </div>
 
 
           <div className='hidden md:block'>
