@@ -12,7 +12,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r font-serif from-[#ebc693] via-[#B49762] to-[#A97635] text-white mt-10 rounded-t-xl shadow-lg">
+    <footer className="bg-gradient-to-r font-serif from-[#ebc693] via-[#B49762] to-[#A97635] text-white rounded-t-2xl shadow-lg">
       <div className="container mx-auto px-4 py-10">
         
         {/* Main Footer Content */}

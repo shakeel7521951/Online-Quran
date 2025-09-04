@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { FaFacebookF } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import { AiOutlineYoutube } from "react-icons/ai";
+import { FaSwatchbook } from "react-icons/fa6";
 
 const navItems=[
   {id:1,name:"Home",path:"/"},
@@ -31,7 +32,7 @@ const Navbar = () => {
           <div className='md:block'>
           <ul className='md:flex hidden  gap-10 '>
             {navItems.map((item)=>(
-               <li key={item.id} className='font-semibold  '>
+               <li key={item.id} className='font-semibold  px-3 transition rounded-sm py-1 hover:bg-[#D1AF81] '>
               <Link to={item.path}>{item.name}</Link>
             </li>
             ))}
@@ -41,7 +42,8 @@ const Navbar = () => {
 
 
           <div className='hidden md:block'>
-            <Link><button className='px-7 py-3 bg-[#64471f] rounded-4xl cursor-pointer text-sm text-white font-semibold'>Sign In</button></Link>
+            <Link><button className='px-5 rounded-sm  group flex items-center gap-2 py-3 bg-[#967B5A] hover:bg-[#b99d79] hover:rounded-tr-xl hover:rounded-bl-xl transition   cursor-pointer text-sm text-white font-semibold'>Sign In<FaSwatchbook className='group-hover:scale-120 transition' />
+</button></Link>
           </div>
           <div className='relative md:hidden'>
 <button onClick={()=>setmenu(!menu)}>
