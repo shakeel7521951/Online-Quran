@@ -79,7 +79,7 @@ const Signup = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
+    <section className="min-h-screen flex items-center py-5 sm:py-10 justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
       {/* Decorative Pattern Overlay */}
       <div className="absolute inset-0 opacity-5 bg-repeat pattern-islamic"></div>
       
@@ -94,21 +94,22 @@ const Signup = () => {
 
       {/* Card */}
       <div
-        className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-md p-10 border border-[#D4AF37]/30"
-        data-aos="zoom-in"
+        className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-sm p-5 border border-[#D4AF37]/30"
+        // data-aos="zoom-in"
       >
         {/* Header */}
-        <h2 className="text-4xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
+        <h2 className="text-xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
           Create Your Account
         </h2>
-        <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-6"></div>
-        <p className="text-center text-gray-600 mb-8 text-lg">
+        <div className="w-20  bg-[#D4AF37] rounded-full mx-auto "></div>
+        <p className="text-center text-gray-600   text-sm mb-5">
           Sign up to start your Quranic journey
         </p>
 
         {/* Form */}
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          <div>
+        <form className="space-y-5 text-sm" onSubmit={handleSubmit}>
+     <div className="flex  flex-col sm:flex-row justify-between gap-5">
+           <div>
             <label className="block text-sm font-medium text-[#2C3E50] mb-1">
               Full Name
             </label>
@@ -122,8 +123,7 @@ const Signup = () => {
             />
             {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
           </div>
-
-          <div>
+              <div>
             <label className="block text-sm font-medium text-[#2C3E50] mb-1">
               Email Address
             </label>
@@ -137,7 +137,10 @@ const Signup = () => {
             />
             {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
           </div>
-
+     </div>
+      
+<div className="flex flex-col sm:flex-row gap-5">
+  
           <div className="relative">
             <label className="block text-sm font-medium text-[#2C3E50] mb-1">
               Password
@@ -199,6 +202,7 @@ const Signup = () => {
             </button>
             {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>}
           </div>
+</div>
 
           <button
             type="submit"

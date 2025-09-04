@@ -81,7 +81,7 @@ const Login = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
+    <section className="min-h-screen py-5  flex items-center justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
       {/* Decorative Pattern Overlay */}
       <div className="absolute inset-0 opacity-5 bg-repeat pattern-islamic"></div>
       
@@ -96,15 +96,15 @@ const Login = () => {
 
       {/* Card */}
       <div
-        className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-md p-10 border border-[#D4AF37]/30"
+        className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-md p-5 border border-[#D4AF37]/30"
         data-aos="zoom-in"
       >
         {/* Header */}
-        <h2 className="text-4xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
+        <h2 className="text-2xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
           {isLogin ? "Welcome Back" : "Join Us Today"}
         </h2>
-        <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-6"></div>
-        <p className="text-center text-gray-600 mb-8 text-lg">
+        <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-2"></div>
+        <p className="text-center text-gray-600 mb-5 text-lg">
           {isLogin
             ? "Login to continue your Quranic journey"
             : "Sign up to start learning with us"}

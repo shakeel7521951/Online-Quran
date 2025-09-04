@@ -27,12 +27,12 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/services", element: <Services /> },
       {path:"/about",element:<About/>},
-      {path:"/login",element:<Login/>},
-      {path:"/signup",element:<Signup/>},
       {path:"/contact",element:<Contact/>},
       
     ],
   },
+  {path:"/login",element:<Login/>},
+  {path:"/signup",element:<Signup/>},
 ]);
 
 function App() {
