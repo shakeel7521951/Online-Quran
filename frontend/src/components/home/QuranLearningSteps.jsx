@@ -168,6 +168,7 @@ const QuranLearningSteps = () => {
 
         {/* CTA Button */}
         <div className="text-center mt-16" data-aos="zoom-in" data-aos-delay="400">
+         <a href="/login">
           <button
             className="px-5 py-2 rounded-lg text-lg font-semibold shadow-lg transition-all"
             style={{
@@ -177,7 +178,7 @@ const QuranLearningSteps = () => {
           >
             Begin Your Registration Now
           </button>
-         
+         </a>
         </div>
       </div>
     </section>

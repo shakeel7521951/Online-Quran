@@ -153,7 +153,7 @@ function Header() {
                   data-aos="zoom-in"
                   data-aos-delay="200"
                 >
-                  <a href="/courses">
+                  <a href="/services">
                     <button
                       className="px-3 py-2 rounded-lg  font-semibold shadow-lg hover:scale-105  transition-all duration-300"
                       style={{
@@ -165,7 +165,7 @@ function Header() {
                       Explore Our Courses
                     </button>
                   </a>
-                  <a href="/trial">
+                  <a href="/FreeTrialClass">
                     <button
                       className="px-3 py-2 rounded-lg  font-semibold border-2 shadow-lg hover:scale-105  transition-all duration-300"
                       style={{

@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Login from "./components/common/Login";
 import Signup from "./components/common/Signup";
 import Contact from "./pages/Contact";
+import FreeTrialClass from "./components/ServicesComp/FreeTrialClass";
 
 
 const MainFunction = () => {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
   },
   {path:"/login",element:<Login/>},
   {path:"/signup",element:<Signup/>},
+  {path:"/FreeTrialClass",element:<FreeTrialClass/>},
 ]);
 
 function App() {

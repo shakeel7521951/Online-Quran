@@ -181,12 +181,14 @@ const ReviewPage = () => {
             from the comfort of their homes.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
+           <a href="/FreeTrialClass">
             <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md">
               Book Free Trial
-            </button>
+            </button></a>
+           <a href="/services">
             <button className="border border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-semibold py-3 px-8 rounded-xl transition-all duration-300">
               View All Courses
-            </button>
+            </button></a>
           </div>
         </div>
       </div>

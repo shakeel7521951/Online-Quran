@@ -293,7 +293,8 @@ const QuranCourses = () => {
           </div>
 
           <div className="text-center mt-16" data-aos="zoom-in-up">
-            <button
+           <a href="/services">
+             <button
               className="inline-block px-5 py-2 rounded-full font-semibold shadow-lg text-white text-lg transition-all duration-300 hover:scale-105"
               style={{
                 background: `linear-gradient(135deg, ${PRIMARY}, ${ACCENT})`,
@@ -301,6 +302,7 @@ const QuranCourses = () => {
             >
               Explore All Services
             </button>
+           </a>
           </div>
         </div>
       </div>
