@@ -229,7 +229,7 @@ const QuranCourses = () => {
           </div>
         </div>
 
-        {/* FAQ Courses Section */}
+        {/* FAQ Courses Sections */}
         <div
           className="bg-white rounded-3xl shadow-xl p-10 md:p-14 border border-emerald-100"
           data-aos="fade-up"
