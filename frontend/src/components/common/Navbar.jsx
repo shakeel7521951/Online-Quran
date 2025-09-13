@@ -1,10 +1,9 @@
 // src/components/common/Navbar.jsx
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineMenuFold } from "react-icons/ai";
+import { AiOutlineMenuFold, AiOutlineYoutube } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
-import { AiOutlineYoutube } from "react-icons/ai";
 
 const navItems = [
   { id: 1, name: "Home", path: "/" },
@@ -15,8 +14,8 @@ const navItems = [
 
 const Navbar = () => {
   const [user, setUser] = useState(
-  JSON.parse(localStorage.getItem("user")) || null
-);
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const [menu, setMenu] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -25,21 +24,19 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-
   useEffect(() => {
-  const handleStorageChange = () => {
-    setUser(JSON.parse(localStorage.getItem("user")));
-  };
-  window.addEventListener("storage", handleStorageChange);
-  return () => window.removeEventListener("storage", handleStorageChange);
-}, []);
-
+    const handleStorageChange = () => {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   // Scroll hide effect
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setHide(currentScrollY > lastScrollY);
+      setHide(currentScrollY > lastScrollY && currentScrollY > 100);
       setLastScrollY(currentScrollY);
     };
     window.addEventListener("scroll", handleScroll);
@@ -60,29 +57,30 @@ const Navbar = () => {
   // Logout
   const handleLogout = () => {
     localStorage.removeItem("user");
-    setUser(null); // ✅ clear context
+    setUser(null);
+    setDropdownOpen(false);
     navigate("/");
   };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50">
       <div
-        className={`flex justify-between items-center w-full sm:w-[95%] mx-auto py-3 px-6 rounded-none sm:rounded-2xl mt-0 sm:mt-2 shadow-md transition-all duration-300 ease-in-out
+        className={`flex justify-between items-center w-full mx-auto py-3 px-4 sm:px-6 transition-all duration-300 ease-in-out
         ${
           hide
-            ? "-translate-y-20 bg-white text-[#2C3E50]"
-            : "translate-y-0 text-white bg-gradient-to-r from-[#D8B586] via-[#D8B586] to-[#D8B586]"
+            ? "-translate-y-full bg-white shadow-md"
+            : "translate-y-0 bg-gradient-to-r from-[#E2B77F] to-[#a5802f] shadow-lg"
         }`}
       >
         {/* Logo */}
-        <div>
-          <Link to="/">
-            <h1 className="flex items-center gap-2 font-bold text-lg tracking-wide">
-              <img
-                className="w-14 rounded-md shadow"
-                src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=500&auto=format&fit=crop&q=60"
-                alt="logo"
-              />
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              className="w-12 h-12 rounded-md shadow-lg border-2 border-white"
+              src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=500&auto=format&fit=crop&q=60"
+              alt="logo"
+            />
+            <h1 className="font-bold text-xl text-white tracking-wide hidden sm:block">
               آنلان قرآن
             </h1>
           </Link>
@@ -90,138 +88,212 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <div className="hidden md:block">
-          <ul className="flex gap-8 text-sm font-semibold">
+          <ul className="flex gap-6 text-sm font-semibold">
             {navItems.map((item) => (
-              <li
-                key={item.id}
-                className="px-3 py-2 rounded-md transition-all hover:bg-[#D4AF37] hover:text-[#2C3E50]"
-              >
-                <Link to={item.path}>{item.name}</Link>
+              <li key={item.id}>
+                <Link
+                  to={item.path}
+                  className="px-3 py-2 rounded-md transition-all text-white hover:bg-white/20 hover:backdrop-blur-sm"
+                >
+                  {item.name}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
 
         {/* User + Dropdown */}
-        <div className="flex items-center gap-3" ref={dropdownRef}>
+        <div className="flex items-center gap-4" ref={dropdownRef}>
           {!user ? (
-            <Link to="/login">
-              <button className="px-5 py-2 bg-[#0E7C5A] hover:bg-[#D4AF37] text-white rounded-lg font-semibold text-sm shadow transition">
-                Sign In
-              </button>
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link to="/login">
+                <button className="px-5 py-2.5 bg-white text-[#0E7C5A] rounded-lg font-semibold text-sm shadow-md transition-all duration-300 hover:bg-[#F2FEF8] hover:shadow-lg hover:-translate-y-0.5">
+                  Sign In
+                </button>
+              </Link>
+            </div>
           ) : (
-            <div className="relative">
+            <div className="relative flex items-center gap-4">
               <button
-  onClick={() => setDropdownOpen(!dropdownOpen)}
-  className="w-12 h-12 rounded-full border-2 border-[#F0ECEB] overflow-hidden shadow-md hover:scale-105 transition"
->
-  {user?.profileImage ? (
-    <img
-      src={user.profileImage}
-      alt="profile"
-      className="w-full h-full object-cover"
-    />
-  ) : (
-    <div className="w-10 h-10 bg-gray-300 rounded-full"></div>
-  )}
-</button>
-
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="w-12 h-12 rounded-full border-2 border-white/30 overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-white"
+              >
+                {user?.profileImage ? (
+                  <img
+                    src={user.profileImage}
+                    alt="profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D4AF37] to-[#F0ECEB] text-white font-semibold text-lg">
+                    {user?.username?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                )}
+              </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-3 w-44 bg-white text-[#2C3E50] rounded-xl shadow-lg overflow-hidden animate-fade-in">
+                <div className="absolute right-0 top-full mt-3 w-56 bg-white text-[#2C3E50] rounded-xl shadow-2xl overflow-hidden animate-fade-in border border-gray-100 z-50">
+                  {/* Dropdown options */}
                   <button
                     onClick={() => {
                       navigate("/profile");
                       setDropdownOpen(false);
                     }}
-                    className="block w-full px-5 py-3 text-left hover:bg-[#F2FEF8] font-medium"
+                    className="block w-full px-5 py-3.5 text-left transition-all duration-200 hover:bg-[#F2FEF8] font-medium text-gray-700 hover:text-[#0E7C5A] hover:pl-6 flex items-center"
                   >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
                     Edit Profile
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="block w-full px-5 py-3 text-left hover:bg-red-100 text-red-600 font-medium"
+                    className="block w-full px-5 py-3.5 text-left transition-all duration-200 hover:bg-red-50 text-red-500 font-medium hover:text-red-600 hover:pl-6 flex items-center"
                   >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
                     Logout
                   </button>
                 </div>
               )}
+
+              {/* Mobile Menu Icon - Moved to front as requested */}
+              <button
+                onClick={() => setMenu(!menu)}
+                className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors duration-200"
+              >
+                <AiOutlineMenuFold className="text-xl text-white cursor-pointer" />
+              </button>
             </div>
           )}
 
-          {/* Mobile Menu Icon */}
-          <button onClick={() => setMenu(!menu)} className="md:hidden">
-            <AiOutlineMenuFold className="text-xl text-black cursor-pointer" />
-          </button>
+          {/* Show menu icon when not logged in on mobile */}
+          {!user && (
+            <button
+              onClick={() => setMenu(!menu)}
+              className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors duration-200"
+            >
+              <AiOutlineMenuFold className="text-xl text-white cursor-pointer" />
+            </button>
+          )}
         </div>
       </div>
 
       {/* Mobile Menu */}
       {menu && (
-        <div className="h-screen sm:hidden text-white fixed bg-gradient-to-b from-[#513D2B] via-[#D8B586] to-[#0E7C5A] z-40 top-0 pt-20 w-full">
+        <div className="h-screen md:hidden fixed bg-gradient-to-b from-[#E2B77F] to-[#a5802f] z-40 top-0 pt-20 w-full backdrop-blur-sm">
           <button
             onClick={() => setMenu(false)}
-            className="absolute top-4 right-4 text-black text-3xl"
+            className="absolute top-6 right-6 text-white text-2xl p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
           >
             <RxCross1 />
           </button>
 
-          <ul className="flex flex-col items-center gap-6 mt-10 text-lg font-semibold">
+          <ul className="flex flex-col items-center gap-8 mt-10 text-lg font-semibold">
             {navItems.map((item) => (
               <li
                 key={item.id}
-                className="hover:text-[#D4AF37] transition"
+                className="hover:text-[#D4AF37] transition-all duration-300"
                 onClick={() => setMenu(false)}
               >
-                <Link to={item.path}>{item.name}</Link>
+                <Link
+                  to={item.path}
+                  className="text-white py-2 px-4 rounded-lg hover:bg-white/10"
+                >
+                  {item.name}
+                </Link>
               </li>
             ))}
           </ul>
 
           {user ? (
-            <div className="flex flex-col items-center gap-4 mt-10">
-              <img
-                src={user.profileImage || "https://via.placeholder.com/150"}
-                alt="profile"
-                className="w-20 h-20 rounded-full border-2 border-white shadow-lg object-cover"
-              />
+            <div className="flex flex-col items-center gap-5 mt-10 px-4">
+              <div className="w-20 h-20 rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
+                {user?.profileImage ? (
+                  <img
+                    src={user.profileImage}
+                    alt="profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D4AF37] to-[#F0ECEB] text-white font-semibold text-2xl">
+                    {user?.username?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                )}
+              </div>
+              <h3 className="text-white font-medium">{user.username}</h3>
               <button
                 onClick={() => {
                   navigate("/profile");
                   setMenu(false);
                 }}
-                className="px-6 py-2 bg-white text-[#2C3E50] rounded-md font-semibold shadow hover:bg-[#F2FEF8] transition"
+                className="px-6 py-3 bg-white text-[#0E7C5A] rounded-lg font-semibold shadow-lg hover:bg-[#F2FEF8] transition-all w-full max-w-xs"
               >
                 Edit Profile
               </button>
               <button
                 onClick={handleLogout}
-                className="px-6 py-2 bg-red-600 text-white rounded-md font-semibold shadow hover:bg-red-700 transition"
+                className="px-6 py-3 bg-red-500 text-white rounded-lg font-semibold shadow-lg hover:bg-red-600 transition-all w-full max-w-xs"
               >
                 Logout
               </button>
             </div>
           ) : (
-            <div className="flex justify-center mt-10">
-              <Link to="/signup">
-                <button className="px-7 py-2 bg-[#0E7C5A] text-white font-semibold rounded-md shadow hover:bg-[#D4AF37] transition">
+            <div className="flex justify-center mt-10 px-4">
+              <Link
+                to="/login"
+                className="w-full max-w-xs"
+                onClick={() => setMenu(false)}
+              >
+                <button className="w-full px-6 py-3 bg-white text-[#0E7C5A] rounded-lg font-semibold shadow-lg hover:bg-[#F2FEF8] transition-all">
                   Sign In
                 </button>
               </Link>
             </div>
           )}
 
-          <div className="flex gap-4 justify-center mt-12">
-            <div className="p-2 bg-[#D4AF37] text-[#2C3E50] rounded-full shadow cursor-pointer hover:scale-110 transition">
+          <div className="flex gap-5 justify-center mt-12">
+            <a
+              href="#"
+              className="p-3 bg-white/10 text-white rounded-full shadow cursor-pointer hover:bg-white/20 hover:scale-110 transition-all duration-300"
+            >
               <FaFacebookF />
-            </div>
-            <div className="p-2 bg-[#D4AF37] text-[#2C3E50] rounded-full shadow cursor-pointer hover:scale-110 transition">
+            </a>
+            <a
+              href="#"
+              className="p-3 bg-white/10 text-white rounded-full shadow cursor-pointer hover:bg-white/20 hover:scale-110 transition-all duration-300"
+            >
               <FaWhatsapp />
-            </div>
-            <div className="p-2 bg-[#D4AF37] text-[#2C3E50] rounded-full shadow cursor-pointer hover:scale-110 transition">
+            </a>
+            <a
+              href="#"
+              className="p-3 bg-white/10 text-white rounded-full shadow cursor-pointer hover:bg-white/20 hover:scale-110 transition-all duration-300"
+            >
               <AiOutlineYoutube />
-            </div>
+            </a>
           </div>
         </div>
       )}

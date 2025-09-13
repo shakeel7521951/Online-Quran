@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
-import API from "../../../src/features/profile/api";
+import API from "../../features/api";
 
 const Login = () => {
   const navigate = useNavigate();

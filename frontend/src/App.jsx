@@ -8,7 +8,7 @@ import Footer from "./components/common/Footer";
 import Login from "./components/common/Login";
 import Signup from "./components/common/Signup";
 import Profile from "./features/profile/Profile";
-import ProtectedRoute from "./features/profile/ProtectedRoute";
+import ProtectedRoute from "./features/ProtectedRoute";
 
 // Pages
 import Home from "./pages/Home";

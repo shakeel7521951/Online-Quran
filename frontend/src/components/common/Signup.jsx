@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import API from "../../../src/features/profile/api";
+import API from "../../features/api";
 
 const parseAxiosError = (error) => {
   if (error?.response) {
