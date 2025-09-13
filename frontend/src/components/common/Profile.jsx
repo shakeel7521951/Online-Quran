@@ -5,7 +5,7 @@ import { Pencil, LogOut, Upload } from "lucide-react";
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [editingField, setEditingField] = useState(null);
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -21,15 +21,18 @@ const Profile = () => {
   const [otpTimer, setOtpTimer] = useState(0);
   const [message, setMessage] = useState({ type: "", text: "" });
   const [errors, setErrors] = useState({});
+  const [pendingEmail, setPendingEmail] = useState("");
 
   // Fetch profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const res = await API.get("/protected/profile");
-        console.log(res.data?.user || res.data);
-        setProfile(res.data);
-        setFormData((prev) => ({ ...prev, ...res.data }));
+        const user = res.data?.user || res.data;
+        console.log("Fetched profile:", user);
+
+        setProfile(user);
+        setFormData((prev) => ({ ...prev, ...user }));
       } catch (error) {
         setMessage({
           type: "error",
@@ -108,8 +111,8 @@ const Profile = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setProfile(res.data.user);
-setFormData((prev) => ({ ...prev, ...res.data.user }));
-setUser(res.data.user);
+      setFormData((prev) => ({ ...prev, ...res.data.user }));
+      setUser(res.data.user);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       window.dispatchEvent(new Event("storage")); // trigger update if Navbar listens
 
@@ -144,6 +147,7 @@ setUser(res.data.user);
       if (payload.email && res.data.message.includes("OTP")) {
         setEmailOtpStep(true);
         setOtpTimer(60);
+        setPendingEmail(profile.email); // store the email awaiting verification
         startOtpTimer();
       }
 
@@ -184,9 +188,10 @@ setUser(res.data.user);
 
   // Resend OTP
   const handleResendOtp = async () => {
+    console.log("Resend OTP for email:", pendingEmail);
     try {
-      const res = await API.post("/auth/resend-email-otp", {
-        email: formData.email,
+      const res = await API.post("/auth/resend-otp", {
+        email: pendingEmail, // This should be the current email, not the new one
       });
       setOtpTimer(60);
       startOtpTimer();
@@ -236,10 +241,12 @@ setUser(res.data.user);
       });
       setMessage({
         type: "success",
-        text: res.data.message || "Password updated successfully!",
+        text: res.data.message || "Password updated succfessfully!",
       });
       setEditingField(null);
-      localStorage.clear();
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+
       window.location.href = "/login";
     } catch (error) {
       setMessage({
@@ -259,7 +266,9 @@ setUser(res.data.user);
     } catch (error) {
       console.error("Logout failed:", error.response?.data || error.message);
     } finally {
-      localStorage.clear();
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+
       window.location.href = "/login";
     }
   };

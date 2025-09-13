@@ -126,28 +126,53 @@ router.post("/verify-otp", async (req, res) => {
   }
 });
 
-// Resend OTP
 router.post("/resend-otp", async (req, res) => {
   try {
     const { email } = req.body;
 
-    // 1. Find in PendingUser collection
-    const pendingUser = await PendingUser.findOne({ email });
-    if (!pendingUser) {
+    // 1. Check if this is a pending user (new registration)
+    let targetUser = await PendingUser.findOne({ email });
+    let userType = "pending";
+
+    // 2. If not found, check in User collection
+    if (!targetUser) {
+      targetUser = await User.findOne({
+        $or: [{ email }, { pendingEmail: email }],
+      });
+      userType = "verified";
+    }
+
+    // 3. If still not found
+    if (!targetUser) {
       return res
         .status(404)
-        .json({ message: "No pending verification found for this email" });
-    } 
+        .json({ message: "No account found with this email" });
+    }
 
-    // 2. Generate new OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit
-    pendingUser.otp = otp;
-    pendingUser.otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
-    await pendingUser.save();
+    // 4. Generate new OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // 3. Send OTP via email
+    // 5. For email change requests, send to the original email
+    let emailToSend = targetUser.email;
+
+    if (userType === "verified" && targetUser.pendingEmail) {
+      // This is an email change request - send to original email
+      emailToSend = targetUser.email;
+
+      // Update the email change OTP fields
+      targetUser.emailChangeOtp = otp;
+      targetUser.emailChangeOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+    } else {
+      // For new registrations or other cases, use regular OTP fields
+      targetUser.otp = otp;
+      targetUser.otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+    }
+
+    await targetUser.save();
+
+    // 6. Send OTP via email
     await sendEmail({
-      to: pendingUser.email,
+      to: emailToSend,
       subject: "Resend Email Verification OTP",
       text: `Your OTP is: ${otp}`,
       html: `<h2>Email Verification</h2>
@@ -155,7 +180,10 @@ router.post("/resend-otp", async (req, res) => {
              <p>It will expire in 10 minutes.</p>`,
     });
 
-    res.status(200).json({ message: "New OTP sent to your email" });
+    res.status(200).json({
+      message: `New OTP sent to your registered email`,
+      email: emailToSend, // Send back which email was used
+    });
   } catch (error) {
     console.error("Resend OTP Error:", error);
     res.status(500).json({ message: "Server error while resending OTP" });
@@ -224,7 +252,7 @@ router.post("/login", async (req, res) => {
         email: user.email,
         role: user.role,
         isAdmin,
-        profileImage: user.profileImage || null, 
+        profileImage: user.profileImage || null,
       },
     });
   } catch (error) {
@@ -337,19 +365,19 @@ router.put(
 router.post("/verify-email-change", authenticate, async (req, res) => {
   try {
     const { otp } = req.body;
-    const user = await User.findById(req.user.id);
+    const userId = req.user.id; // Assuming you have user auth middleware
 
-    if (!user || !user.emailChangeOtp) {
-      return res
-        .status(400)
-        .json({ message: "No pending email change request" });
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.emailChangeOtp !== otp || Date.now() > user.emailChangeOtpExpiry) {
+    // Check if OTP is valid and not expired
+    if (user.emailChangeOtp !== otp || user.emailChangeOtpExpiry < Date.now()) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    // Apply the new email
+    // Update the email and clear pending fields
     user.email = user.pendingEmail;
     user.pendingEmail = undefined;
     user.emailChangeOtp = undefined;
@@ -357,10 +385,15 @@ router.post("/verify-email-change", authenticate, async (req, res) => {
 
     await user.save();
 
-    res.json({ message: "Email updated successfully", user: user.toObject() });
+    res.json({
+      message: "Email updated successfully",
+      user,
+    });
   } catch (error) {
-    console.error(" Verify Email Change Error:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+    console.error("Verify Email Change Error:", error);
+    res
+      .status(500)
+      .json({ message: "Server error while verifying email change" });
   }
 });
 

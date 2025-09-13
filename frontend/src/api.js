@@ -5,7 +5,6 @@ const API = axios.create({
   withCredentials: true,
 });
 
-
 // Add token automatically if stored
 API.interceptors.request.use(
   (req) => {

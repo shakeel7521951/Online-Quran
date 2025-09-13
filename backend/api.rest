@@ -32,7 +32,7 @@ POST http://localhost:5000/api/auth/resend-otp
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "hijaz2266@gmail.com"
 }
 
 ### ✅ User/Admin Login (Only Works if Email is Verified)
@@ -60,11 +60,11 @@ Content-Type: application/json
 
 ### ✅ Verify Email Change (OTP)
 POST http://localhost:5000/api/auth/verify-email-change
-Authorization: Bearer <access-token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzEyNjA2OGJiZTQxNGVkYzdkMDNiNiIsImlhdCI6MTc1Nzc1NjI5NiwiZXhwIjoxNzU4MzYxMDk2fQ.kL3-vee_qMylKJLEFm9inMHRCoJlZUTovmQjAwidpmc
 Content-Type: application/json
 
 {
-  "otp": "733775"
+  "otp": "750884"
 }
 
 ### ✅ User Logout
