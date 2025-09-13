@@ -122,7 +122,7 @@ setUser(res.data.user);
     }
   };
 
-  // Save single profile field
+  // Save single profile fields
   const handleSaveProfile = async () => {
     const errorMsg = validateField(editingField, formData[editingField]);
     if (errorMsg) {
