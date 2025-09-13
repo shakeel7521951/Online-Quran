@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../../api";
 import { Pencil, LogOut, Upload } from "lucide-react";
-//fsdfs
+// fetched profile
 const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [editingField, setEditingField] = useState(null);
