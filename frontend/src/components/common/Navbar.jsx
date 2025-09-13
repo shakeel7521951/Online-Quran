@@ -5,7 +5,6 @@ import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
 import { AiOutlineYoutube } from "react-icons/ai";
-import { AuthContext } from "./AuthContext"; // ✅ fix import path
 
 const navItems = [
   { id: 1, name: "Home", path: "/" },
