@@ -1,62 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useNavigate } from "react-router-dom";
 import API from "../../features/api";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(true);
+
+  // Login form states
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Forgot Password states
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotStep, setForgotStep] = useState(1); // 1 = email, 2 = otp
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPass, setNewPass] = useState("");
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
-  //  useEffect(() => {
-  //   const token = localStorage.getItem("accessToken");
-  //   if (token) {
-  //     navigate("/profile", { replace: true });
-  //   }
-  // }, [navigate]);
-
+  // Input handler
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
 
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: "",
-      });
-    }
+    if (errors[name]) setErrors({ ...errors, [name]: "" });
   };
 
+  // Validation
   const validateForm = () => {
     let formErrors = {};
-
-    if (!isLogin && !formData.name.trim()) {
-      formErrors.name = "Full name is required";
-    }
 
     if (!formData.email) {
       formErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      formErrors.email = "Email address is invalid";
+      formErrors.email = "Invalid email address";
     }
 
     if (!formData.password) {
@@ -65,46 +52,31 @@ const Login = () => {
       formErrors.password = "Password must be at least 6 characters";
     }
 
-    if (!isLogin && formData.password !== formData.confirmPassword) {
-      formErrors.confirmPassword = "Passwords do not match";
-    }
-
     return formErrors;
   };
 
+  // Login submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formErrors = validateForm();
 
     if (Object.keys(formErrors).length === 0) {
       setIsSubmitting(true);
-
       try {
-        if (isLogin) {
-          // ✅ Login API
-          const res = await API.post("/auth/login", {
-            email: formData.email,
-            password: formData.password,
-          });
+        const res = await API.post("/auth/login", {
+          email: formData.email,
+          password: formData.password,
+        });
 
-          // Save tokens after successful login
-          localStorage.setItem("accessToken", res.data.accessToken);
-          localStorage.setItem("refreshToken", res.data.refreshToken);
-          localStorage.setItem("user", JSON.stringify({ ...res.data.user, token: res.data.accessToken }));
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...res.data.user, token: res.data.accessToken })
+        );
 
-          alert("Login successful!");
-          navigate("/");
-        } else {
-          // ✅ Signup (you’ll connect later if needed)
-          const res = await API.post("/auth/signup", {
-            username: formData.name,
-            email: formData.email,
-            password: formData.password,
-          });
-
-          alert("Signup successful! Please verify your email via OTP.");
-          // Optionally redirect to OTP page
-        }
+        alert("Login successful!");
+        navigate("/");
       } catch (error) {
         alert(
           error.response?.data?.message || "Something went wrong. Try again."
@@ -117,12 +89,40 @@ const Login = () => {
     }
   };
 
+  // Forgot password: send OTP
+  const handleSendOtp = async () => {
+    try {
+      await API.post("/auth/forgot-password", { email: forgotEmail });
+      alert("OTP sent to your email");
+      setForgotStep(2);
+    } catch (err) {
+      alert(err.response?.data?.message || "Error sending OTP");
+    }
+  };
+
+  // Forgot password: reset
+  const handleResetPassword = async () => {
+    try {
+      await API.post("/auth/reset-password", {
+        email: forgotEmail,
+        otp,
+        newPassword: newPass,
+      });
+      alert("Password reset successful. Please login again.");
+      setShowForgotModal(false);
+      setForgotStep(1);
+      setForgotEmail("");
+      setOtp("");
+      setNewPass("");
+    } catch (err) {
+      alert(err.response?.data?.message || "Error resetting password");
+    }
+  };
+
   return (
-    <section className="min-h-screen py-5  flex items-center justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
+    <section className="min-h-screen py-5 flex items-center justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
       {/* Decorative Pattern Overlay */}
       <div className="absolute inset-0 opacity-5 bg-repeat pattern-islamic"></div>
-
-      {/* Add CSS for the pattern in your global CSS file if needed */}
       <style>
         {`
           .pattern-islamic {
@@ -138,38 +138,15 @@ const Login = () => {
       >
         {/* Header */}
         <h2 className="text-2xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
-          {isLogin ? "Welcome Back" : "Join Us Today"}
+          Welcome Back
         </h2>
         <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-2"></div>
         <p className="text-center text-gray-600 mb-5 text-lg">
-          {isLogin
-            ? "Login to continue your Quranic journey"
-            : "Sign up to start learning with us"}
+          Login to continue your Quranic journey
         </p>
 
         {/* Form */}
         <form className="space-y-5" onSubmit={handleSubmit}>
-          {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium text-[#2C3E50] mb-1">
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className={`w-full border ${
-                  errors.name ? "border-red-500" : "border-gray-300"
-                } rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37] focus:outline-none`}
-                placeholder="John Doe"
-              />
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-              )}
-            </div>
-          )}
           <div>
             <label className="block text-sm font-medium text-[#2C3E50] mb-1">
               Email Address
@@ -188,14 +165,14 @@ const Login = () => {
               <p className="mt-1 text-sm text-red-500">{errors.email}</p>
             )}
           </div>
-          <div className="relative">
+
+          <div className="relative items-center justify-center">
             <label className="block text-sm font-medium text-[#2C3E50] mb-1">
               Password
             </label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              required
               value={formData.password}
               onChange={handleChange}
               className={`w-full border ${
@@ -209,148 +186,109 @@ const Login = () => {
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
+                <EyeIcon size={18} className="text-blue-500" />
               ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                  />
-                </svg>
+                <EyeOffIcon size={18} className="text-gray-600" />
               )}
             </button>
             {errors.password && (
               <p className="mt-1 text-sm text-red-500">{errors.password}</p>
             )}
           </div>
-          {!isLogin && (
-            <div className="relative">
-              <label className="block text-sm font-medium text-[#2C3E50] mb-1">
-                Confirm Password
-              </label>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className={`w-full border ${
-                  errors.confirmPassword ? "border-red-500" : "border-gray-300"
-                } rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37] focus:outline-none pr-10`}
-                placeholder="••••••••"
-              />
-              <button
-                type="button"
-                className="absolute right-3 top-9 text-gray-500 hover:text-[#0E7C5A]"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                    />
-                  </svg>
-                )}
-              </button>
-              {errors.confirmPassword && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.confirmPassword}
-                </p>
-              )}
-            </div>
-          )}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`w-full bg-[#d6a049]  text-white py-2.5 rounded-lg font-semibold cursor-pointer hover:bg-[#e7d0ab]  transition-colors ${
-              isSubmitting ? "opacity-75 cursor-not-allowed" : ""
-            }`}
-          >
-            {isSubmitting ? "Processing..." : isLogin ? "Login" : "Sign Up"}
-          </button>
+
+          <div className="flex justify-center mt-5">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`px-15 py-2.5 rounded-lg font-semibold transition-all duration-200 
+      ${
+        isSubmitting
+          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+          : "bg-[#A98435] text-white hover:bg-[#D4AF37] shadow-md hover:shadow-lg"
+      }`}
+            >
+              {isSubmitting ? "Processing..." : "Login"}
+            </button>
+          </div>
         </form>
 
-        {/* Divider */}
-        <div className="my-6 flex items-center">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="px-3 text-gray-500 text-sm">OR</span>
-          <div className="flex-grow border-t border-gray-300"></div>
+        {/* Forgot Password Modal */}
+        {showForgotModal && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-sm">
+              <h3 className="text-lg font-semibold mb-3 text-[#2C3E50]">
+                Forgot Password
+              </h3>
+              {forgotStep === 1 && (
+                <>
+                  <input
+                    type="email"
+                    value={forgotEmail}
+                    onChange={(e) => setForgotEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-4"
+                  />
+                  <button
+                    onClick={handleSendOtp}
+                    className="w-full bg-[#d6a049] text-white py-2 rounded-lg hover:bg-[#e7d0ab]"
+                  >
+                    Send OTP
+                  </button>
+                </>
+              )}
+              {forgotStep === 2 && (
+                <>
+                  <input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter OTP"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3"
+                  />
+                  <input
+                    type="password"
+                    value={newPass}
+                    onChange={(e) => setNewPass(e.target.value)}
+                    placeholder="New Password"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3"
+                  />
+                  <button
+                    onClick={handleResetPassword}
+                    className="w-full bg-[#0E7C5A] text-white py-2 rounded-lg hover:bg-[#12956f]"
+                  >
+                    Reset Password
+                  </button>
+                </>
+              )}
+              <button
+                onClick={() => setShowForgotModal(false)}
+                className="mt-3 text-sm text-gray-500 hover:underline"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Forget Password Button */}
+        {/* Forget Password Button */}
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => setShowForgotModal(true)}
+            className="text-[#2C3E50] text-sm font-medium hover:underline transition"
+          >
+            Forgot your password?
+          </button>
         </div>
 
-        {/* Social Login */}
-        <button className="w-full flex cursor-pointer items-center justify-center border border-gray-300 rounded-lg py-2 hover:bg-gray-50 transition">
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            className="w-5 h-5 mr-2"
-          />
-          Continue with Google
-        </button>
-
-        {/* Toggle */}
-        <p className="mt-6 text-center text-gray-600 text-sm">
-          Don't have an account?{" "}
+        {/* Redirect to Signup */}
+        <p className="mt-6 text-center text-sm text-gray-600">
+          Don’t have an account?{" "}
           <Link
             to="/signup"
-            className="text-[#0E7C5A] font-medium hover:underline"
+            className="text-[#D4AF37] font-semibold hover:text-[#b8902c] transition"
           >
-            SignUp
+            Sign up here
           </Link>
         </p>
       </div>

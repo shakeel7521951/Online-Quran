@@ -91,7 +91,7 @@ POST http://localhost:5000/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "habdul2266@gmail.com"
 }
 
 ### ✅ Reset Password (Via Reset Link)
@@ -99,6 +99,7 @@ POST http://localhost:5000/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "token": "current-token-on-url-reset-link-email",
-  "newPassword": "12345"
+  "email": "habdul2266@gmail.com",
+  "otp": "578991",
+  "newPassword": "1234567"
 }

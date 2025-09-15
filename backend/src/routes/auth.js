@@ -476,67 +476,56 @@ router.post("/change-password", authenticate, async (req, res) => {
   }
 });
 
-/**
- * 1. Forgot Password → send reset email
- */
+
+// Forgot Password → send reset email
+
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 min
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit OTP
+    user.resetPasswordToken = otp;
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000; // 15 minutes
     await user.save();
-
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
     await sendEmail({
       to: email,
       subject: "Reset your password",
-      text: `Click below to reset your password: ${resetUrl}`,
-      html: `<p>Click below to reset your password:</p>
-         <a href="${resetUrl}">${resetUrl}</a>`,
+      text: `Your OTP code is: ${otp}`,
+      html: `<p>Your OTP code is:</p><h2>${otp}</h2><p>Valid for 15 minutes.</p>`,
     });
 
-    res.json({ message: "Password reset email sent" });
+    res.json({ message: "OTP sent to your email" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-/**
- * 2. Reset Password → with token
- */
+// 2. Verify OTP & Reset Password
 router.post("/reset-password", async (req, res) => {
   try {
-    const { token, newPassword } = req.body;
+    const { otp, email, newPassword } = req.body;
 
     const user = await User.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }, // not expired
+      email,
+      resetPasswordToken: otp,
+      resetPasswordExpires: { $gt: Date.now() },
     });
 
-    if (!user)
-      return res.status(400).json({ message: "Invalid or expired token" });
+    if (!user) return res.status(400).json({ message: "Invalid or expired OTP" });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
-
-    // Invalidate tokens
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
     user.refreshTokens = [];
     user.passwordChangedAt = Date.now();
 
-    // clear reset fields
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-
     await user.save();
 
-    res.json({
-      message: "Password updated successfully. Please log in again.",
-    });
+    res.json({ message: "Password updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
