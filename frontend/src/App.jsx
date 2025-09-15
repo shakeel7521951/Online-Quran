@@ -9,6 +9,7 @@ import Login from "./components/common/Login";
 import Signup from "./components/common/Signup";
 import Profile from "./features/profile/Profile";
 import ProtectedRoute from "./features/ProtectedRoute";
+import { AdminRoute } from "./features/ProtectedRoute";
 
 // Pages
 import Home from "./pages/Home";
@@ -68,10 +69,9 @@ const router = createBrowserRouter([
   { path: "/FreeTrialClass", element: <FreeTrialClass /> },
   {
     path: "/dashboard",
-    element: <AdminLayout />,
+    element: (<AdminRoute><AdminLayout /></AdminRoute>),
     children: [
-      { index: true, element: <Dashboard /> }, // loads at /dashboard
-      { path: "users", element: <Users /> },
+      { index: true, element: <Dashboard /> }, 
       { path: "users", element: <Users /> },
       { path: "tutors", element: <Tutors /> },
       { path: "courses", element: <Courses /> },

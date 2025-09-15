@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import API from "../../features/api";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const parseAxiosError = (error) => {
   if (error?.response) {
@@ -109,7 +110,7 @@ const Signup = () => {
       });
       alert(res?.data?.message || "Email verified!");
       setStep("done");
-      navigate("/login")
+      navigate("/login");
     } catch (error) {
       console.error("Verify OTP error:", error);
       alert(parseAxiosError(error));
@@ -134,24 +135,18 @@ const Signup = () => {
 
   return (
     <section className="min-h-screen flex items-center py-5 sm:py-10 justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5 bg-repeat pattern-islamic"></div>
-      <style>
-        {`
-          .pattern-islamic {
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232C3E50' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-          }
-        `}
-      </style>
-
-      <div className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-lg p-5 border border-[#D4AF37]/30">
+      <div
+        className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-lg p-5 border border-[#D4AF37]/30"
+        data-aos="zoom-in"
+      >
         {/* Step 1: Signup */}
         {step === "signup" && (
           <>
-            <h2 className="text-xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
+            <h2 className="text-2xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
               Create Your Account
             </h2>
-            <div className="w-20 bg-[#D4AF37] rounded-full mx-auto"></div>
-            <p className="text-center text-gray-600 text-sm mb-5">
+            <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-2"></div>
+            <p className="text-center text-gray-600 mb-5 text-lg">
               Sign up to start your Quranic journey
             </p>
 
@@ -216,8 +211,13 @@ const Signup = () => {
                     className="absolute right-3 top-9 text-gray-500 hover:text-[#0E7C5A]"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? "Hide" : "Show"}
+                    {showPassword ? (
+                      <EyeIcon size={18} className="text-[#D4AF37]" />
+                    ) : (
+                      <EyeOffIcon size={18} className="text-[#D4AF37]" />
+                    )}
                   </button>
+
                   {errors.password && (
                     <p className="mt-1 text-sm text-red-500">
                       {errors.password}
@@ -246,7 +246,11 @@ const Signup = () => {
                     className="absolute right-3 top-9 text-gray-500 hover:text-[#0E7C5A]"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
-                    {showConfirmPassword ? "Hide" : "Show"}
+                    {showConfirmPassword ? (
+                      <EyeIcon size={18} className="text-[#D4AF37]" />
+                    ) : (
+                      <EyeOffIcon size={18} className="text-[#D4AF37]" />
+                    )}
                   </button>
                   {errors.confirmPassword && (
                     <p className="mt-1 text-sm text-red-500">
@@ -255,25 +259,27 @@ const Signup = () => {
                   )}
                 </div>
               </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full bg-[#d6a049] text-white py-2.5 rounded-lg font-semibold hover:bg-[#cdad79] transition-colors ${
-                  isSubmitting ? "opacity-75 cursor-not-allowed" : ""
-                }`}
-              >
-                {isSubmitting ? "Processing..." : "Sign Up"}
-              </button>
+              <div className="flex justify-center mt-5">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`px-15 py-2.5 rounded-lg font-semibold transition-all duration-200 
+      ${
+        isSubmitting
+          ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+          : "bg-[#A98435] text-white hover:bg-[#D4AF37] shadow-md hover:shadow-lg"
+      }`}
+                >
+                  {isSubmitting ? "Processing..." : "Sign Up"}
+                </button>
+              </div>
             </form>
 
-
-
-            <p className="mt-6 text-center text-gray-600 text-sm">
+            <p className="mt-6 text-center text-sm text-gray-600">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-[#0E7C5A] font-medium hover:underline"
+                className="text-[#D4AF37] font-semibold hover:text-[#b8902c] transition"
               >
                 Login
               </Link>
@@ -326,7 +332,6 @@ const Signup = () => {
             </button>
           </>
         )}
-
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import API from "../../features/api";import { Pencil, LogOut, Upload } from "lucide-react";
+import API from "../../features/api";
+import { Pencil, LogOut, Upload } from "lucide-react";
 // fetched profile
 const Profile = () => {
   const [profile, setProfile] = useState(null);

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineMenuFold, AiOutlineYoutube } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
+import { LogOut, UserIcon } from "lucide-react";
 
 const navItems = [
   { id: 1, name: "Home", path: "/" },
@@ -17,6 +18,7 @@ const Navbar = () => {
     JSON.parse(localStorage.getItem("user")) || null
   );
 
+  const isAdmin = user?.role === "admin";
   const [menu, setMenu] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hide, setHide] = useState(false);
@@ -99,6 +101,16 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            {isAdmin && (
+              <li>
+                <Link
+                  to="/dashboard"
+                  className="px-3 py-2 rounded-md transition-all text-white hover:bg-white/20 hover:backdrop-blur-sm"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
 
@@ -116,18 +128,25 @@ const Navbar = () => {
             <div className="relative flex items-center gap-4">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="w-12 h-12 rounded-full border-2 border-white/30 overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-white"
+                className="flex items-center gap-2 w-auto rounded-full border-2 border-white/30 overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-white"
               >
-                {user?.profileImage ? (
-                  <img
-                    src={user.profileImage}
-                    alt="profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D4AF37] to-[#F0ECEB] text-white font-semibold text-lg">
-                    {user?.username?.charAt(0).toUpperCase() || "U"}
-                  </div>
+                <div className="w-12 h-12 rounded-full overflow-hidden">
+                  {user?.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt="profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D4AF37] to-[#F0ECEB] text-white font-semibold text-lg">
+                      {user?.username?.charAt(0).toUpperCase() || "U"}
+                    </div>
+                  )}
+                </div>
+                {isAdmin && (
+                  <span className="text-xs font-semibold bg-red-100 text-red-600 px-2 py-0.5 rounded-lg">
+                    Admin
+                  </span>
                 )}
               </button>
 
@@ -139,42 +158,16 @@ const Navbar = () => {
                       navigate("/profile");
                       setDropdownOpen(false);
                     }}
-                    className="block w-full px-5 py-3.5 text-left transition-all duration-200 hover:bg-[#F2FEF8] font-medium text-gray-700 hover:text-[#0E7C5A] hover:pl-6 flex items-center"
+                    className="w-full px-5 py-3.5 text-left transition-all duration-200 hover:bg-[#F2FEF8] font-medium text-gray-700 hover:text-[#0E7C5A] hover:pl-6 flex items-center"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    > 
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
+                    <UserIcon className="h-4 w-4 mr-2 text-gray-600 hover:text-[#0E7C5A] cursor-pointer" />
                     Edit Profile
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="block w-full px-5 py-3.5 text-left transition-all duration-200 hover:bg-red-50 text-red-500 font-medium hover:text-red-600 hover:pl-6 flex items-center"
+                    className="w-full px-5 py-3.5 text-left transition-all duration-200 hover:bg-red-50 text-red-500 font-medium hover:text-red-600 hover:pl-6 flex items-center"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 mr-2"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                      />
-                    </svg>
+                    <LogOut className="h-5 w-4 mr-2" />
                     Logout
                   </button>
                 </div>
@@ -227,24 +220,20 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            {isAdmin && (
+              <li>
+                <Link
+                  to="/dashboard"
+                  className="px-3 py-2 rounded-md transition-all text-white hover:bg-white/20 hover:backdrop-blur-sm"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
           </ul>
 
           {user ? (
             <div className="flex flex-col items-center gap-5 mt-10 px-4">
-              <div className="w-20 h-20 rounded-full border-2 border-white/30 overflow-hidden shadow-lg">
-                {user?.profileImage ? (
-                  <img
-                    src={user.profileImage}
-                    alt="profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#D4AF37] to-[#F0ECEB] text-white font-semibold text-2xl">
-                    {user?.username?.charAt(0).toUpperCase() || "U"}
-                  </div>
-                )}
-              </div>
-              <h3 className="text-white font-medium">{user.username}</h3>
               <button
                 onClick={() => {
                   navigate("/profile");
@@ -274,27 +263,6 @@ const Navbar = () => {
               </Link>
             </div>
           )}
-
-          <div className="flex gap-5 justify-center mt-12">
-            <a
-              href="#"
-              className="p-3 bg-white/10 text-white rounded-full shadow cursor-pointer hover:bg-white/20 hover:scale-110 transition-all duration-300"
-            >
-              <FaFacebookF />
-            </a>
-            <a
-              href="#"
-              className="p-3 bg-white/10 text-white rounded-full shadow cursor-pointer hover:bg-white/20 hover:scale-110 transition-all duration-300"
-            >
-              <FaWhatsapp />
-            </a>
-            <a
-              href="#"
-              className="p-3 bg-white/10 text-white rounded-full shadow cursor-pointer hover:bg-white/20 hover:scale-110 transition-all duration-300"
-            >
-              <AiOutlineYoutube />
-            </a>
-          </div>
         </div>
       )}
     </nav>

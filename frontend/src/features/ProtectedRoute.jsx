@@ -10,4 +10,14 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+export const AdminRoute = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (user?.role === "admin") {
+    return children;
+  } else {
+    return <Navigate to="/" replace />;
+  }
+};
+
 export default ProtectedRoute;
