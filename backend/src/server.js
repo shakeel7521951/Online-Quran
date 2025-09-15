@@ -30,6 +30,10 @@ import("./routes/auth.js").then(({ default: authRoutes }) => {
   app.use("/api/auth", authRoutes);
 });
 
+import("./routes/adminAuth.js").then(({ default: adminAuthRoutes }) => {
+  app.use("/api/auth/admin", adminAuthRoutes);
+});
+
 import("./routes/protected.js").then(({ default: protectedRoutes }) => {
   app.use("/api/protected", protectedRoutes);
 });

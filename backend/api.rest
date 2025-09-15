@@ -1,4 +1,4 @@
-### ✅ User Signup (Admin)
+### ✅ Admin Signup
 POST http://localhost:5000/api/auth/admin/signup
 Content-Type: application/json
 

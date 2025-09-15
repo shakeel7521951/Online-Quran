@@ -1,20 +1,26 @@
+// src/middleware/auth.js
 import jwt from "jsonwebtoken";
 
 export const authMiddleware = (req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1]; // "Bearer <token>"
+  const authHeader = req.header("Authorization") || req.header("authorization");
+  if (!authHeader) return res.status(401).json({ message: "No token, access denied" });
+
+  const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
   if (!token) return res.status(401).json({ message: "No token, access denied" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id, email, role, isAdmin }
+    req.user = decoded; // decoded should include role/isAdmin
     next();
   } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
 
 export const adminMiddleware = (req, res, next) => {
-  if (!req.user.isAdmin) {
+  const user = req.user || {};
+  // Accept either explicit isAdmin boolean OR role === 'admin'
+  if (!(user.isAdmin === true || user.role === "admin")) {
     return res.status(403).json({ message: "Access denied: Admins only" });
   }
   next();

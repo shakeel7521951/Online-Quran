@@ -1,9 +1,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import crypto from "crypto";
 import User from "../models/User.js";
-import { authMiddleware, adminMiddleware } from "../middleware/auth.js";
 import RefreshToken from "../models/refreshToken.js";
 import authenticate from "../middleware/authenticate.js";
 import { sendEmail } from "../utils/sendEmail.js";
@@ -12,39 +10,6 @@ import path from "path";
 import PendingUser from "../models/PendingUser.js";
 
 const router = express.Router();
-
-// Admin Signup API (protected routes)
-router.post(
-  "/admin/signup",
-  authMiddleware,
-  adminMiddleware,
-  async (req, res) => {
-    try {
-      const { username, email, password } = req.body;
-
-      const existingUser = await User.findOne({ email });
-      if (existingUser)
-        return res
-          .status(400)
-          .json({ message: "Admin with this email already exists" });
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const admin = new User({
-        username,
-        email,
-        password: hashedPassword,
-        role: "admin",
-      });
-      await admin.save();
-
-      res.status(201).json({ message: "Admin created successfully" });
-    } catch (error) {
-      console.error("Error:", error); // log full error in terminal
-      res.status(500).json({ message: "Server error", error: error.message });
-    }
-  }
-);
 
 // User Signup API with Email OTP
 router.post("/signup", async (req, res) => {
