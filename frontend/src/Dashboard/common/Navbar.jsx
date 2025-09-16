@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import ProfileCircle from "../../components/common/ProfileCircle";
 
 const PAGE_TITLES = {
   "/dashboard": "Dashboard",
@@ -53,28 +54,27 @@ const DashboardNavbar = () => {
         {/* Add Admin button */}
         <Link
           to="/dashboard/adminSignup"
-          className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg 
-                     bg-white/20 hover:bg-white/30 text-white transition 
-                     shadow-md hover:shadow-lg"
+          className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg 
+               bg-white/20 hover:bg-white/30 text-white transition 
+               shadow-md hover:shadow-lg"
           title="Add another Admin"
         >
-          <FaPlus className="text-xs sm:text-sm" />
+          <FaPlus className="text-sm sm:text-base" />
         </Link>
 
-        {/* Admin Badge */}
-        <div
-          className="flex flex-col items-end text-white px-2 sm:px-3 py-1 
-                     rounded-lg bg-gradient-to-r from-[#0E7C5A]/90 to-[#2d9a77]/90 
-                     shadow-md hover:shadow-lg hover:from-[#0E7C5A] hover:to-[#34c28a]
-                     transition duration-300"
+        {/* Home button */}
+        <Link
+          to="/"
+          className="flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg 
+               bg-gradient-to-r from-[#0E7C5A]/90 to-[#2d9a77]/90 
+               text-white font-medium shadow-md hover:shadow-lg 
+               hover:from-[#0E7C5A] hover:to-[#34c28a] transition duration-300"
         >
-          <span className="text-xs sm:text-sm font-bold tracking-wide">
-            Admin
-          </span>
-          <span className="sm:inline text-[10px] sm:text-[11px] text-gray-100 italic opacity-90">
-            Administrator
-          </span>
-        </div>
+          Home
+        </Link>
+
+        {/* Profile Menu */}
+        <ProfileCircle />
       </div>
     </header>
   );

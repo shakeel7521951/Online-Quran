@@ -113,7 +113,7 @@ const AdminSignup = () => {
         <h2 className="text-2xl font-extrabold text-center text-[#2C3E50] mb-3">
           Create New Admin
         </h2>
-        <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-4" />
+        <div className="w-20 h-1.5 bg-[#0F6A51] rounded-full mx-auto mb-4" />
 
         <form className="space-y-5 text-sm" onSubmit={handleSubmit}>
           <div>
@@ -174,9 +174,9 @@ const AdminSignup = () => {
               onClick={() => setShowPassword((s) => !s)}
             >
               {showPassword ? (
-                <EyeIcon size={18} className="text-[#D4AF37]" />
+                <EyeIcon size={18} className="text-[#0E7C5A]" />
               ) : (
-                <EyeOffIcon size={18} className="text-[#D4AF37]" />
+                <EyeOffIcon size={18} className="text-[#0E7C5A]" />
               )}
             </button>
             {errors.password && (
@@ -204,9 +204,9 @@ const AdminSignup = () => {
               onClick={() => setShowConfirmPassword((s) => !s)}
             >
               {showConfirmPassword ? (
-                <EyeIcon size={18} className="text-[#D4AF37]" />
+                <EyeIcon size={18} className="text-[#0E7C5A]" />
               ) : (
-                <EyeOffIcon size={18} className="text-[#D4AF37]" />
+                <EyeOffIcon size={18} className="text-[#0E7C5A]" />
               )}
             </button>
             {errors.confirmPassword && (
@@ -223,7 +223,7 @@ const AdminSignup = () => {
               className={`px-8 py-2.5 rounded-lg font-semibold transition-all duration-200 ${
                 isSubmitting
                   ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                  : "bg-[#A98435] text-white hover:bg-[#D4AF37] shadow-md hover:shadow-lg"
+                  : "bg-[#0F6A51] text-white hover:bg-[#31BD86] shadow-md hover:shadow-lg"
               }`}
             >
               {isSubmitting ? "Processing..." : "Create Admin"}
@@ -233,7 +233,7 @@ const AdminSignup = () => {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Back to{" "}
-          <Link to="/dashboard" className="text-[#D4AF37] font-semibold">
+          <Link to="/dashboard" className="text-[#0F6A51] font-semibold hover:text-[#31BD86]">
             Dashboard
           </Link>
         </p>

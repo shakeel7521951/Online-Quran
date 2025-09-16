@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import API from "../../features/api";
-import { Pencil, LogOut, Upload } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {
+  Pencil,
+  LogOut,
+  Upload,
+  EyeIcon,
+  EyeOffIcon,
+  Home,
+} from "lucide-react";
+
 // fetched profile
 const Profile = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [editingField, setEditingField] = useState(null);
   const [user, setUser] = useState();
@@ -22,6 +32,8 @@ const Profile = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
   const [errors, setErrors] = useState({});
   const [pendingEmail, setPendingEmail] = useState("");
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   // Fetch profile
   useEffect(() => {
@@ -470,36 +482,68 @@ const Profile = () => {
               <strong className="text-[#0E7C5A]">Password:</strong>
               {editingField === "password" ? (
                 <>
-                  <input
-                    type="password"
-                    name="currentPassword"
-                    value={formData.currentPassword}
-                    onChange={handleChange}
-                    placeholder="Current Password"
-                    className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
-                  />
-                  {errors.currentPassword && (
-                    <p className="text-sm text-red-600">
-                      {errors.currentPassword}
-                    </p>
-                  )}
-                  <input
-                    type="password"
-                    name="newPassword"
-                    value={formData.newPassword}
-                    onChange={handleChange}
-                    placeholder="New Password"
-                    className="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
-                  />
-                  {errors.newPassword && (
-                    <p className="text-sm text-red-600">{errors.newPassword}</p>
-                  )}
-                  <button
-                    onClick={handleSavePassword}
-                    className="mt-2 bg-[#0E7C5A] text-white py-2 rounded-xl shadow-md"
-                  >
-                    Save Password
-                  </button>
+                  <div>
+                    <div className="relative mb-2">
+                      <input
+                        type={showOldPassword ? "text" : "password"}
+                        name="currentPassword"
+                        value={formData.currentPassword}
+                        onChange={handleChange}
+                        placeholder="Current Password"
+                        className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37] pr-10"
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-2.5 text-gray-500 hover:text-[#0E7C5A]"
+                        onClick={() => setShowOldPassword(!showOldPassword)}
+                      >
+                        {showOldPassword ? (
+                          <EyeIcon size={18} className="text-[#0E7C5A]" />
+                        ) : (
+                          <EyeOffIcon size={18} className="text-[#0E7C5A]" />
+                        )}
+                      </button>
+                    </div>
+                    {errors.currentPassword && (
+                      <p className="text-sm text-red-600">
+                        {errors.currentPassword}
+                      </p>
+                    )}
+
+                    {/* New Password */}
+                    <div className="relative mb-2">
+                      <input
+                        type={showNewPassword ? "text" : "password"}
+                        name="newPassword"
+                        value={formData.newPassword}
+                        onChange={handleChange}
+                        placeholder="New Password"
+                        className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37] pr-10"
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-2.5 text-gray-500 hover:text-[#0E7C5A]"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                      >
+                        {showNewPassword ? (
+                          <EyeIcon size={18} className="text-[#0E7C5A]" />
+                        ) : (
+                          <EyeOffIcon size={18} className="text-[#0E7C5A]" />
+                        )}
+                      </button>
+                    </div>
+                    {errors.newPassword && (
+                      <p className="text-sm text-red-600">
+                        {errors.newPassword}
+                      </p>
+                    )}
+                    <button
+                      onClick={handleSavePassword}
+                      className="mt-2 bg-[#0E7C5A] text-white py-2 rounded-xl shadow-md px-5"
+                    >
+                      Save Password
+                    </button>
+                  </div>
                 </>
               ) : (
                 <div className="flex justify-between items-center">
@@ -519,13 +563,22 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Logout */}
-          <div className="mt-6">
+          {/* Buttons */}
+          <div className="mt-6 flex gap-5">
+            {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center gap-2 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl shadow-md"
+              className="flex items-center justify-center gap-2 w-1/2 bg-red-500 hover:bg-red-600 text-white py-2 rounded-xl shadow-md"
             >
               <LogOut size={18} /> Logout
+            </button>
+
+            {/* Home Button */}
+            <button
+              onClick={() => navigate("/")}
+              className="flex items-center justify-center gap-2 w-1/2 bg-[#0E7C5A] hover:bg-[#0c694c] text-white py-2 rounded-xl shadow-md"
+            >
+              <Home size={18} /> Home
             </button>
           </div>
         </div>
