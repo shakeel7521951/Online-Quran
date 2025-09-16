@@ -27,7 +27,8 @@ import { Tutors } from "./Dashboard/Tutors";
 import { Courses } from "./Dashboard/Courses";
 import { Reviews } from "./Dashboard/Reviews";
 import { Settings } from "./Dashboard/Settings";
-import AdminSignup from "./Dashboard/AdminSignup";
+import AdminSignup from "./Dashboard/common/AdminSignup";
+import AdminVerifyOtp from "./Dashboard/common/AdminVerifyOtp";
 
 // ===== Layouts =====
 const MainLayout = () => (
@@ -87,6 +88,7 @@ const router = createBrowserRouter([
       { path: "reviews", element: <Reviews /> },
       { path: "settings", element: <Settings /> },
       { path: "adminSignup", element: <AdminSignup /> },
+      { path: "verify-otp", element: <AdminVerifyOtp  /> },
     ],
   },
 ]);

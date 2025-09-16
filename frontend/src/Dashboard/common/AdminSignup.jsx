@@ -1,9 +1,8 @@
-// src/components/admin/AdminSignup.jsx
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import API from "../features/api"; // keep your axios instance here
+import API from "../../features/api"; // keep your axios instance here
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const parseAxiosError = (error) => {
@@ -97,9 +96,9 @@ const AdminSignup = () => {
         }
       );
 
-      alert(res?.data?.message || "New admin created successfully.");
-      // go back to dashboard
-      navigate("/dashboard");
+      // After successful signup request
+      alert("OTP sent to email. Please verify.");
+      navigate("/dashboard/verify-otp?email=" + formData.email);
     } catch (error) {
       console.error("Admin signup error:", error);
       alert(parseAxiosError(error));

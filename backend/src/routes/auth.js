@@ -2,12 +2,14 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Admin from "../models/Admin.js";
 import RefreshToken from "../models/refreshToken.js";
 import authenticate from "../middleware/authenticate.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import multer from "multer";
 import path from "path";
-import PendingUser from "../models/PendingUser.js";
+import PendingUser from "../models/PendingUser.js"; 
+import PendingAdmin from "../models/PendingAdmin.js";
 
 const router = express.Router();
 
@@ -91,51 +93,67 @@ router.post("/verify-otp", async (req, res) => {
   }
 });
 
+// resend for the both admin and user 
 router.post("/resend-otp", async (req, res) => {
   try {
     const { email } = req.body;
 
-    // 1. Check if this is a pending user (new registration)
-    let targetUser = await PendingUser.findOne({ email });
-    let userType = "pending";
+    let targetUser = null;
+    let userType = null;
+    let emailToSend = email;
 
-    // 2. If not found, check in User collection
+    // 1. Check in PendingUser
+    targetUser = await PendingUser.findOne({ email });
+    if (targetUser) userType = "pendingUser";
+
+    // 2. If not found, check in PendingAdmin
+    if (!targetUser) {
+      targetUser = await PendingAdmin.findOne({ email });
+      if (targetUser) userType = "pendingAdmin";
+    }
+
+    // 3. If not found, check in User (email or pendingEmail)
     if (!targetUser) {
       targetUser = await User.findOne({
         $or: [{ email }, { pendingEmail: email }],
       });
-      userType = "verified";
+      if (targetUser) userType = "user";
     }
 
-    // 3. If still not found
+    // 4. If not found, check in Admin (email or pendingEmail)
     if (!targetUser) {
-      return res
-        .status(404)
-        .json({ message: "No account found with this email" });
+      targetUser = await Admin.findOne({
+        $or: [{ email }, { pendingEmail: email }],
+      });
+      if (targetUser) userType = "admin";
+      console.log(targetUser)
     }
 
-    // 4. Generate new OTP
+    // 5. Still not found
+    if (!targetUser) {
+      return res.status(404).json({ message: "No account found with this email" });
+    }
+
+    // 6. Generate new OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // 5. For email change requests, send to the original email
-    let emailToSend = targetUser.email;
-
-    if (userType === "verified" && targetUser.pendingEmail) {
-      // This is an email change request - send to original email
+    // 7. Decide where to send & update fields
+    if ((userType === "user" || userType === "admin") && targetUser.pendingEmail) {
+      // Email change request → send to original email
       emailToSend = targetUser.email;
 
-      // Update the email change OTP fields
       targetUser.emailChangeOtp = otp;
-      targetUser.emailChangeOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+      targetUser.emailChangeOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 min
     } else {
-      // For new registrations or other cases, use regular OTP fields
+      // Normal flow (registration or re-verification)
+      emailToSend = targetUser.email;
       targetUser.otp = otp;
-      targetUser.otpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+      targetUser.otpExpires = Date.now() + 10 * 60 * 1000; // 10 min
     }
 
     await targetUser.save();
 
-    // 6. Send OTP via email
+    // 8. Send OTP
     await sendEmail({
       to: emailToSend,
       subject: "Resend Email Verification OTP",
@@ -147,7 +165,8 @@ router.post("/resend-otp", async (req, res) => {
 
     res.status(200).json({
       message: `New OTP sent to your registered email`,
-      email: emailToSend, // Send back which email was used
+      email: emailToSend,
+      type: userType,
     });
   } catch (error) {
     console.error("Resend OTP Error:", error);
@@ -155,36 +174,45 @@ router.post("/resend-otp", async (req, res) => {
   }
 });
 
+
 // Login for both admin and user
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Find user
-    const user = await User.findOne({ email });
-    if (!user)
-      return res.status(400).json({ message: "Invalid email or password" });
+    // 1. Try finding in User collection
+    let user = await User.findOne({ email });
 
-    // 2. Check if verified
-    if (!user.isVerified) {
+    // 2. If not found, try Admin collection
+    let isAdmin = false;
+    if (!user) {
+      user = await Admin.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: "Invalid email or password" });
+      }
+      isAdmin = true;
+    } else {
+      isAdmin = user.role === "admin";
+    }
+
+    // 3. Check if verified (only for normal users)
+    if (!isAdmin && !user.isVerified) {
       return res.status(403).json({
         message: "Email not verified. Please verify your email with OTP.",
       });
     }
 
-    // 3. Compare password
+    // 4. Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(400).json({ message: "Invalid email or password" });
 
-    const isAdmin = user.role === "admin";
-
-    // 4. Generate tokens
+    // 5. Generate tokens
     const accessToken = jwt.sign(
       {
         id: user._id,
         email: user.email,
-        role: user.role,
+        role: isAdmin ? "admin" : user.role,
         username: user.username,
         isAdmin,
       },
@@ -198,7 +226,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    // 5. Save refresh token
+    // 6. Save refresh token
     const refreshToken = new RefreshToken({
       token: refreshTokenValue,
       user: user._id,
@@ -206,7 +234,7 @@ router.post("/login", async (req, res) => {
     });
     await refreshToken.save();
 
-    // 6. Response
+    // 7. Response
     res.status(200).json({
       message: "Login successful",
       accessToken,
@@ -215,32 +243,45 @@ router.post("/login", async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        role: user.role,
+        role: isAdmin ? "admin" : user.role,
         isAdmin,
         profileImage: user.profileImage || null,
       },
     });
   } catch (error) {
-    console.error(" Error:", error);
+    console.error("Error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-// Get My Profile (protected)
-router.get("/profile", authenticate, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select(
-      "-password -otp -otpExpires -resetPasswordToken -resetPasswordExpires -emailChangeOtp -emailChangeOtpExpiry"
-    );
 
-    if (!user) return res.status(404).json({ message: "User not found" });
+// // Get My Profile (works for both User and Admin)
+// router.get("/profile", authenticate, async (req, res) => {
+//   try {
+//     let account;
 
-    res.json({ user });
-  } catch (error) {
-    console.error("Profile fetch error:", error);
-    res.status(500).json({ message: "Server error while fetching profile" });
-  }
-});
+//     // First try User collection
+//     account = await User.findById(req.user.id).select(
+//       "-password -otp -otpExpires -resetPasswordToken -resetPasswordExpires -emailChangeOtp -emailChangeOtpExpiry"
+//     );
+
+//     // If not found, try Admin collection
+//     if (!account) {
+//       account = await Admin.findById(req.user.id).select("-password");
+//     }
+
+//     if (!account) {
+//       return res.status(404).json({ message: "Account not found" });
+//     }
+
+//     res.json({ user: account });
+//   } catch (error) {
+//     console.error("Profile fetch error:", error);
+//     res.status(500).json({ message: "Server error while fetching profile" });
+//   }
+// });
+
+
 
 // ✅ Configure multer storage
 const storage = multer.diskStorage({
@@ -257,6 +298,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+
 // Edit Profile (update username, phone, bio, or request email change)
 router.put(
   "/profile",
@@ -264,34 +306,42 @@ router.put(
   upload.single("profileImage"),
   async (req, res) => {
     try {
-      const user = await User.findById(req.user.id);
+      let account;
 
-      if (!user) return res.status(404).json({ message: "User not found" });
+      if (req.user.role === "admin" || req.user.isAdmin) {
+        account = await Admin.findById(req.user.id);
+      } else {
+        account = await User.findById(req.user.id);
+      }
 
+      if (!account) return res.status(404).json({ message: "Account not found" });
+
+      // ✅ Profile image update
       if (req.file) {
-        user.profileImage = `${req.protocol}://${req.get("host")}/uploads/${
+        account.profileImage = `${req.protocol}://${req.get("host")}/uploads/${
           req.file.filename
         }`;
       }
 
       const { username, email, phone, bio, address } = req.body;
-      // ✅ Update basic profile fields directly
-      if (username !== undefined) user.username = username;
-      if (phone !== undefined) user.phone = phone;
-      if (bio !== undefined) user.bio = bio;
-      if (address !== undefined) user.address = address;
+
+      // ✅ Update basic fields
+      if (username !== undefined) account.username = username;
+      if (phone !== undefined) account.phone = phone;
+      if (bio !== undefined) account.bio = bio;
+      if (address !== undefined) account.address = address;
 
       // ✅ Email change requires OTP verification
-      if (email && email !== user.email) {
+      if (email && email !== account.email) {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        user.pendingEmail = email;
-        user.emailChangeOtp = otp;
-        user.emailChangeOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 min
-        await user.save();
+        account.pendingEmail = email;
+        account.emailChangeOtp = otp;
+        account.emailChangeOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 min
+        await account.save();
 
         await sendEmail({
-          to: user.email, // send to OLD email
+          to: account.email, // send to OLD email
           subject: "Confirm your email change",
           text: `Your OTP for email change is: ${otp}`,
           html: `<p>Your OTP for email change is: <b>${otp}</b></p><p>It expires in 10 minutes.</p>`,
@@ -303,10 +353,11 @@ router.put(
         });
       }
 
-      await user.save();
+      await account.save();
+
       res.json({
         message: "Profile updated successfully",
-        user: user.toObject({
+        user: account.toObject({
           transform: (_, ret) => {
             delete ret.password;
             delete ret.otp;
@@ -326,59 +377,59 @@ router.put(
   }
 );
 
-// Verify email change OTP
+
+
+// ✅ Verify email change OTP (User + Admin)
 router.post("/verify-email-change", authenticate, async (req, res) => {
   try {
     const { otp } = req.body;
-    const userId = req.user.id; // Assuming you have user auth middleware
+    const userId = req.user.id;
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    // Try User first
+    let account = await User.findById(userId);
+    if (!account) {
+      account = await Admin.findById(userId);
+    }
+    if (!account) {
+      return res.status(404).json({ message: "Account not found" });
     }
 
-    // Check if OTP is valid and not expired
-    if (user.emailChangeOtp !== otp || user.emailChangeOtpExpiry < Date.now()) {
+    if (
+      account.emailChangeOtp !== otp ||
+      account.emailChangeOtpExpiry < Date.now()
+    ) {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
-    // Update the email and clear pending fields
-    user.email = user.pendingEmail;
-    user.pendingEmail = undefined;
-    user.emailChangeOtp = undefined;
-    user.emailChangeOtpExpiry = undefined;
+    // Update email and clear pending fields
+    account.email = account.pendingEmail;
+    account.pendingEmail = undefined;
+    account.emailChangeOtp = undefined;
+    account.emailChangeOtpExpiry = undefined;
 
-    await user.save();
+    await account.save();
 
     res.json({
       message: "Email updated successfully",
-      user,
+      user: account,
     });
   } catch (error) {
     console.error("Verify Email Change Error:", error);
-    res
-      .status(500)
-      .json({ message: "Server error while verifying email change" });
+    res.status(500).json({ message: "Server error while verifying email change" });
   }
 });
 
-// Logout api for both admin and user
+// ✅ Logout (User + Admin)
 router.post("/logout", async (req, res) => {
   try {
-    // Get refresh token from body or header
     const token = req.body.refreshToken || req.headers["x-refresh-token"];
-
     if (!token) {
       return res.status(400).json({ message: "No refresh token provided" });
     }
 
-    // Delete refresh token from DB
     const deletedToken = await RefreshToken.findOneAndDelete({ token });
-
     if (!deletedToken) {
-      return res
-        .status(400)
-        .json({ message: "Invalid or already logged out token" });
+      return res.status(400).json({ message: "Invalid or already logged out token" });
     }
 
     res.status(200).json({ message: "Logged out successfully" });
@@ -388,49 +439,43 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// Change Password (secure way with refresh token invalidation)
-
+// ✅ Change Password (User + Admin)
 router.post("/change-password", authenticate, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
-
-    // 1. Input validation
     if (!currentPassword || !newPassword) {
       return res
         .status(400)
         .json({ message: "Current and new password are required" });
     }
 
-    // 2. Find the user from token
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    let account = await User.findById(req.user.id);
+    if (!account) {
+      account = await Admin.findById(req.user.id);
+    }
+    if (!account) {
+      return res.status(404).json({ message: "Account not found" });
     }
 
-    // 3. Verify old password
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    const isMatch = await bcrypt.compare(currentPassword, account.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Current password is incorrect" });
     }
 
-    // 4. Hash new password
     const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    account.password = await bcrypt.hash(newPassword, salt);
 
-    // 5. Save new password
-    await user.save();
+    await account.save();
 
-    // 6. Invalidate all refresh tokens (logout from all devices)
-    await RefreshToken.deleteMany({ user: user._id });
+    // Invalidate all refresh tokens for this account
+    await RefreshToken.deleteMany({ user: account._id });
 
-    // 7. Clear refreshToken cookie if exists
     res.clearCookie("refreshToken", {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
     });
 
-    // 8. Return response
     res.status(200).json({
       message:
         "Password changed successfully. You have been logged out from all devices. Please log in again with your new password.",
@@ -479,7 +524,8 @@ router.post("/reset-password", async (req, res) => {
       resetPasswordExpires: { $gt: Date.now() },
     });
 
-    if (!user) return res.status(400).json({ message: "Invalid or expired OTP" });
+    if (!user)
+      return res.status(400).json({ message: "Invalid or expired OTP" });
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);

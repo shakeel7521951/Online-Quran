@@ -45,17 +45,17 @@ Content-Type: application/json
 }
 
 ### ✅ Get My Profile
-GET http://localhost:5000/api/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YmZmZGQzNTk5YWFhNjEyMDhiMjVkNiIsImVtYWlsIjoiaGFiZHVsMjI2NkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3NTc0MTc4NDUsImV4cCI6MTc1NzQxODc0NX0.LYGf928cMyxUtOxuzvoIU57DOj3uNDFpS5GvwK21HKc
+GET http://localhost:5000/api/protected/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzEyNjA2OGJiZTQxNGVkYzdkMDNiNiIsImVtYWlsIjoiaGlqYXoyMjY2QGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidXNlcm5hbWUiOiJBYmR1bCBSZWhtYW4iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzU4MDA3MTE1LCJleHAiOjE3NTgwMDgwMTV9.3YBMVnqIGYFUdc0fwS_dyhjq8BXAxJErA0jV-srr-Xk
 
 ### ✅ Edit My Profile
 PUT http://localhost:5000/api/auth/profile
-Authorization: Bearer <access-token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzkwMjZkZDI5M2I4OThhZDgzMDEwOSIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwidXNlcm5hbWUiOiJBZG1pbiAyIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzU4MDA1MDEzLCJleHAiOjE3NTgwMDU5MTN9.g0aQpHmJijdfZKezjlNbT4vpXfh0zn8Xzv7hCze0Aag
 Content-Type: application/json
 
 {
-  "username": "user",
-  "email": "test@example.com",
+  "username": "Admin new",
+  "bio": "i am new admin"
 }
 
 ### ✅ Verify Email Change (OTP)

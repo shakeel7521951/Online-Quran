@@ -10,10 +10,12 @@ export const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded JWT:", decoded);
     req.user = decoded; // decoded should include role/isAdmin
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
+    console.error("JWT Verify Error:", error.message);
+  return res.status(401).json({ message: "Invalid token" });
   }
 };
 
