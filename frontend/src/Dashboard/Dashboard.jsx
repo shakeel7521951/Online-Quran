@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaUsers, FaChalkboardTeacher, FaBookOpen, FaChartLine, FaBell, FaSearch,
   FaPlus, FaUserPlus, FaCheckCircle, FaDownload, FaMoon, FaSun,
@@ -44,6 +44,7 @@ const useResize = (ref) => {
   }, [ref]);
   return rect;
 };
+
 const useLocalStorage = (key, initial) => {
   const [val, setVal] = useState(() => {
     try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : initial; }
@@ -52,6 +53,7 @@ const useLocalStorage = (key, initial) => {
   useEffect(() => { try { localStorage.setItem(key, JSON.stringify(val)); } catch{} }, [key, val]);
   return [val, setVal];
 };
+
 const useMedia = (q) => {
   const [m, setM] = useState(false);
   useEffect(() => {
@@ -63,6 +65,7 @@ const useMedia = (q) => {
   }, [q]);
   return m;
 };
+
 const CountUp = ({ value, duration = 1000 }) => {
   const [v, setV] = useState(0);
   useEffect(() => {
@@ -79,6 +82,7 @@ const CountUp = ({ value, duration = 1000 }) => {
   }, [value, duration]);
   return <>{v.toLocaleString()}</>;
 };
+
 const StatusBadge = ({ s }) => {
   const map = {
     Active: { fg: BRAND.primary, bg: "#0E7C5A1A" },
@@ -90,29 +94,6 @@ const StatusBadge = ({ s }) => {
     <span className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ color: fg, background: bg }}>
       {s}
     </span>
-  );
-};
-
-/* ---------- Sparkline for KPI cards ---------- */
-const Spark = ({ data, color }) => {
-  if (!data?.length) return null;
-  const w = 120, h = 36, max = Math.max(...data), min = Math.min(...data);
-  const pts = data.map((d, i) => {
-    const x = (i / (data.length - 1)) * (w - 6) + 3;
-    const y = h - 3 - ((d - min) / Math.max(1, max - min)) * (h - 6);
-    return `${x},${y}`;
-  }).join(" L ");
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
-      <defs>
-        <linearGradient id={`spark-${color}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity=".35" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={`M ${pts}`} stroke={color} strokeWidth="2" fill="none" />
-      <path d={`M ${pts} L ${w-3},${h-3} L 3,${h-3} Z`} fill={`url(#spark-${color})`} />
-    </svg>
   );
 };
 
@@ -188,7 +169,7 @@ const AreaChart = ({ series, labels, height = 280, legend, onToggle, svgRef }) =
 /* ===================================================================
    Donut chart
    =================================================================== */
-const DonutChart = ({ segments, size = 200, thickness = 26, hidden = new Set(), selected = null, onToggleHidden, onSelect, svgRef }) => {
+const DonutChart = ({ segments, size = 300, thickness = 26, hidden = new Set(), selected = null, onToggleHidden, onSelect, svgRef }) => {
   const visible = segments.filter(s => !hidden.has(s.label));
   const totalVisible = Math.max(1, visible.reduce((s, x) => s + x.value, 0));
   const totalAll = Math.max(1, segments.reduce((s, x) => s + x.value, 0));
@@ -245,23 +226,6 @@ const DonutChart = ({ segments, size = 200, thickness = 26, hidden = new Set(), 
   );
 };
 
-/* ---------- generic modal ---------- */
-const Modal = ({ title, onClose, children, wide=false }) => (
-  <AnimatePresence>
-    <motion.div className="fixed inset-0 bg-black/40 z-50" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={onClose}/>
-    <motion.div initial={{scale:.95,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:.95,opacity:0}}
-      className="fixed inset-0 z-50 grid place-items-center p-4">
-      <div className={`w-full ${wide?'max-w-2xl':'max-w-lg'} bg-white rounded-2xl shadow-xl p-6`}>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <button className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50" onClick={onClose}>✕</button>
-        </div>
-        {children}
-      </div>
-    </motion.div>
-  </AnimatePresence>
-);
-
 /* ===================================================================
    Dashboard (fully responsive)
    =================================================================== */
@@ -272,7 +236,6 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [legendHidden, setLegendHidden] = useState(new Set());
   const [userQ, setUserQ] = useState("");
-  useReducedMotion();
 
   const [showHelp, setShowHelp] = useState(false);
   const [refreshSpin, setRefreshSpin] = useState(false);
@@ -398,8 +361,6 @@ export const Dashboard = () => {
   };
 
   const bgPage = dark ? "#0b1220" : BRAND.light;
-  const overlay = `radial-gradient(1200px 600px at -10% -10%, rgba(212,175,55,.10), transparent 40%),
-                   radial-gradient(900px 500px at 110% -20%, rgba(14,124,90,.12), transparent 35%)`;
   const cardBg = dark ? "rgba(17,24,39,.9)" : "rgba(255,255,255,.96)";
   const borderCol = dark ? "rgba(255,255,255,.08)" : "#e2e8f0";
   const textMain = dark ? "#f8fafc" : BRAND.ink;
@@ -427,7 +388,7 @@ export const Dashboard = () => {
   const addCourse = (c) => { setCoursesCount(n => n + 1); setShowAddCourse(false); alert(`Course "${c.title}" added!`); };
 
   /* KPI Card */
-  const Card = ({ title, value, icon, tintFrom, tintTo, color, spark, delta, i }) => (
+  const Card = ({ title, value, icon, color, spark, delta, i }) => (
     <motion.div
       custom={i}
       initial={{ opacity: 0, y: 14 }}
@@ -435,15 +396,12 @@ export const Dashboard = () => {
       className="group relative rounded-2xl min-w-0"
       style={{ background: cardBg, boxShadow: "0 10px 25px rgba(16,24,40,.06)", border:`1px solid ${borderCol}` }}
     >
-      <div className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
-           style={{ background: `linear-gradient(135deg, ${tintFrom}, ${tintTo})` }} />
       <div className="relative p-4 sm:p-5 flex items-center gap-4 backdrop-blur">
         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl shadow-md" style={{ background: color }}>{icon}</div>
         <div className="min-w-0">
           <p className="text-sm" style={{ color: textSub }}>{title}</p>
           <div className="flex items-end gap-3">
             <h3 className="text-2xl sm:text-3xl font-extrabold" style={{ color: textMain }}><CountUp value={value} /></h3>
-            <div className="hidden sm:block opacity-90"><Spark data={spark} color={color} /></div>
           </div>
         </div>
         <span className={`ml-auto text-xs font-semibold px-2 py-1 rounded-full ${delta >= 0 ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"}`}>{delta >= 0 ? "▲" : "▼"} {Math.abs(delta)}%</span>
@@ -452,7 +410,7 @@ export const Dashboard = () => {
   );
 
   return (
-    <div className="flex-1 min-h-screen" style={{ background: bgPage, backgroundImage: overlay }}>
+    <div className="flex-1 min-h-screen" style={{ background: bgPage }}>
       <FX />
 
       {/* ---------- Header ---------- */}
@@ -532,13 +490,13 @@ export const Dashboard = () => {
       <div className="px-4 sm:px-6 md:px-8 py-6 grid gap-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
-          <Card i={0} title="Total Users"    value={totalUsers}     icon={<FaUsers />}             tintFrom="#0E7C5A33" tintTo="#0B5F4633" color={BRAND.primary} spark={baseData.sparkUsers}  delta={baseData.delta.users}  />
-          <Card i={1} title="Active Tutors"  value={tutorsActive}   icon={<FaChalkboardTeacher />} tintFrom="#D4AF3733" tintTo="#B98F2133" color={BRAND.gold}    spark={[4,7,12,15,18,28,38,48]} delta={baseData.delta.tutors} />
-          <Card i={2} title="Courses"        value={coursesCount}   icon={<FaBookOpen />}          tintFrom="#2C3E5033" tintTo="#1B2A3833" color={BRAND.dark}    spark={[3,4,6,8,9,10,11,12]}     delta={baseData.delta.courses}/>
-          <Card i={3} title="Trial Requests" value={baseData.trials}icon={<FaChartLine />}         tintFrom="#967B5A33" tintTo="#7E624633" color={BRAND.brown}   spark={baseData.sparkTrials}     delta={baseData.delta.trials} />
+          <Card i={0} title="Total Users"    value={totalUsers}     icon={<FaUsers />}             color={BRAND.primary} spark={baseData.sparkUsers}  delta={baseData.delta.users}  />
+          <Card i={1} title="Active Tutors"  value={tutorsActive}   icon={<FaChalkboardTeacher />} color={BRAND.gold}    spark={[4,7,12,15,18,28,38,48]} delta={baseData.delta.tutors} />
+          <Card i={2} title="Courses"        value={coursesCount}   icon={<FaBookOpen />}          color={BRAND.dark}    spark={[3,4,6,8,9,10,11,12]}     delta={baseData.delta.courses}/>
+          <Card i={3} title="Trial Requests" value={baseData.trials}icon={<FaChartLine />}         color={BRAND.brown}   spark={baseData.sparkTrials}     delta={baseData.delta.trials} />
         </div>
 
-        {/* Chart + Activity (NO STRETCH) */}
+        {/* Chart + Activity */}
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 sm:gap-6 items-start">
           {/* Chart card */}
           <AnimatePresence mode="wait">
@@ -591,6 +549,7 @@ export const Dashboard = () => {
               </motion.div>
             )}
           </AnimatePresence>
+
 
           {/* Recent Activity + Donut */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0, transition: { duration: 0.35, ease} }}

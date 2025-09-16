@@ -13,8 +13,8 @@ POST http://localhost:5000/api/auth/signup
 Content-Type: application/json
 
 {
-  "username": "umair",
-  "email": "jfhskjdfhjdshfkjsh@example.com",
+  "username": "user",
+  "email": "user@example.com",
   "password": "12345"
 }
 
@@ -32,7 +32,7 @@ POST http://localhost:5000/api/auth/resend-otp
 Content-Type: application/json
 
 {
-  "email": "hijaz2266@gmail.com"
+  "email": "user@gmail.com"
 }
 
 ### ✅ User/Admin Login (Only Works if Email is Verified)
@@ -40,17 +40,17 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "habdul2266@gmail.com",
+  "email": "user@gmail.com",
   "password": "123456"
 }
 
 ### ✅ Get My Profile
 GET http://localhost:5000/api/protected/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzEyNjA2OGJiZTQxNGVkYzdkMDNiNiIsImVtYWlsIjoiaGlqYXoyMjY2QGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwidXNlcm5hbWUiOiJBYmR1bCBSZWhtYW4iLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzU4MDA3MTE1LCJleHAiOjE3NTgwMDgwMTV9.3YBMVnqIGYFUdc0fwS_dyhjq8BXAxJErA0jV-srr-Xk
+Authorization: Bearer <access token>
 
 ### ✅ Edit My Profile
 PUT http://localhost:5000/api/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzkwMjZkZDI5M2I4OThhZDgzMDEwOSIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwidXNlcm5hbWUiOiJBZG1pbiAyIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNzU4MDA1MDEzLCJleHAiOjE3NTgwMDU5MTN9.g0aQpHmJijdfZKezjlNbT4vpXfh0zn8Xzv7hCze0Aag
+Authorization: Bearer <access token>
 Content-Type: application/json
 
 {
@@ -60,8 +60,7 @@ Content-Type: application/json
 
 ### ✅ Verify Email Change (OTP)
 POST http://localhost:5000/api/auth/verify-email-change
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzEyNjA2OGJiZTQxNGVkYzdkMDNiNiIsImlhdCI6MTc1Nzc1NjI5NiwiZXhwIjoxNzU4MzYxMDk2fQ.kL3-vee_qMylKJLEFm9inMHRCoJlZUTovmQjAwidpmc
-Content-Type: application/json
+Authorization: Bearer <access token>
 
 {
   "otp": "750884"
@@ -72,7 +71,7 @@ POST http://localhost:5000/api/auth/logout
 Content-Type: application/json
 
 {
-  "email": "test@example.com",
+  "email": "user@example.com",
   "refreshToken": "current-token-on-login"
 }
 
@@ -91,7 +90,7 @@ POST http://localhost:5000/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "email": "habdul2266@gmail.com"
+  "email": "user@gmail.com"
 }
 
 ### ✅ Reset Password (Via Reset Link)
@@ -99,7 +98,8 @@ POST http://localhost:5000/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "email": "habdul2266@gmail.com",
+  "email": "user@gmail.com",
   "otp": "578991",
   "newPassword": "1234567"
 }
+////////////////////*******************************************************////////////////////

@@ -32,8 +32,8 @@ const DashboardNavbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-30 flex items-center justify-between 
-                  h-17 sm:h-17 px-4 sm:px-6 transition-transform duration-300 
+      className={`sticky top-0 z-30 flex flex-wrap items-center justify-between 
+                  h-16 sm:h-17 px-3 sm:px-6 transition-transform duration-300 
                   ${hide ? "-translate-y-full" : "translate-y-0"}`}
       style={{
         background:
@@ -45,30 +45,30 @@ const DashboardNavbar = () => {
       }}
     >
       {/* Page title */}
-      <h1 className="text-base sm:text-lg md:text-xl font-semibold text-white tracking-wide drop-shadow-md truncate">
+      <h1 className="text-sm sm:text-base md:text-xl font-semibold text-white tracking-wide drop-shadow-md truncate max-w-[60%] sm:max-w-none">
         {pageTitle}
       </h1>
 
       {/* Right side */}
-      <div className="flex items-center gap-3 sm:gap-6">
+      <div className="flex items-center gap-2 sm:gap-4 md:gap-6 flex-shrink-0">
         {/* Add Admin button */}
         <Link
           to="/dashboard/adminSignup"
-          className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg 
+          className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 rounded-lg 
                bg-white/20 hover:bg-white/30 text-white transition 
                shadow-md hover:shadow-lg"
           title="Add another Admin"
         >
-          <FaPlus className="text-sm sm:text-base" />
+          <FaPlus className="text-xs sm:text-sm md:text-base" />
         </Link>
 
         {/* Home button */}
         <Link
           to="/"
-          className="flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg 
+          className="flex items-center justify-center px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-lg 
                bg-gradient-to-r from-[#0E7C5A]/90 to-[#2d9a77]/90 
-               text-white font-medium shadow-md hover:shadow-lg 
-               hover:from-[#0E7C5A] hover:to-[#34c28a] transition duration-300"
+               text-white text-xs sm:text-sm md:text-base font-medium shadow-md hover:shadow-lg 
+               hover:from-[#0E7C5A] hover:to-[#34c28a] transition duration-300 whitespace-nowrap"
         >
           Home
         </Link>
