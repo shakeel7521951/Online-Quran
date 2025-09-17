@@ -42,7 +42,7 @@ const MainLayout = () => (
 const AdminLayout = () => (
   <div className="flex min-h-screen">
     <Sidebar />
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 w-full flex flex-col">
       <DashboardNavbar />
       <main className="flex-1 p-6">
         <Outlet />

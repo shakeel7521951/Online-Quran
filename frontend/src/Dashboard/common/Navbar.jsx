@@ -32,7 +32,7 @@ const DashboardNavbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-30 flex flex-wrap items-center justify-between 
+      className={`sticky overflow-hidden top-0 z-30 flex flex-wrap items-center justify-between 
                   h-16 sm:h-17 px-3 sm:px-6 transition-transform duration-300 
                   ${hide ? "-translate-y-full" : "translate-y-0"}`}
       style={{

@@ -1,13 +1,34 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
-  FaSearch, FaFilter, FaDownload, FaTimes,
-  FaBookOpen, FaChalkboardTeacher, FaStar, FaPen, FaTrashAlt, FaEye, FaPlay,
-  FaThLarge, FaListUl, FaClock, FaUserGraduate, FaTag, FaCheck, FaPlus, FaCheckCircle
+  FaSearch,
+  FaFilter,
+  FaDownload,
+  FaTimes,
+  FaBookOpen,
+  FaChalkboardTeacher,
+  FaStar,
+  FaPen,
+  FaTrashAlt,
+  FaEye,
+  FaPlay,
+  FaThLarge,
+  FaListUl,
+  FaClock,
+  FaUserGraduate,
+  FaTag,
+  FaCheck,
+  FaPlus,
+  FaCheckCircle,
 } from "react-icons/fa";
 
 /* ───────────────── Brand ───────────────── */
-const BRAND = { primary: "#0E7C5A", gold: "#D4AF37", dark: "#2C3E50", light: "#F5F7FA" };
+const BRAND = {
+  primary: "#0E7C5A",
+  gold: "#D4AF37",
+  dark: "#2C3E50",
+  light: "#F5F7FA",
+};
 const ease = [0.16, 1, 0.3, 1];
 const cls = (...s) => s.filter(Boolean).join(" ");
 
@@ -44,20 +65,25 @@ const GlobalFX = () => (
 
 /* ───────────────── Helpers ───────────────── */
 const useMedia = (query) => {
-  const get = () => (typeof window !== "undefined" ? window.matchMedia(query).matches : false);
+  const get = () =>
+    typeof window !== "undefined" ? window.matchMedia(query).matches : false;
   const [match, setMatch] = useState(get);
   useEffect(() => {
     const m = window.matchMedia(query);
     const fn = () => setMatch(m.matches);
     if (m.addEventListener) m.addEventListener("change", fn);
     else m.addListener(fn);
-    return () => (m.removeEventListener ? m.removeEventListener("change", fn) : m.removeListener(fn));
+    return () =>
+      m.removeEventListener
+        ? m.removeEventListener("change", fn)
+        : m.removeListener(fn);
   }, [query]);
   return match;
 };
 
 const scrollToTop = (target) => {
-  const top = (typeof target?.offsetTop === "number" ? target.offsetTop : 0) - 8;
+  const top =
+    (typeof target?.offsetTop === "number" ? target.offsetTop : 0) - 8;
   window.scrollTo({ top, behavior: "smooth" });
 };
 
@@ -75,13 +101,16 @@ const getQueryPage = () => {
 /* ───────────────── UI atoms ───────────────── */
 const StatusBadge = ({ s }) => {
   const map = {
-    Live:     { fg: BRAND.primary, bg: "#0E7C5A1A" },
-    Draft:    { fg: "#64748B",     bg: "#64748B1A" },
-    Archived: { fg: "#991B1B",     bg: "#991B1B1A" },
+    Live: { fg: BRAND.primary, bg: "#0E7C5A1A" },
+    Draft: { fg: "#64748B", bg: "#64748B1A" },
+    Archived: { fg: "#991B1B", bg: "#991B1B1A" },
   };
   const { fg, bg } = map[s] || map.Draft;
   return (
-    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold" style={{ color: fg, background: bg }}>
+    <span
+      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+      style={{ color: fg, background: bg }}
+    >
       <span className="w-1.5 h-1.5 rounded-full" style={{ background: fg }} />
       {s}
     </span>
@@ -89,33 +118,52 @@ const StatusBadge = ({ s }) => {
 };
 
 const LevelBadge = ({ lvl }) => {
-  const map = { Beginner: "#A7F3D0", Intermediate: "#FDE68A", Advanced: "#C4B5FD" };
+  const map = {
+    Beginner: "#A7F3D0",
+    Intermediate: "#FDE68A",
+    Advanced: "#C4B5FD",
+  };
   const bg = map[lvl] || "#E5E7EB";
   return (
-    <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold" style={{ color: "#1E293B", background: `${bg}66` }}>
+    <span
+      className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold"
+      style={{ color: "#1E293B", background: `${bg}66` }}
+    >
       {lvl}
     </span>
   );
 };
 
-const IconBtn = ({ children, label, onClick, variant = "neutral", disabled }) => {
+const IconBtn = ({
+  children,
+  label,
+  onClick,
+  variant = "neutral",
+  disabled,
+}) => {
   const styles = {
-    neutral: "border-slate-200 text-slate-600 hover:bg-slate-50 focus-visible:ring-slate-300",
-    view:    "border-emerald-200 text-emerald-600 hover:bg-emerald-50 focus-visible:ring-emerald-300",
-    edit:    "border-amber-200  text-amber-600  hover:bg-amber-50  focus-visible:ring-amber-300",
-    delete:  "border-rose-200   text-rose-600   hover:bg-rose-50   focus-visible:ring-rose-300",
+    neutral:
+      "border-slate-200 text-slate-600 hover:bg-slate-50 focus-visible:ring-slate-300",
+    view: "border-emerald-200 text-emerald-600 hover:bg-emerald-50 focus-visible:ring-emerald-300",
+    edit: "border-amber-200  text-amber-600  hover:bg-amber-50  focus-visible:ring-amber-300",
+    delete:
+      "border-rose-200   text-rose-600   hover:bg-rose-50   focus-visible:ring-rose-300",
   }[variant];
   return (
     <motion.button
-      type="button" aria-label={label} onClick={disabled ? undefined : onClick} disabled={disabled}
-      whileHover={disabled ? undefined : { y:-1 }} whileTap={disabled ? undefined : { y:0 }}
+      type="button"
+      aria-label={label}
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      whileHover={disabled ? undefined : { y: -1 }}
+      whileTap={disabled ? undefined : { y: 0 }}
       className={cls(
         "ripple relative inline-flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-lg border transition outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         styles,
         disabled && "opacity-50 cursor-not-allowed"
       )}
       title={label}
-      style={{ transitionTimingFunction:"cubic-bezier(0.16,1,0.3,1)" }}
+      style={{ transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }}
     >
       <span className="text-[15px]">{children}</span>
     </motion.button>
@@ -123,7 +171,10 @@ const IconBtn = ({ children, label, onClick, variant = "neutral", disabled }) =>
 };
 
 const Head = ({ label, onClick }) => (
-  <button onClick={onClick} className="text-left text-xs uppercase tracking-wide text-slate-500 hover:text-slate-700 transition">
+  <button
+    onClick={onClick}
+    className="text-left text-xs uppercase tracking-wide text-slate-500 hover:text-slate-700 transition"
+  >
     {label}
   </button>
 );
@@ -140,10 +191,13 @@ const useOutside = (refs, onClose) => {
   const list = Array.isArray(refs) ? refs : [refs];
   useEffect(() => {
     const onDown = (e) => {
-      for (const r of list) if (r?.current && r.current.contains(e.target)) return;
+      for (const r of list)
+        if (r?.current && r.current.contains(e.target)) return;
       onClose?.();
     };
-    const onEsc = (e) => { if (e.key === "Escape") onClose?.(); };
+    const onEsc = (e) => {
+      if (e.key === "Escape") onClose?.();
+    };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onEsc);
     return () => {
@@ -158,9 +212,17 @@ const Select = ({ label, value, options, onChange }) => {
   const btnRef = useRef(null);
   const popRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [pos, setPos] = useState({top:0,left:0,width:220,flip:false,bottom:undefined});
-  const opts = options.map(o => typeof o === "string" ? ({label:o, value:o}) : o);
-  const current = opts.find(o=>o.value===value) || opts[0];
+  const [pos, setPos] = useState({
+    top: 0,
+    left: 0,
+    width: 220,
+    flip: false,
+    bottom: undefined,
+  });
+  const opts = options.map((o) =>
+    typeof o === "string" ? { label: o, value: o } : o
+  );
+  const current = opts.find((o) => o.value === value) || opts[0];
 
   const place = () => {
     if (!btnRef.current) return;
@@ -169,26 +231,36 @@ const Select = ({ label, value, options, onChange }) => {
     const vh = window.innerHeight;
     const margin = 12;
 
-    const width = Math.min(Math.max(220, r.width), vw - margin*2, 560);
-    const left  = Math.min(Math.max(margin, r.left + (r.width - width) / 2), vw - width - margin);
+    const width = Math.min(Math.max(220, r.width), vw - margin * 2, 560);
+    const left = Math.min(
+      Math.max(margin, r.left + (r.width - width) / 2),
+      vw - width - margin
+    );
 
     const belowSpace = vh - (r.bottom + 6) - margin;
-    const aboveSpace = (r.top - 6) - margin;
+    const aboveSpace = r.top - 6 - margin;
 
     const wantBelow = belowSpace >= 220 || belowSpace >= aboveSpace;
-    const top = wantBelow ? (r.bottom + 6) : (r.top - 6);
-    const bottom = wantBelow ? undefined : (vh - (r.top - 6));
+    const top = wantBelow ? r.bottom + 6 : r.top - 6;
+    const bottom = wantBelow ? undefined : vh - (r.top - 6);
     setPos({ top, left, width, flip: !wantBelow, bottom });
   };
-  useEffect(()=>{ if(open) place(); },[open]);
-  useEffect(()=>{
-    const onResize = () => { if(open) place(); };
+  useEffect(() => {
+    if (open) place();
+  }, [open]);
+  useEffect(() => {
+    const onResize = () => {
+      if (open) place();
+    };
     window.addEventListener("resize", onResize);
     window.addEventListener("scroll", onResize, true);
-    return ()=>{ window.removeEventListener("resize", onResize); window.removeEventListener("scroll", onResize, true); };
-  },[open]);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onResize, true);
+    };
+  }, [open]);
 
-  useOutside([btnRef, popRef], ()=>setOpen(false));
+  useOutside([btnRef, popRef], () => setOpen(false));
 
   return (
     <div className="grid gap-1 text-sm min-w-[160px]">
@@ -197,7 +269,7 @@ const Select = ({ label, value, options, onChange }) => {
         ref={btnRef}
         aria-haspopup="listbox"
         aria-expanded={open}
-        onClick={()=>setOpen(v=>!v)}
+        onClick={() => setOpen((v) => !v)}
         className="w-full text-left px-3 py-2 rounded-lg border border-slate-200 bg-white pr-9 outline-none transition
                    focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 relative"
       >
@@ -205,39 +277,55 @@ const Select = ({ label, value, options, onChange }) => {
         <motion.span
           className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500"
           animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: .18 }}
-        >▾</motion.span>
+          transition={{ duration: 0.18 }}
+        >
+          ▾
+        </motion.span>
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div
             ref={popRef}
-            initial={{opacity:0,y:-6,scale:.98}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:-6,scale:.98}}
-            transition={{duration:.2, ease}}
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.2, ease }}
             className="fixed z-50 rounded-xl border border-slate-200 bg-white shadow-2xl overflow-hidden"
             style={{
               left: pos.left,
               width: pos.width,
               maxHeight: isPhone ? "50vh" : 320,
               top: pos.flip ? undefined : pos.top,
-              bottom: pos.flip ? pos.bottom : undefined
+              bottom: pos.flip ? pos.bottom : undefined,
             }}
           >
             <ul className="overflow-auto" role="menu" aria-label={label}>
-              {opts.map(o=>{
-                const active = o.value===value;
+              {opts.map((o) => {
+                const active = o.value === value;
                 return (
                   <li key={o.value}>
                     <button
                       role="menuitemradio"
                       aria-checked={active}
-                      onClick={()=>{ onChange(o.value); setOpen(false); }}
-                      className={cls("w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-emerald-50 transition-colors",
-                        active ? "bg-emerald-50 text-emerald-700" : "text-slate-700")}
+                      onClick={() => {
+                        onChange(o.value);
+                        setOpen(false);
+                      }}
+                      className={cls(
+                        "w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-emerald-50 transition-colors",
+                        active
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "text-slate-700"
+                      )}
                     >
-                      <span className={cls("inline-flex items-center justify-center w-5", active?"opacity-100":"opacity-0")}>
-                        <FaCheck/>
+                      <span
+                        className={cls(
+                          "inline-flex items-center justify-center w-5",
+                          active ? "opacity-100" : "opacity-0"
+                        )}
+                      >
+                        <FaCheck />
                       </span>
                       {o.label}
                     </button>
@@ -255,23 +343,111 @@ const Select = ({ label, value, options, onChange }) => {
 /* ───────────────── Images (placeholders) ───────────────── */
 const QURAN_WEBSITE_IMAGES = {};
 const FALLBACK_QURAN = {
-  tajweed:"https://qtstutor.com/wp-content/uploads/2025/02/online-Quran-classes-with-Tajweed.jpg",
-  hifz:"https://qiratulquran.com/wp-content/uploads/2024/10/How-to-Do-Hifz-at-Home.webp",
-  tafseer:"https://alfalahquranacademy.com/wp-content/uploads/2017/04/al-falah-Quran-academy-tafseer-ul-quran_yellow.jpg",
-  kids:"https://hoorainquranacademyonline.com/wp-content/uploads/2025/06/quran-recitation-for-kids-1024x683-1.jpg",
-  studies:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSevvC-mK2xSxYqCdf_sHnYzpHT4wnvUoovgQ&s",
-  arabic:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQvNFbowNQajiHhICsupLNWqjTtJrzV2rgyA&s",
+  tajweed:
+    "https://qtstutor.com/wp-content/uploads/2025/02/online-Quran-classes-with-Tajweed.jpg",
+  hifz: "https://qiratulquran.com/wp-content/uploads/2024/10/How-to-Do-Hifz-at-Home.webp",
+  tafseer:
+    "https://alfalahquranacademy.com/wp-content/uploads/2017/04/al-falah-Quran-academy-tafseer-ul-quran_yellow.jpg",
+  kids: "https://hoorainquranacademyonline.com/wp-content/uploads/2025/06/quran-recitation-for-kids-1024x683-1.jpg",
+  studies:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSevvC-mK2xSxYqCdf_sHnYzpHT4wnvUoovgQ&s",
+  arabic:
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQvNFbowNQajiHhICsupLNWqjTtJrzV2rgyA&s",
 };
 const qImg = (key) => QURAN_WEBSITE_IMAGES[key] || FALLBACK_QURAN[key];
 
 /* ───────────────── Demo data ───────────────── */
 const seed = [
-  { id: 101, title: "Tajweed Mastery",       category: "Tajweed",        level: "Intermediate", tutor: "Ustadh Imran",   students: 128, rating: 4.8, status: "Live",     updated: "2025-09-06", duration: "12 weeks", sessions: 24, price: 149, thumb: qImg("tajweed") },
-  { id: 102, title: "Hifz (Memorization)",   category: "Hifz",           level: "Advanced",     tutor: "Qari Zainab",    students: 96,  rating: 4.9, status: "Live",     updated: "2025-09-07", duration: "20 weeks", sessions: 40, price: 199, thumb: qImg("hifz") },
-  { id: 103, title: "Tafseer Essentials",    category: "Tafseer",        level: "Beginner",     tutor: "Ustadha Aisha",  students: 84,  rating: 4.6, status: "Live",     updated: "2025-09-04", duration: "10 weeks", sessions: 20, price: 129, thumb: qImg("tafseer") },
-  { id: 104, title: "Kids’ Quran Classes",   category: "Kids",           level: "Beginner",     tutor: "Ustadh Ali",     students: 152, rating: 4.7, status: "Live",     updated: "2025-09-05", duration: "8 weeks",  sessions: 16, price: 99,  thumb: qImg("kids") },
-  { id: 105, title: "Islamic Studies Track", category: "Islamic Studies", level: "Intermediate", tutor: "Ustadha Maryam", students: 73,  rating: 4.5, status: "Draft",    updated: "2025-09-03", duration: "14 weeks", sessions: 28, price: 139, thumb: qImg("studies") },
-  { id: 106, title: "Arabic for Quran",      category: "Arabic",         level: "Beginner",     tutor: "Ustadh Bilal",   students: 61,  rating: 4.3, status: "Archived", updated: "2025-08-28", duration: "12 weeks", sessions: 24, price: 119, thumb: qImg("arabic") },
+  {
+    id: 101,
+    title: "Tajweed Mastery",
+    category: "Tajweed",
+    level: "Intermediate",
+    tutor: "Ustadh Imran",
+    students: 128,
+    rating: 4.8,
+    status: "Live",
+    updated: "2025-09-06",
+    duration: "12 weeks",
+    sessions: 24,
+    price: 149,
+    thumb: qImg("tajweed"),
+  },
+  {
+    id: 102,
+    title: "Hifz (Memorization)",
+    category: "Hifz",
+    level: "Advanced",
+    tutor: "Qari Zainab",
+    students: 96,
+    rating: 4.9,
+    status: "Live",
+    updated: "2025-09-07",
+    duration: "20 weeks",
+    sessions: 40,
+    price: 199,
+    thumb: qImg("hifz"),
+  },
+  {
+    id: 103,
+    title: "Tafseer Essentials",
+    category: "Tafseer",
+    level: "Beginner",
+    tutor: "Ustadha Aisha",
+    students: 84,
+    rating: 4.6,
+    status: "Live",
+    updated: "2025-09-04",
+    duration: "10 weeks",
+    sessions: 20,
+    price: 129,
+    thumb: qImg("tafseer"),
+  },
+  {
+    id: 104,
+    title: "Kids’ Quran Classes",
+    category: "Kids",
+    level: "Beginner",
+    tutor: "Ustadh Ali",
+    students: 152,
+    rating: 4.7,
+    status: "Live",
+    updated: "2025-09-05",
+    duration: "8 weeks",
+    sessions: 16,
+    price: 99,
+    thumb: qImg("kids"),
+  },
+  {
+    id: 105,
+    title: "Islamic Studies Track",
+    category: "Islamic Studies",
+    level: "Intermediate",
+    tutor: "Ustadha Maryam",
+    students: 73,
+    rating: 4.5,
+    status: "Draft",
+    updated: "2025-09-03",
+    duration: "14 weeks",
+    sessions: 28,
+    price: 139,
+    thumb: qImg("studies"),
+  },
+  {
+    id: 106,
+    title: "Arabic for Quran",
+    category: "Arabic",
+    level: "Beginner",
+    tutor: "Ustadh Bilal",
+    students: 61,
+    rating: 4.3,
+    status: "Archived",
+    updated: "2025-08-28",
+    duration: "12 weeks",
+    sessions: 24,
+    price: 119,
+    thumb: qImg("arabic"),
+  },
 ];
 
 /* ───────────────── Edit / Create Form ───────────────── */
@@ -290,74 +466,157 @@ const EditForm = ({ course, onCancel, onSubmit }) => {
     category: course?.category || "Tajweed",
     thumb: course?.thumb || qImg("tajweed"),
     rating: course?.rating ?? 0,
-    updated: course?.updated || new Date().toISOString().slice(0,10),
+    updated: course?.updated || new Date().toISOString().slice(0, 10),
   });
 
-  const set = (k,v)=>setForm(f=>({ ...f, [k]: v }));
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   return (
-    <form className="grid gap-3" onSubmit={(e)=>{ e.preventDefault(); if(!form.title.trim()){alert("Title is required"); return;} onSubmit(form); }}>
+    <form
+      className="grid gap-3"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!form.title.trim()) {
+          alert("Title is required");
+          return;
+        }
+        onSubmit(form);
+      }}
+    >
       <Field label="Title">
-        <input className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.title}
-               onChange={(e)=>set("title", e.target.value)} placeholder="e.g. Advanced Tajweed Program" required/>
+        <input
+          className="w-full px-3 py-2 rounded-md border border-slate-200"
+          value={form.title}
+          onChange={(e) => set("title", e.target.value)}
+          placeholder="e.g. Advanced Tajweed Program"
+          required
+        />
       </Field>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Field label="Tutor">
-          <input className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.tutor}
-                 onChange={(e)=>set("tutor", e.target.value)} placeholder="e.g. Ustadh Imran"/>
+          <input
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.tutor}
+            onChange={(e) => set("tutor", e.target.value)}
+            placeholder="e.g. Ustadh Imran"
+          />
         </Field>
         <Field label="Level">
-          <select className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.level}
-                  onChange={(e)=>set("level", e.target.value)}>
-            <option>Beginner</option><option>Intermediate</option><option>Advanced</option>
+          <select
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.level}
+            onChange={(e) => set("level", e.target.value)}
+          >
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
           </select>
         </Field>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Field label="Status">
-          <select className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.status}
-                  onChange={(e)=>set("status", e.target.value)}>
-            <option>Live</option><option>Draft</option><option>Archived</option>
+          <select
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.status}
+            onChange={(e) => set("status", e.target.value)}
+          >
+            <option>Live</option>
+            <option>Draft</option>
+            <option>Archived</option>
           </select>
         </Field>
         <Field label="Students">
-          <input type="number" className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.students}
-                 onChange={(e)=>set("students", Number(e.target.value))}/>
+          <input
+            type="number"
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.students}
+            onChange={(e) => set("students", Number(e.target.value))}
+          />
         </Field>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Field label="Duration">
-          <input className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.duration}
-                 onChange={(e)=>set("duration", e.target.value)} placeholder="e.g. 12 weeks"/>
+          <input
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.duration}
+            onChange={(e) => set("duration", e.target.value)}
+            placeholder="e.g. 12 weeks"
+          />
         </Field>
         <Field label="Sessions">
-          <input type="number" className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.sessions}
-                 onChange={(e)=>set("sessions", Number(e.target.value))}/>
+          <input
+            type="number"
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.sessions}
+            onChange={(e) => set("sessions", Number(e.target.value))}
+          />
         </Field>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <Field label="Price ($)">
-          <input type="number" className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.price}
-                 onChange={(e)=>set("price", Number(e.target.value))}/>
+          <input
+            type="number"
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.price}
+            onChange={(e) => set("price", Number(e.target.value))}
+          />
         </Field>
         <Field label="Category">
-          <select className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.category}
-                  onChange={(e)=>{ set("category", e.target.value); set("thumb", qImg(e.target.value.toLowerCase().includes("islamic") ? "studies" : e.target.value.toLowerCase())); }}>
-            {["Tajweed","Hifz","Tafseer","Kids","Islamic Studies","Arabic"].map(c=><option key={c}>{c}</option>)}
+          <select
+            className="w-full px-3 py-2 rounded-md border border-slate-200"
+            value={form.category}
+            onChange={(e) => {
+              set("category", e.target.value);
+              set(
+                "thumb",
+                qImg(
+                  e.target.value.toLowerCase().includes("islamic")
+                    ? "studies"
+                    : e.target.value.toLowerCase()
+                )
+              );
+            }}
+          >
+            {[
+              "Tajweed",
+              "Hifz",
+              "Tafseer",
+              "Kids",
+              "Islamic Studies",
+              "Arabic",
+            ].map((c) => (
+              <option key={c}>{c}</option>
+            ))}
           </select>
         </Field>
       </div>
       <Field label="Thumbnail URL">
-        <input className="w-full px-3 py-2 rounded-md border border-slate-200" value={form.thumb}
-               onChange={(e)=>set("thumb", e.target.value)} placeholder="https://…"/>
+        <input
+          className="w-full px-3 py-2 rounded-md border border-slate-200"
+          value={form.thumb}
+          onChange={(e) => set("thumb", e.target.value)}
+          placeholder="https://…"
+        />
       </Field>
 
       <div className="mt-2 flex items-center justify-between gap-2">
-        <div className="text-xs text-slate-500">Last updated: {new Date(form.updated).toLocaleDateString()}</div>
+        <div className="text-xs text-slate-500">
+          Last updated: {new Date(form.updated).toLocaleDateString()}
+        </div>
         <div className="flex items-center gap-2">
-          <button type="button" className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50" onClick={onCancel}>Cancel</button>
-          <button type="submit" className="ripple inline-flex items-center gap-2 px-3 py-2 rounded-md text-white hover:opacity-95" style={{background:BRAND.primary}}>
-            <FaCheck/> {isEdit ? "Save Changes" : "Create Course"}
+          <button
+            type="button"
+            className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="ripple inline-flex items-center gap-2 px-3 py-2 rounded-md text-white hover:opacity-95"
+            style={{ background: BRAND.primary }}
+          >
+            <FaCheck /> {isEdit ? "Save Changes" : "Create Course"}
           </button>
         </div>
       </div>
@@ -368,15 +627,25 @@ const EditForm = ({ course, onCancel, onSubmit }) => {
 /* ───────────────── Course Card ───────────────── */
 const CourseCard = ({ c, onView, onEdit, onDelete, reduce }) => (
   <motion.div
-    initial={{opacity:0, y: reduce ? 0 : 10}}
-    animate={{opacity:1, y:0, transition:{duration:.25}}}
+    initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+    animate={{ opacity: 1, y: 0, transition: { duration: 0.25 } }}
     whileHover={reduce ? undefined : { y: -4, scale: 1.01 }}
     className="group relative bg-white rounded-2xl shadow overflow-hidden border border-slate-100 hover-lift"
   >
     <div className="relative aspect-[16/9] sm:aspect-[5/2] overflow-hidden">
-      <img src={c.thumb} alt={`${c.title} thumbnail`} loading="lazy" className="w-full h-full object-cover" />
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
-           style={{background:"linear-gradient(90deg, transparent, rgba(212,175,55,.15), transparent)"}} />
+      <img
+        src={c.thumb}
+        alt={`${c.title} thumbnail`}
+        loading="lazy"
+        className="w-full h-full object-cover"
+      />
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(212,175,55,.15), transparent)",
+        }}
+      />
       <div className="absolute top-2 left-2 flex items-center gap-2">
         <LevelBadge lvl={c.level} />
         <StatusBadge s={c.status} />
@@ -386,7 +655,9 @@ const CourseCard = ({ c, onView, onEdit, onDelete, reduce }) => (
     <div className="p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="text-base font-semibold text-[#0B1324] truncate">{c.title}</h3>
+          <h3 className="text-base font-semibold text-[#0B1324] truncate">
+            {c.title}
+          </h3>
           <div className="mt-1 text-xs text-slate-500 truncate flex items-center gap-2">
             <FaChalkboardTeacher className="opacity-70" /> {c.tutor}
           </div>
@@ -397,22 +668,40 @@ const CourseCard = ({ c, onView, onEdit, onDelete, reduce }) => (
       </div>
 
       <div className="mt-3 grid grid-cols-3 gap-2 text-[12px] text-slate-600">
-        <div className="inline-flex items-center gap-1.5"><FaClock/> {c.duration || "—"}</div>
-        <div className="inline-flex items-center gap-1.5"><FaUserGraduate/> {c.students} students</div>
-        <div className="inline-flex items-center gap-1.5"><FaTag/> ${c.price}</div>
+        <div className="inline-flex items-center gap-1.5">
+          <FaClock /> {c.duration || "—"}
+        </div>
+        <div className="inline-flex items-center gap-1.5">
+          <FaUserGraduate /> {c.students} students
+        </div>
+        <div className="inline-flex items-center gap-1.5">
+          <FaTag /> ${c.price}
+        </div>
       </div>
 
       <div className="mt-3 flex items-center gap-2">
-        <span className="px-2 py-1 rounded-full text-[11px] bg-emerald-50 text-emerald-700">{c.category}</span>
-        <span className="px-2 py-1 rounded-full text-[11px] bg-slate-50 text-slate-700">Sessions: {c.sessions}</span>
+        <span className="px-2 py-1 rounded-full text-[11px] bg-emerald-50 text-emerald-700">
+          {c.category}
+        </span>
+        <span className="px-2 py-1 rounded-full text-[11px] bg-slate-50 text-slate-700">
+          Sessions: {c.sessions}
+        </span>
       </div>
 
       <div className="mt-4 flex items-center justify-between">
-        <div className="text-xs text-slate-500">Updated {new Date(c.updated).toLocaleDateString()}</div>
+        <div className="text-xs text-slate-500">
+          Updated {new Date(c.updated).toLocaleDateString()}
+        </div>
         <div className="flex items-center gap-2">
-          <IconBtn label="View"   variant="view"   onClick={onView}><FaEye/></IconBtn>
-          <IconBtn label="Update" variant="edit"   onClick={onEdit}><FaPen/></IconBtn>
-          <IconBtn label="Delete" variant="delete" onClick={onDelete}><FaTrashAlt/></IconBtn>
+          <IconBtn label="View" variant="view" onClick={onView}>
+            <FaEye />
+          </IconBtn>
+          <IconBtn label="Update" variant="edit" onClick={onEdit}>
+            <FaPen />
+          </IconBtn>
+          <IconBtn label="Delete" variant="delete" onClick={onDelete}>
+            <FaTrashAlt />
+          </IconBtn>
         </div>
       </div>
     </div>
@@ -459,83 +748,138 @@ export const Courses = () => {
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => { if (isMobile) setMode("cards"); }, [isMobile]);
-  useEffect(() => { if (!loading) setQueryPage(page); }, [page, loading]);
+  useEffect(() => {
+    if (isMobile) setMode("cards");
+  }, [isMobile]);
+  useEffect(() => {
+    if (!loading) setQueryPage(page);
+  }, [page, loading]);
 
   useEffect(() => {
-    const onKey = (e) => { if (e.key === "ArrowRight") goNext(); if (e.key === "ArrowLeft") goPrev(); };
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowLeft") goPrev();
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  const categories = useMemo(() => ["All", ...Array.from(new Set(data.map(d => d.category)))], [data]);
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(data.map((d) => d.category)))],
+    [data]
+  );
   const filtered = useMemo(() => {
     let out = [...data];
-    if (q.trim()){
+    if (q.trim()) {
       const t = q.toLowerCase();
-      out = out.filter(c => c.title.toLowerCase().includes(t) || c.tutor.toLowerCase().includes(t));
+      out = out.filter(
+        (c) =>
+          c.title.toLowerCase().includes(t) || c.tutor.toLowerCase().includes(t)
+      );
     }
-    if (category !== "All") out = out.filter(c => c.category === category);
-    if (status !== "All")   out = out.filter(c => c.status === status);
-    if (level !== "All")    out = out.filter(c => c.level === level);
+    if (category !== "All") out = out.filter((c) => c.category === category);
+    if (status !== "All") out = out.filter((c) => c.status === status);
+    if (level !== "All") out = out.filter((c) => c.level === level);
 
-    out.sort((a,b)=>{
+    out.sort((a, b) => {
       const k = sort.key;
-      let av = a[k], bv = b[k];
-      if (k === "updated") { av=+new Date(a.updated); bv=+new Date(b.updated); }
-      if (typeof av==="string"){ av=av.toLowerCase(); bv=bv.toLowerCase(); }
-      if (av<bv) return sort.dir==="asc"?-1:1;
-      if (av>bv) return sort.dir==="asc"?1:-1;
+      let av = a[k],
+        bv = b[k];
+      if (k === "updated") {
+        av = +new Date(a.updated);
+        bv = +new Date(b.updated);
+      }
+      if (typeof av === "string") {
+        av = av.toLowerCase();
+        bv = bv.toLowerCase();
+      }
+      if (av < bv) return sort.dir === "asc" ? -1 : 1;
+      if (av > bv) return sort.dir === "asc" ? 1 : -1;
       return 0;
     });
     return out;
-  }, [data,q,category,status,level,sort]);
+  }, [data, q, category, status, level, sort]);
 
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / perPage));
   const pageData = filtered.slice((page - 1) * perPage, page * perPage);
-  useEffect(() => { if (page > pages) setPage(pages); }, [pages, page]);
+  useEffect(() => {
+    if (page > pages) setPage(pages);
+  }, [pages, page]);
 
-  const allChecked = pageData.length>0 && pageData.every(c=>selected.includes(c.id));
+  const allChecked =
+    pageData.length > 0 && pageData.every((c) => selected.includes(c.id));
   const toggleAll = () => {
-    if (allChecked) setSelected(prev => prev.filter(id => !pageData.find(c => c.id === id)));
-    else setSelected(prev => [...new Set([...prev, ...pageData.map(c => c.id)])]);
+    if (allChecked)
+      setSelected((prev) =>
+        prev.filter((id) => !pageData.find((c) => c.id === id))
+      );
+    else
+      setSelected((prev) => [
+        ...new Set([...prev, ...pageData.map((c) => c.id)]),
+      ]);
   };
-  const toggleOne = (id) => setSelected(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  const toggleOne = (id) =>
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
 
   const exportCSV = () => alert("Export current view to CSV");
 
   const applyUpdate = (payload) => {
     if (payload.id) {
-      setData(prev => prev.map(c => c.id === payload.id ? { ...c, ...payload, updated: new Date().toISOString().slice(0,10) } : c));
+      setData((prev) =>
+        prev.map((c) =>
+          c.id === payload.id
+            ? {
+                ...c,
+                ...payload,
+                updated: new Date().toISOString().slice(0, 10),
+              }
+            : c
+        )
+      );
       setToast({ title: "Course updated", desc: payload.title });
     } else {
-      const nextId = Math.max(0, ...data.map(d=>d.id)) + 1;
-      const newCourse = { ...payload, id: nextId, rating: 0, updated: new Date().toISOString().slice(0,10) };
-      setData(prev => [newCourse, ...prev]);
+      const nextId = Math.max(0, ...data.map((d) => d.id)) + 1;
+      const newCourse = {
+        ...payload,
+        id: nextId,
+        rating: 0,
+        updated: new Date().toISOString().slice(0, 10),
+      };
+      setData((prev) => [newCourse, ...prev]);
       setPage(1);
       setToast({ title: "Course added", desc: newCourse.title });
       sparkle();
     }
     setEditCourse(null);
-    setTimeout(()=>setToast(null), 1800);
+    setTimeout(() => setToast(null), 1800);
   };
 
   const applyDelete = (id) => {
-    const item = data.find(d=>d.id===id);
-    setData(prev => prev.filter(c => c.id !== id));
+    const item = data.find((d) => d.id === id);
+    setData((prev) => prev.filter((c) => c.id !== id));
     setDeleteCourse(null);
-    setSelected(prev => prev.filter(x => x !== id));
+    setSelected((prev) => prev.filter((x) => x !== id));
     setToast({ title: "Course deleted", desc: item?.title || `#${id}` });
-    setTimeout(()=>setToast(null), 1500);
+    setTimeout(() => setToast(null), 1500);
   };
 
   const openAdd = () => {
     setEditCourse({
-      title: "", tutor: "", level: "Beginner", status: "Live",
-      students: 0, duration: "", sessions: 0, price: 0,
-      category: "Tajweed", thumb: qImg("tajweed"),
-      updated: new Date().toISOString().slice(0,10), rating: 0
+      title: "",
+      tutor: "",
+      level: "Beginner",
+      status: "Live",
+      students: 0,
+      duration: "",
+      sessions: 0,
+      price: 0,
+      category: "Tajweed",
+      thumb: qImg("tajweed"),
+      updated: new Date().toISOString().slice(0, 10),
+      rating: 0,
     });
   };
 
@@ -543,61 +887,77 @@ export const Courses = () => {
     const next = Math.min(Math.max(1, n), pages);
     if (next === page) return;
     setPage(next);
-    setTimeout(()=>scrollToTop(listRef.current || document.body), 10);
+    setTimeout(() => scrollToTop(listRef.current || document.body), 10);
   };
   const goPrev = () => goPage(page - 1);
   const goNext = () => goPage(page + 1);
 
   const sparkle = () => {
     const root = document.body;
-    const colors = ["#34d399","#d4af37","#60a5fa"];
-    for (let i=0;i<12;i++){
+    const colors = ["#34d399", "#d4af37", "#60a5fa"];
+    for (let i = 0; i < 12; i++) {
       const s = document.createElement("span");
       s.textContent = "✦";
-      s.style.position="fixed";
-      s.style.left = (50 + (Math.random()*20-10)) + "vw";
-      s.style.top = (20 + Math.random()*10) + "vh";
-      s.style.color = colors[i%colors.length];
-      s.style.fontSize = (10+Math.random()*10) + "px";
-      s.style.pointerEvents="none";
+      s.style.position = "fixed";
+      s.style.left = 50 + (Math.random() * 20 - 10) + "vw";
+      s.style.top = 20 + Math.random() * 10 + "vh";
+      s.style.color = colors[i % colors.length];
+      s.style.fontSize = 10 + Math.random() * 10 + "px";
+      s.style.pointerEvents = "none";
       s.style.animation = "pop .9s ease forwards";
       root.appendChild(s);
-      setTimeout(()=>root.removeChild(s), 900);
+      setTimeout(() => root.removeChild(s), 900);
     }
   };
 
-  const counts = useMemo(() => ({
-    all: data.length,
-    live: data.filter(d => d.status === "Live").length,
-    drafts: data.filter(d => d.status === "Draft").length
-  }), [data]);
+  const counts = useMemo(
+    () => ({
+      all: data.length,
+      live: data.filter((d) => d.status === "Live").length,
+      drafts: data.filter((d) => d.status === "Draft").length,
+    }),
+    [data]
+  );
 
-  const tileHover = reduce ? {} : { whileHover: { y: -4, scale: 1.01 }, whileTap: { scale: 0.99 } };
+  const tileHover = reduce
+    ? {}
+    : { whileHover: { y: -4, scale: 1.01 }, whileTap: { scale: 0.99 } };
 
   /* ---------- UI ---------- */
   return (
-    <div className="relative flex-1 p-4 sm:p-6 md:p-8" style={{ background: BRAND.light }}>
-      <GlobalFX/>
+    <div
+      className="relative flex-1 p-4 sm:p-6 md:p-8 overflow-hidden"
+      style={{ background: BRAND.light }}
+    >
+      <GlobalFX />
 
       {/* Toast */}
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{y:-20,opacity:0}} animate={{y:0,opacity:1}} exit={{y:-20,opacity:0}}
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -20, opacity: 0 }}
             className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white border border-emerald-200 text-emerald-800 rounded-full shadow-lg px-4 py-2 flex items-center gap-2"
           >
-            <FaCheckCircle/>
+            <FaCheckCircle />
             <div className="text-sm font-medium">{toast.title}</div>
-            {toast.desc && <div className="text-xs text-emerald-700">• {toast.desc}</div>}
+            {toast.desc && (
+              <div className="text-xs text-emerald-700">• {toast.desc}</div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Hero (keep Add here) */}
       <motion.div
-        initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} transition={{duration:.35, ease}}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease }}
         className="relative overflow-hidden rounded-2xl mb-6 p-5 sm:p-8 text-white shadow"
-        style={{ background: `linear-gradient(135deg, ${BRAND.primary}, #0B5F46)` }}
+        style={{
+          background: `linear-gradient(135deg, ${BRAND.primary}, #0B5F46)`,
+        }}
       >
         <div className="absolute inset-0 aurora opacity-35" />
         <div className="relative">
@@ -606,44 +966,86 @@ export const Courses = () => {
               <div className="grid place-items-center w-11 h-11 rounded-full bg-white/15 ring-1 ring-white/20">
                 <FaBookOpen />
               </div>
-              <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">Courses</h1>
+              <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+                Courses
+              </h1>
             </div>
             <motion.button
-              whileTap={{scale:.98}} whileHover={{y:-1}}
+              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -1 }}
               onClick={openAdd}
               className="ripple inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/90 text-[#0B1324] ring-1 ring-white/50 hover:bg-white"
             >
-              <FaPlus/> Add Course
+              <FaPlus /> Add Course
             </motion.button>
           </div>
-          <p className="mt-1 opacity-90 text-sm">Manage Quran offerings with live status and enrollments.</p>
+          <p className="mt-1 opacity-90 text-sm">
+            Manage Quran offerings with live status and enrollments.
+          </p>
         </div>
       </motion.div>
 
       {/* KPI tiles */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
-          { t: "Total Courses", v: counts.all,  from: "#0E7C5A", to: "#0B5F46", icon: <FaBookOpen/> },
-          { t: "Live Courses",  v: counts.live, from: "#D4AF37", to: "#B98F21", icon: <FaPlay/> },
-          { t: "Drafts",        v: counts.drafts, from: "#2C3E50", to: "#1B2A38", icon: <FaStar/> },
-        ].map((k,i)=>(
-          <motion.div key={k.t}
-            initial={{opacity:0,y:12}} animate={{opacity:1,y:0,transition:{duration:.45,delay:.06*i,ease}}}
+          {
+            t: "Total Courses",
+            v: counts.all,
+            from: "#0E7C5A",
+            to: "#0B5F46",
+            icon: <FaBookOpen />,
+          },
+          {
+            t: "Live Courses",
+            v: counts.live,
+            from: "#D4AF37",
+            to: "#B98F21",
+            icon: <FaPlay />,
+          },
+          {
+            t: "Drafts",
+            v: counts.drafts,
+            from: "#2C3E50",
+            to: "#1B2A38",
+            icon: <FaStar />,
+          },
+        ].map((k, i) => (
+          <motion.div
+            key={k.t}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.45, delay: 0.06 * i, ease },
+            }}
             {...tileHover}
             className="relative overflow-hidden rounded-2xl p-5 text-white shadow-lg transition-shadow"
-            style={{background:`linear-gradient(135deg, ${k.from}, ${k.to})`}}
+            style={{
+              background: `linear-gradient(135deg, ${k.from}, ${k.to})`,
+            }}
           >
-            <div className="absolute inset-0 opacity-30 pointer-events-none"
-                 style={{background:"radial-gradient(600px 200px at -10% -40%, rgba(255,255,255,.35), transparent 60%)"}}/>
+            <div
+              className="absolute inset-0 opacity-30 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(600px 200px at -10% -40%, rgba(255,255,255,.35), transparent 60%)",
+              }}
+            />
             <div className="relative flex items-center gap-3 min-w-0">
               <div className="shrink-0 grid place-items-center w-11 h-11 rounded-full bg-white/10 ring-1 ring-white/15">
-                <motion.span className="text-[18px]" whileHover={reduce?undefined:{rotate:2,scale:1.05}} transition={{type:"spring",stiffness:260,damping:18}}>
+                <motion.span
+                  className="text-[18px]"
+                  whileHover={reduce ? undefined : { rotate: 2, scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                >
                   {k.icon}
                 </motion.span>
               </div>
               <div className="min-w-0">
                 <div className="text-sm/4 opacity-90 truncate">{k.t}</div>
-                <div className="mt-1 text-3xl font-extrabold tracking-tight tabular-nums">{k.v}</div>
+                <div className="mt-1 text-3xl font-extrabold tracking-tight tabular-nums">
+                  {k.v}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -654,32 +1056,60 @@ export const Courses = () => {
       <div ref={commandRef} className="bg-white rounded-2xl shadow p-4 mb-4">
         <div className="grid gap-3">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <motion.div className="flex-1 min-w-[200px] w-full flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2"
-              whileFocus={{ boxShadow:"0 0 0 6px #0E7C5A22" }}>
-              <FaSearch className="text-slate-400"/>
-              <input value={q} onChange={(e)=>{setQ(e.target.value); setPage(1);}} placeholder="Search title or tutor…" className="w-full outline-none bg-transparent" />
+            <motion.div
+              className="flex-1 min-w-[200px] w-full flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2"
+              whileFocus={{ boxShadow: "0 0 0 6px #0E7C5A22" }}
+            >
+              <FaSearch className="text-slate-400" />
+              <input
+                value={q}
+                onChange={(e) => {
+                  setQ(e.target.value);
+                  setPage(1);
+                }}
+                placeholder="Search title or tutor…"
+                className="w-full outline-none bg-transparent"
+              />
             </motion.div>
 
             {/* Right actions: scrollable on tight screens */}
             <div className="ml-auto flex items-center gap-2 shrink-0 overflow-x-auto scrollbar-none">
               <div className="inline-flex rounded-lg border border-slate-200 overflow-hidden">
-                <button className={cls("px-3 py-2 text-sm", mode==="cards"?"bg-emerald-50 text-emerald-700":"text-slate-600 hover:bg-slate-50")} onClick={()=>setMode("cards")} title="Cards view">
-                  <FaThLarge/>
+                <button
+                  className={cls(
+                    "px-3 py-2 text-sm",
+                    mode === "cards"
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "text-slate-600 hover:bg-slate-50"
+                  )}
+                  onClick={() => setMode("cards")}
+                  title="Cards view"
+                >
+                  <FaThLarge />
                 </button>
                 <button
-                  className={cls("px-3 py-2 text-sm", mode==="table"?"bg-emerald-50 text-emerald-700":"text-slate-600 hover:bg-slate-50", isMobile && "opacity-50 pointer-events-none")}
-                  onClick={()=>!isMobile && setMode("table")}
+                  className={cls(
+                    "px-3 py-2 text-sm",
+                    mode === "table"
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "text-slate-600 hover:bg-slate-50",
+                    isMobile && "opacity-50 pointer-events-none"
+                  )}
+                  onClick={() => !isMobile && setMode("table")}
                   title={isMobile ? "Table on larger screens" : "Table view"}
                 >
-                  <FaListUl/>
+                  <FaListUl />
                 </button>
               </div>
               <button className="ripple inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50">
                 <FaFilter className="text-slate-500" /> Advanced
               </button>
-              <button className="ripple inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg text-white hover:opacity-95"
-                style={{background:BRAND.primary}} onClick={exportCSV}>
-                <FaDownload className="text-white/90"/> Export
+              <button
+                className="ripple inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg text-white hover:opacity-95"
+                style={{ background: BRAND.primary }}
+                onClick={exportCSV}
+              >
+                <FaDownload className="text-white/90" /> Export
               </button>
             </div>
           </div>
@@ -689,20 +1119,29 @@ export const Courses = () => {
             <Select
               label="Course"
               value={category}
-              onChange={(v)=>{ setCategory(v); setPage(1); }}
-              options={categories.map(c=>({label:c, value:c}))}
+              onChange={(v) => {
+                setCategory(v);
+                setPage(1);
+              }}
+              options={categories.map((c) => ({ label: c, value: c }))}
             />
             <Select
               label="Status"
               value={status}
-              onChange={(v)=>{ setStatus(v); setPage(1); }}
-              options={["All","Live","Draft","Archived"]}
+              onChange={(v) => {
+                setStatus(v);
+                setPage(1);
+              }}
+              options={["All", "Live", "Draft", "Archived"]}
             />
             <Select
               label="Level"
               value={level}
-              onChange={(v)=>{ setLevel(v); setPage(1); }}
-              options={["All","Beginner","Intermediate","Advanced"]}
+              onChange={(v) => {
+                setLevel(v);
+                setPage(1);
+              }}
+              options={["All", "Beginner", "Intermediate", "Advanced"]}
             />
           </div>
         </div>
@@ -714,28 +1153,42 @@ export const Courses = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`cards-page-${page}`}
-              initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-8}}
-              transition={{duration:.25, ease}}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease }}
               className="grid gap-4"
-              style={{ gridTemplateColumns: `repeat(auto-fill, minmax(${cardMin}px, 1fr))` }}
+              style={{
+                gridTemplateColumns: `repeat(auto-fill, minmax(${cardMin}px, 1fr))`,
+              }}
             >
               {loading ? (
-                [...Array(6)].map((_,i)=>(<div key={i} className="h-64 rounded-2xl bg-white shadow animate-pulse" />))
+                [...Array(6)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-64 rounded-2xl bg-white shadow animate-pulse"
+                  />
+                ))
               ) : pageData.length ? (
-                pageData.map((c)=>(
+                pageData.map((c) => (
                   <CourseCard
                     key={c.id}
                     c={c}
                     reduce={reduce}
-                    onView={()=>setDrawer(c)}
-                    onEdit={()=>setEditCourse(c)}
-                    onDelete={()=>setDeleteCourse(c)}
+                    onView={() => setDrawer(c)}
+                    onEdit={() => setEditCourse(c)}
+                    onDelete={() => setDeleteCourse(c)}
                   />
                 ))
               ) : (
                 <div className="col-span-full">
                   <motion.div
-                    initial={{opacity:0, y:8}} animate={{opacity:1, y:0, transition:{duration:.25}}}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.25 },
+                    }}
                     className="grid place-items-center h-48 rounded-2xl bg-white border border-slate-100 text-slate-600"
                   >
                     No courses match your filters.
@@ -756,44 +1209,147 @@ export const Courses = () => {
                 <div className="sticky top-0 z-10 bg-slate-50/70 backdrop-blur border-b">
                   <div className="grid grid-cols-[48px_1.6fr_1.2fr_.9fr_.9fr_.9fr_120px] px-2 py-3 text-xs uppercase tracking-wide text-slate-500">
                     <div className="pl-2">
-                      <input type="checkbox" checked={pageData.length>0 && pageData.every(c=>selected.includes(c.id))} onChange={toggleAll}/>
+                      <input
+                        type="checkbox"
+                        checked={
+                          pageData.length > 0 &&
+                          pageData.every((c) => selected.includes(c.id))
+                        }
+                        onChange={toggleAll}
+                      />
                     </div>
-                    <Head label="Title"   onClick={()=>setSort(s=>({key:"title",   dir:s.key==="title"   && s.dir==="asc"?"desc":"asc"}))}/>
-                    <Head label="Tutor"   onClick={()=>setSort(s=>({key:"tutor",   dir:s.key==="tutor"   && s.dir==="asc"?"desc":"asc"}))}/>
-                    <Head label="Level"   onClick={()=>setSort(s=>({key:"level",   dir:s.key==="level"   && s.dir==="asc"?"desc":"asc"}))}/>
-                    <Head label="Students"onClick={()=>setSort(s=>({key:"students",dir:s.key==="students"&& s.dir==="asc"?"desc":"asc"}))}/>
-                    <Head label="Updated" onClick={()=>setSort(s=>({key:"updated", dir:s.key==="updated"&& s.dir==="asc"?"desc":"asc"}))}/>
+                    <Head
+                      label="Title"
+                      onClick={() =>
+                        setSort((s) => ({
+                          key: "title",
+                          dir:
+                            s.key === "title" && s.dir === "asc"
+                              ? "desc"
+                              : "asc",
+                        }))
+                      }
+                    />
+                    <Head
+                      label="Tutor"
+                      onClick={() =>
+                        setSort((s) => ({
+                          key: "tutor",
+                          dir:
+                            s.key === "tutor" && s.dir === "asc"
+                              ? "desc"
+                              : "asc",
+                        }))
+                      }
+                    />
+                    <Head
+                      label="Level"
+                      onClick={() =>
+                        setSort((s) => ({
+                          key: "level",
+                          dir:
+                            s.key === "level" && s.dir === "asc"
+                              ? "desc"
+                              : "asc",
+                        }))
+                      }
+                    />
+                    <Head
+                      label="Students"
+                      onClick={() =>
+                        setSort((s) => ({
+                          key: "students",
+                          dir:
+                            s.key === "students" && s.dir === "asc"
+                              ? "desc"
+                              : "asc",
+                        }))
+                      }
+                    />
+                    <Head
+                      label="Updated"
+                      onClick={() =>
+                        setSort((s) => ({
+                          key: "updated",
+                          dir:
+                            s.key === "updated" && s.dir === "asc"
+                              ? "desc"
+                              : "asc",
+                        }))
+                      }
+                    />
                     <div className="pr-3 text-right">Actions</div>
                   </div>
                 </div>
 
                 {loading ? (
                   <div className="p-4 space-y-3">
-                    {[...Array(6)].map((_,i)=>(<div key={i} className="h-16 rounded-xl bg-slate-100 animate-pulse" />))}
+                    {[...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-16 rounded-xl bg-slate-100 animate-pulse"
+                      />
+                    ))}
                   </div>
                 ) : (
                   <ul className="divide-y">
                     <AnimatePresence initial={false} mode="popLayout">
-                      {pageData.map((c,idx)=>(
-                        <motion.li key={c.id}
-                          initial={{opacity:0,y:reduce?0:10}} animate={{opacity:1,y:0,transition:{duration:.25,delay:.02*idx}}}
-                          exit={{opacity:0,y:4}}
+                      {pageData.map((c, idx) => (
+                        <motion.li
+                          key={c.id}
+                          initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            transition: { duration: 0.25, delay: 0.02 * idx },
+                          }}
+                          exit={{ opacity: 0, y: 4 }}
                           className="grid grid-cols-[48px_1.6fr_1.2fr_.9fr_.9fr_.9fr_120px] items-center px-2 py-3 transition-colors hover:bg-[#0E7C5A06]"
                         >
-                          <div className="pl-2"><input type="checkbox" checked={selected.includes(c.id)} onChange={()=>toggleOne(c.id)}/></div>
+                          <div className="pl-2">
+                            <input
+                              type="checkbox"
+                              checked={selected.includes(c.id)}
+                              onChange={() => toggleOne(c.id)}
+                            />
+                          </div>
                           <div className="min-w-0">
-                            <div className="font-medium truncate text-[#0B1324]">{c.title}</div>
-                            <div className="text-xs text-slate-500">ID #{c.id}</div>
+                            <div className="font-medium truncate text-[#0B1324]">
+                              {c.title}
+                            </div>
+                            <div className="text-xs text-slate-500">
+                              ID #{c.id}
+                            </div>
                           </div>
                           <div className="truncate">{c.tutor}</div>
-                          <div><LevelBadge lvl={c.level}/></div>
+                          <div>
+                            <LevelBadge lvl={c.level} />
+                          </div>
                           <div className="tabular-nums">{c.students}</div>
                           <div>{new Date(c.updated).toLocaleDateString()}</div>
                           <div className="pr-3">
                             <div className="flex items-center justify-end gap-3">
-                              <IconBtn label="View"   variant="view"   onClick={()=>setDrawer(c)}><FaEye/></IconBtn>
-                              <IconBtn label="Update" variant="edit"   onClick={()=>setEditCourse(c)}><FaPen/></IconBtn>
-                              <IconBtn label="Delete" variant="delete" onClick={()=>setDeleteCourse(c)}><FaTrashAlt/></IconBtn>
+                              <IconBtn
+                                label="View"
+                                variant="view"
+                                onClick={() => setDrawer(c)}
+                              >
+                                <FaEye />
+                              </IconBtn>
+                              <IconBtn
+                                label="Update"
+                                variant="edit"
+                                onClick={() => setEditCourse(c)}
+                              >
+                                <FaPen />
+                              </IconBtn>
+                              <IconBtn
+                                label="Delete"
+                                variant="delete"
+                                onClick={() => setDeleteCourse(c)}
+                              >
+                                <FaTrashAlt />
+                              </IconBtn>
                             </div>
                           </div>
                         </motion.li>
@@ -804,30 +1360,38 @@ export const Courses = () => {
 
                 {!loading && (
                   <div className="flex items-center justify-between px-4 py-3 text-sm text-slate-600 border-t">
-                    <span>Showing {(page-1)*perPage+1}–{Math.min(page*perPage,total)} of {total}</span>
+                    <span>
+                      Showing {(page - 1) * perPage + 1}–
+                      {Math.min(page * perPage, total)} of {total}
+                    </span>
 
                     {/* Desktop pager */}
                     <div className="hidden md:flex items-center gap-1">
                       <button
                         className="ripple px-3 py-1.5 rounded-full border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
-                        onClick={goPrev} disabled={page===1}
+                        onClick={goPrev}
+                        disabled={page === 1}
                       >
                         ← Previous
                       </button>
-                      {[...Array(pages)].map((_,i)=>(
-                        <button key={i}
+                      {[...Array(pages)].map((_, i) => (
+                        <button
+                          key={i}
                           className={cls(
                             "ripple px-3 py-1.5 rounded-full border transition",
-                            page===i+1
+                            page === i + 1
                               ? "bg-[#0E7C5A] text-white border-transparent"
                               : "border-slate-200 hover:bg-slate-50"
                           )}
-                          onClick={()=>goPage(i+1)}
-                        >{i+1}</button>
+                          onClick={() => goPage(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
                       ))}
                       <button
                         className="ripple px-3 py-1.5 rounded-full border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
-                        onClick={goNext} disabled={page===pages}
+                        onClick={goNext}
+                        disabled={page === pages}
                       >
                         Next →
                       </button>
@@ -837,14 +1401,18 @@ export const Courses = () => {
                     <div className="flex md:hidden items-center gap-2">
                       <button
                         className="ripple px-3 py-1.5 rounded-full border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
-                        onClick={goPrev} disabled={page===1}
+                        onClick={goPrev}
+                        disabled={page === 1}
                       >
                         ← Prev
                       </button>
-                      <span className="tabular-nums">{page} / {pages}</span>
+                      <span className="tabular-nums">
+                        {page} / {pages}
+                      </span>
                       <button
                         className="ripple px-3 py-1.5 rounded-full border border-slate-200 hover:bg-slate-50 disabled:opacity-50"
-                        onClick={goNext} disabled={page===pages}
+                        onClick={goNext}
+                        disabled={page === pages}
                       >
                         Next →
                       </button>
@@ -861,42 +1429,90 @@ export const Courses = () => {
       <AnimatePresence>
         {drawer && (
           <>
-            <motion.div className="fixed inset-0 bg-black/30" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setDrawer(null)}/>
+            <motion.div
+              className="fixed inset-0 bg-black/30"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setDrawer(null)}
+            />
             <motion.aside
-              initial={{x:"100%"}} animate={{x:0,transition:{duration:.35,ease}}} exit={{x:"100%"}}
+              initial={{ x: "100%" }}
+              animate={{ x: 0, transition: { duration: 0.35, ease } }}
+              exit={{ x: "100%" }}
               className="fixed right-0 top-0 h-[100svh] w-full max-w-md bg-white shadow-2xl z-50 flex flex-col pb-[env(safe-area-inset-bottom)]"
             >
               <div className="p-4 border-b flex items-center justify-between">
-                <h3 className="text-lg font-semibold" style={{color:BRAND.dark}}>Course Details</h3>
-                <button className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50" onClick={()=>setDrawer(null)} title="Close">
-                  <FaTimes className="mx-auto"/>
+                <h3
+                  className="text-lg font-semibold"
+                  style={{ color: BRAND.dark }}
+                >
+                  Course Details
+                </h3>
+                <button
+                  className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
+                  onClick={() => setDrawer(null)}
+                  title="Close"
+                >
+                  <FaTimes className="mx-auto" />
                 </button>
               </div>
               <div className="p-6 space-y-4 overflow-y-auto overscroll-contain flex-1">
                 <div className="rounded-xl overflow-hidden border border-slate-100">
-                  <img src={drawer.thumb} alt={`${drawer.title} cover`} loading="lazy" className="w-full h-40 object-cover" />
+                  <img
+                    src={drawer.thumb}
+                    alt={`${drawer.title} cover`}
+                    loading="lazy"
+                    className="w-full h-40 object-cover"
+                  />
                 </div>
                 <div>
                   <div className="text-xl font-bold">{drawer.title}</div>
                   <div className="text-slate-500">by {drawer.tutor}</div>
                   <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <LevelBadge lvl={drawer.level}/> 
-                    <StatusBadge s={drawer.status}/>
-                    <span className="px-2 py-1 rounded-full text-[11px] bg-emerald-50 text-emerald-700">{drawer.category}</span>
+                    <LevelBadge lvl={drawer.level} />
+                    <StatusBadge s={drawer.status} />
+                    <span className="px-2 py-1 rounded-full text-[11px] bg-emerald-50 text-emerald-700">
+                      {drawer.category}
+                    </span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div><span className="text-slate-500">Students:</span> {drawer.students}</div>
-                  <div><span className="text-slate-500">Rating:</span> {drawer.rating.toFixed(1)}</div>
-                  <div><span className="text-slate-500">Duration:</span> {drawer.duration || "—"}</div>
-                  <div><span className="text-slate-500">Sessions:</span> {drawer.sessions}</div>
-                  <div><span className="text-slate-500">Price:</span> ${drawer.price}</div>
-                  <div><span className="text-slate-500">Updated:</span> {new Date(drawer.updated).toLocaleDateString()}</div>
-                  <div><span className="text-slate-500">Course ID:</span> #{drawer.id}</div>
+                  <div>
+                    <span className="text-slate-500">Students:</span>{" "}
+                    {drawer.students}
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Rating:</span>{" "}
+                    {drawer.rating.toFixed(1)}
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Duration:</span>{" "}
+                    {drawer.duration || "—"}
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Sessions:</span>{" "}
+                    {drawer.sessions}
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Price:</span> $
+                    {drawer.price}
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Updated:</span>{" "}
+                    {new Date(drawer.updated).toLocaleDateString()}
+                  </div>
+                  <div>
+                    <span className="text-slate-500">Course ID:</span> #
+                    {drawer.id}
+                  </div>
                 </div>
                 <div className="pt-2 border-t">
                   <div className="text-sm text-slate-500 mb-2">Notes</div>
-                  <p className="text-slate-700">Connect to backend to show syllabus, session count, and enrolled cohorts.</p>
+                  <p className="text-slate-700">
+                    Connect to backend to show syllabus, session count, and
+                    enrolled cohorts.
+                  </p>
                 </div>
               </div>
             </motion.aside>
@@ -908,21 +1524,39 @@ export const Courses = () => {
       <AnimatePresence>
         {editCourse && (
           <>
-            <motion.div className="fixed inset-0 bg-black/40" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setEditCourse(null)}/>
             <motion.div
-              initial={{scale:.95,opacity:0}} animate={{scale:1,opacity:1,transition:{duration:.25}}} exit={{scale:.95,opacity:0}}
+              className="fixed inset-0 bg-black/40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setEditCourse(null)}
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
+              exit={{ scale: 0.95, opacity: 0 }}
               className="fixed inset-0 z-50 grid place-items-center p-4"
             >
               <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold" style={{color:BRAND.dark}}>
+                  <h3
+                    className="text-lg font-semibold"
+                    style={{ color: BRAND.dark }}
+                  >
                     {editCourse.id ? "Update Course" : "Add Course"}
                   </h3>
-                  <button className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50" onClick={()=>setEditCourse(null)}>
-                    <FaTimes className="mx-auto"/>
+                  <button
+                    className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
+                    onClick={() => setEditCourse(null)}
+                  >
+                    <FaTimes className="mx-auto" />
                   </button>
                 </div>
-                <EditForm course={editCourse} onCancel={()=>setEditCourse(null)} onSubmit={applyUpdate}/>
+                <EditForm
+                  course={editCourse}
+                  onCancel={() => setEditCourse(null)}
+                  onSubmit={applyUpdate}
+                />
               </div>
             </motion.div>
           </>
@@ -933,17 +1567,43 @@ export const Courses = () => {
       <AnimatePresence>
         {deleteCourse && (
           <>
-            <motion.div className="fixed inset-0 bg-black/40" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setDeleteCourse(null)}/>
             <motion.div
-              initial={{scale:.95,opacity:0}} animate={{scale:1,opacity:1,transition:{duration:.25}}} exit={{scale:.95,opacity:0}}
+              className="fixed inset-0 bg-black/40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setDeleteCourse(null)}
+            />
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
+              exit={{ scale: 0.95, opacity: 0 }}
               className="fixed inset-0 z-50 grid place-items-center p-4"
             >
               <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
-                <h3 className="text-lg font-semibold mb-2" style={{color:BRAND.dark}}>Confirm Delete</h3>
-                <p className="text-slate-600 mb-4">Delete <b>{deleteCourse.title}</b>? This action cannot be undone.</p>
+                <h3
+                  className="text-lg font-semibold mb-2"
+                  style={{ color: BRAND.dark }}
+                >
+                  Confirm Delete
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  Delete <b>{deleteCourse.title}</b>? This action cannot be
+                  undone.
+                </p>
                 <div className="flex items-center justify-end gap-2">
-                  <button className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50" onClick={()=>setDeleteCourse(null)}>Cancel</button>
-                  <button className="ripple px-3 py-2 rounded-md text-white bg-rose-600 hover:opacity-95" onClick={()=>applyDelete(deleteCourse.id)}>Delete</button>
+                  <button
+                    className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
+                    onClick={() => setDeleteCourse(null)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="ripple px-3 py-2 rounded-md text-white bg-rose-600 hover:opacity-95"
+                    onClick={() => applyDelete(deleteCourse.id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -955,13 +1615,28 @@ export const Courses = () => {
       <AnimatePresence>
         {isMobile && !(drawer || editCourse || deleteCourse) && (
           <motion.nav
-            initial={{y:20, opacity:0}} animate={{y:0, opacity:1}} exit={{y:20, opacity:0}}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
             className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2 safe-bottom pointer-events-auto overflow-x-auto scrollbar-none"
             style={{ bottom: `calc(12px + env(safe-area-inset-bottom))` }}
           >
-            <button className="ripple px-3 py-1.5 rounded-full text-sm text-white" style={{background:BRAND.primary}} onClick={openAdd}><FaPlus className="-mt-0.5 mr-1"/>Add</button>
-            <button className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200" onClick={()=>{ commandRef.current?.scrollIntoView({behavior:"smooth"}); }}>
-              <FaFilter className="inline -mt-0.5 mr-1"/>Filters
+            <button
+              className="ripple px-3 py-1.5 rounded-full text-sm text-white"
+              style={{ background: BRAND.primary }}
+              onClick={openAdd}
+            >
+              <FaPlus className="-mt-0.5 mr-1" />
+              Add
+            </button>
+            <button
+              className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200"
+              onClick={() => {
+                commandRef.current?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <FaFilter className="inline -mt-0.5 mr-1" />
+              Filters
             </button>
           </motion.nav>
         )}

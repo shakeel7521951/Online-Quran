@@ -52,7 +52,7 @@ export const Sidebar = () => {
   }, [rail]);
 
   return (
-    <>
+    <div className="overflow-hidden">
       <style>{`
         /* gradient background for sidebar */
         .qa-aside {
@@ -129,7 +129,7 @@ export const Sidebar = () => {
       {/* Floating Menu Button (Mobile Only) */}
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden fixed top-3 left-3 z-50 w-11 h-11 flex items-center justify-center rounded-xl bg-white text-slate-700 shadow border border-slate-200"
+        className="md:hidden fixed top-3 left-3 z-40 w-11 h-11 flex items-center justify-center rounded-xl bg-white text-slate-700 shadow border border-slate-200"
         aria-label="Open sidebar"
       >
         <FaBars size={15} />
@@ -268,6 +268,6 @@ export const Sidebar = () => {
           </div>
         </div>
       </motion.aside>
-    </>
+    </div>
   );
 };
