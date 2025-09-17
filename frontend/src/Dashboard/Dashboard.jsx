@@ -6,9 +6,9 @@ import {
   FaChartLine,
   FaSearch,
 } from "react-icons/fa";
-import { AreaChart } from "./DashboardHome/AreaChart";
-import QuickActions from "./DashboardHome/QuickActions";
-import LatestUsers from "./DashboardHome/LatestUsers";
+import { AreaChart } from "./DashboardSections/AreaChart";
+import QuickActions from "./DashboardSections/QuickActions";
+import LatestUsers from "./DashboardSections/LatestUsers";
 
 /* ---------- tiny helpers ---------- */
 const useLocalStorage = (key, initial) => {

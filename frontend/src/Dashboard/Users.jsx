@@ -1,10 +1,12 @@
 // /src/Dashboard/common pages/Users.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Field } from "./UserSections/EditForm";
+import { EditForm } from "./UserSections/EditForm";
+import ViewDrawer from "./UserSections/ViewDrawer";
 import {
   FaSearch,
   FaFilter,
-  FaDownload,
   FaTimes,
   FaUsers,
   FaChalkboardTeacher,
@@ -14,290 +16,20 @@ import {
   FaEye,
   FaChevronDown,
 } from "react-icons/fa";
+import {
+  useMedia,
+  useOutside,
+  StatusBadge,
+  RoleBadge,
+  IconBtn,
+  Head,
+  SoftSelect,
+  ActionsMenu,
+} from "./UserSections/Exports";
 
-/* ───────────────── Brand / easing ───────────────── */
-const BRAND = {
-  primary: "#0E7C5A",
-  gold: "#D4AF37",
-  dark: "#2C3E50",
-  light: "#F5F7FA",
-};
 const ease = [0.16, 1, 0.3, 1];
 
-/* ───────────────── Global FX ───────────────── */
-const GlobalFX = () => (
-  <style>{`
-    .ripple { position: relative; overflow: hidden; }
-    .ripple:after { content:""; position:absolute; inset:auto auto 50% 50%; width:0;height:0;border-radius:9999px;background:rgba(255,255,255,.35); transform:translate(-50%,50%); opacity:0; }
-    .ripple:active:after { width:220%; height:220%; opacity:1; transition: width .35s ease, height .35s ease, opacity .6s ease; }
-
-    .hover-lift { transition: transform .25s cubic-bezier(0.16,1,0.3,1), box-shadow .25s; }
-    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(2,8,20,.08); }
-
-    .aurora {
-      background:
-        radial-gradient(40% 60% at 12% 8%, rgba(13,148,136,.25), transparent 60%),
-        radial-gradient(36% 60% at 88% 12%, rgba(212,175,55,.18), transparent 60%),
-        radial-gradient(60% 70% at 50% 100%, rgba(14,124,90,.18), transparent 60%);
-      filter: blur(36px) saturate(115%); animation: auroraMove 26s ease-in-out infinite alternate; pointer-events:none;
-    }
-    @keyframes auroraMove { 0% { transform: translate3d(-2%, -2%, 0) } 100% { transform: translate3d(2%, 2%, 0) } }
-
-    .shimmer { position: relative; overflow: hidden; background: #eef2f6; }
-    .shimmer:before { content:""; position:absolute; inset:0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent); transform: translateX(-100%); animation: sh 1.2s ease-in-out infinite; }
-    @keyframes sh { to { transform: translateX(100%); } }
-  `}</style>
-);
-
-/* ───────────────── helpers ───────────────── */
 const cls = (...s) => s.filter(Boolean).join(" ");
-const useMedia = (query) => {
-  const get = () =>
-    typeof window !== "undefined" ? window.matchMedia(query).matches : false;
-  const [match, setMatch] = useState(get);
-  useEffect(() => {
-    const m = window.matchMedia(query);
-    const fn = () => setMatch(m.matches);
-    m.addEventListener ? m.addEventListener("change", fn) : m.addListener(fn);
-    return () =>
-      m.removeEventListener
-        ? m.removeEventListener("change", fn)
-        : m.removeListener(fn);
-  }, [query]);
-  return match;
-};
-const useOutside = (refs, onClose) => {
-  const list = Array.isArray(refs) ? refs : [refs];
-  useEffect(() => {
-    const onDown = (e) => {
-      if (list.some((r) => r?.current && r.current.contains(e.target))) return;
-      onClose?.();
-    };
-    const onEsc = (e) => {
-      if (e.key === "Escape") onClose?.();
-    };
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("keydown", onEsc);
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("keydown", onEsc);
-    };
-  }, [onClose]);
-};
-
-/* ───────────────── UI atoms ───────────────── */
-const StatusBadge = ({ s }) => {
-  const map = {
-    Active: { fg: BRAND.primary, bg: "#0E7C5A1A" },
-    Trial: { fg: "#B45309", bg: "#B453091A" },
-    Inactive: { fg: "#64748B", bg: "#64748B1A" },
-  };
-  const { fg, bg } = map[s] || map.Inactive;
-  return (
-    <span
-      className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
-      style={{ color: fg, background: bg }}
-    >
-      {s}
-    </span>
-  );
-};
-const RoleBadge = ({ r }) => {
-  const map = { Student: "#CBD5E1", Tutor: "#FACC15", Admin: "#A78BFA" };
-  const bg = map[r] || map.Student;
-  return (
-    <span
-      className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold"
-      style={{ color: "#1E293B", background: `${bg}33` }}
-    >
-      {r}
-    </span>
-  );
-};
-const IconBtn = ({ children, label, onClick, variant = "neutral" }) => {
-  const styles = {
-    neutral:
-      "border-slate-200 text-slate-600 hover:bg-slate-50 focus-visible:ring-slate-300",
-    view: "border-emerald-200 text-emerald-600 hover:bg-emerald-50 focus-visible:ring-emerald-300",
-    edit: "border-amber-200 text-amber-600 hover:bg-amber-50 focus-visible:ring-amber-300",
-    delete:
-      "border-rose-200 text-rose-600 hover:bg-rose-50 focus-visible:ring-rose-300",
-  }[variant];
-  return (
-    <motion.button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      whileHover={{ y: -1 }}
-      whileTap={{ y: 0 }}
-      className={cls(
-        "ripple inline-flex items-center justify-center w-9 h-9 rounded-lg border transition outline-none focus-visible:ring-2",
-        styles
-      )}
-      title={label}
-      style={{ transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }}
-    >
-      <span className="text-[15px]">{children}</span>
-    </motion.button>
-  );
-};
-const Head = ({ label, onClick }) => (
-  <button
-    onClick={onClick}
-    className="text-left text-xs uppercase tracking-wide text-slate-500 hover:text-slate-700 transition"
-  >
-    {label}
-  </button>
-);
-const Field = ({ label, children }) => (
-  <label className="grid gap-1 text-sm">
-    <span className="text-slate-600">{label}</span>
-    {children}
-  </label>
-);
-
-/* ───────────────── SoftSelect (animated dropdown for filters) ───────────────── */
-const SoftSelect = ({ label, value, options, onChange, className }) => {
-  const wrap = useRef(null);
-  const pop = useRef(null);
-  const [open, setOpen] = useState(false);
-  useOutside([wrap, pop], () => setOpen(false));
-
-  const opts = (Array.isArray(options) ? options : []).map((o) =>
-    typeof o === "string" ? { label: o, value: o } : o
-  );
-  const current = opts.find((o) => o.value === value) ||
-    opts[0] || { label: "All", value: "All" };
-
-  return (
-    <div ref={wrap} className={cls("relative grid gap-1 text-sm", className)}>
-      <span className="text-slate-600">{label}</span>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full text-left px-3 py-2 rounded-lg border border-slate-200 bg-white pr-9 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 relative"
-      >
-        {current.label}
-        <motion.span
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500"
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.18 }}
-        >
-          ▾
-        </motion.span>
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            ref={pop}
-            initial={{ opacity: 0, y: -4, scale: 0.98 }}
-            animate={{ opacity: 1, y: 4, scale: 1 }}
-            exit={{ opacity: 0, y: -4, scale: 0.98 }}
-            transition={{ duration: 0.18, ease }}
-            className="absolute z-30 mt-1 w-full rounded-lg border border-slate-200 bg-white shadow-2xl overflow-hidden"
-          >
-            <ul className="max-h-64 overflow-auto">
-              {opts.map((opt) => {
-                const active = opt.value === value;
-                return (
-                  <li key={opt.value}>
-                    <button
-                      onClick={() => {
-                        onChange?.(opt.value);
-                        setOpen(false);
-                      }}
-                      className={cls(
-                        "w-full text-left px-3 py-2 hover:bg-emerald-50",
-                        active
-                          ? "bg-emerald-50 text-emerald-700"
-                          : "text-slate-700"
-                      )}
-                    >
-                      {opt.label}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-/* ───────────────── Actions dropdown (replaces 3-dots) ───────────────── */
-const ActionsMenu = ({ onView, onEdit, onDelete }) => {
-  const btnRef = useRef(null);
-  const popRef = useRef(null);
-  const [open, setOpen] = useState(false);
-  useOutside([btnRef, popRef], () => setOpen(false));
-
-  return (
-    <div className="relative inline-block text-left">
-      <motion.button
-        ref={btnRef}
-        whileTap={{ scale: 0.98 }}
-        whileHover={{ y: -1 }}
-        onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-2 px-3 py-1.5 text-sm rounded-full border border-slate-200 bg-white hover:bg-slate-50"
-        aria-haspopup="menu"
-        aria-expanded={open}
-      >
-        Actions <FaChevronDown className="opacity-70" />
-      </motion.button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            ref={popRef}
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 4, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
-            transition={{ duration: 0.18, ease }}
-            className="absolute right-0 mt-1 w-36 rounded-xl border border-slate-200 bg-white shadow-2xl overflow-hidden z-20"
-          >
-            <ul className="py-1 text-sm">
-              <li>
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    onView?.();
-                  }}
-                  className="w-full text-left px-3 py-2 hover:bg-emerald-50 text-slate-700 flex items-center gap-2"
-                >
-                  <FaEye className="text-emerald-600" /> View
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    onEdit?.();
-                  }}
-                  className="w-full text-left px-3 py-2 hover:bg-amber-50 text-slate-700 flex items-center gap-2"
-                >
-                  <FaPen className="text-amber-600" /> Edit
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    onDelete?.();
-                  }}
-                  className="w-full text-left px-3 py-2 hover:bg-rose-50 text-rose-700 flex items-center gap-2"
-                >
-                  <FaTrashAlt /> Delete
-                </button>
-              </li>
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
 
 /* ───────────────── Demo data ───────────────── */
 const seed = [
@@ -310,163 +42,10 @@ const seed = [
     joined: "2025-09-09",
     avatar: "https://i.pravatar.cc/64?img=39",
   },
-  {
-    id: 8,
-    name: "Bilal Qureshi",
-    email: "bilal@example.com",
-    role: "Student",
-    status: "Active",
-    joined: "2025-09-08",
-    avatar: "https://i.pravatar.cc/64?img=28",
-  },
-  {
-    id: 1,
-    name: "Ahmed Ali",
-    email: "ahmed@example.com",
-    role: "Student",
-    status: "Active",
-    joined: "2025-09-07",
-    avatar: "https://i.pravatar.cc/64?img=11",
-  },
-  {
-    id: 7,
-    name: "Maryam Saeed",
-    email: "maryam@example.com",
-    role: "Student",
-    status: "Trial",
-    joined: "2025-09-06",
-    avatar: "https://i.pravatar.cc/64?img=31",
-  },
-  {
-    id: 2,
-    name: "Fatima Noor",
-    email: "fatima@example.com",
-    role: "Student",
-    status: "Trial",
-    joined: "2025-09-05",
-    avatar: "https://i.pravatar.cc/64?img=15",
-  },
-  {
-    id: 3,
-    name: "Yusuf Khan",
-    email: "yusuf@example.com",
-    role: "Student",
-    status: "Active",
-    joined: "2025-09-04",
-    avatar: "https://i.pravatar.cc/64?img=13",
-  },
-  {
-    id: 4,
-    name: "Aisha Rahman",
-    email: "aisha@example.com",
-    role: "Student",
-    status: "Inactive",
-    joined: "2025-09-02",
-    avatar: "https://i.pravatar.cc/64?img=17",
-  },
-  {
-    id: 5,
-    name: "Imran Hashmi",
-    email: "imran@example.com",
-    role: "Tutor",
-    status: "Active",
-    joined: "2025-09-03",
-    avatar: "https://i.pravatar.cc/64?img=22",
-  },
-  {
-    id: 6,
-    name: "Zainab Karim",
-    email: "zainab@example.com",
-    role: "Tutor",
-    status: "Active",
-    joined: "2025-09-01",
-    avatar: "https://i.pravatar.cc/64?img=24",
-  },
-  {
-    id: 9,
-    name: "Huda Khan",
-    email: "huda@example.com",
-    role: "Admin",
-    status: "Active",
-    joined: "2025-09-01",
-    avatar: "https://i.pravatar.cc/64?img=35",
-  },
 ];
 
 /* ───────────────── Edit Form ───────────────── */
-const EditForm = ({ user, onCancel, onSubmit }) => {
-  const [form, setForm] = useState({
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    status: user.status,
-  });
-  return (
-    <form
-      className="grid gap-3"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(form);
-      }}
-    >
-      <Field label="Name">
-        <input
-          className="w-full px-3 py-2 rounded-md border border-slate-200"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-      </Field>
-      <Field label="Email">
-        <input
-          className="w-full px-3 py-2 rounded-md border border-slate-200"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-      </Field>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <Field label="Role">
-          <select
-            className="w-full px-3 py-2 rounded-md border border-slate-200"
-            value={form.role}
-            onChange={(e) => setForm({ ...form, role: e.target.value })}
-          >
-            <option>Student</option>
-            <option>Tutor</option>
-            <option>Admin</option>
-          </select>
-        </Field>
-        <Field label="Status">
-          <select
-            className="w-full px-3 py-2 rounded-md border border-slate-200"
-            value={form.status}
-            onChange={(e) => setForm({ ...form, status: e.target.value })}
-          >
-            <option>Active</option>
-            <option>Trial</option>
-            <option>Inactive</option>
-          </select>
-        </Field>
-      </div>
-      <div className="mt-2 flex items-center justify-end gap-2">
-        <button
-          type="button"
-          className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
-          onClick={onCancel}
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="ripple px-3 py-2 rounded-md text-white"
-          style={{ background: BRAND.primary }}
-        >
-          Save Changes
-        </button>
-      </div>
-    </form>
-  );
-};
+<EditForm />;
 
 /* ───────────────── Page ───────────────── */
 export const Users = () => {
@@ -570,7 +149,6 @@ export const Users = () => {
     );
 
   /* actions (mock) */
-  const exportCSV = () => alert("Export current view to CSV");
   const applyUpdate = (payload) => {
     setData((prev) =>
       prev.map((u) => (u.id === payload.id ? { ...u, ...payload } : u))
@@ -603,10 +181,8 @@ export const Users = () => {
   return (
     <div
       className="relative flex-1 p-4 sm:p-6 md:p-8 overflow-hidden"
-      style={{ background: BRAND.light }}
+      style={{ background: "#F5F7FA" }}
     >
-      <GlobalFX />
-
       {/* Hero / heading */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
@@ -614,7 +190,7 @@ export const Users = () => {
         transition={{ duration: 0.35, ease }}
         className="relative overflow-hidden rounded-2xl mb-6 p-6 sm:p-8 text-white shadow"
         style={{
-          background: `linear-gradient(135deg, ${BRAND.primary}, #0B5F46)`,
+          background: `linear-gradient(135deg,#0E7C5A, #0B5F46)`,
         }}
       >
         <div className="absolute inset-0 aurora opacity-35" />
@@ -751,13 +327,6 @@ export const Users = () => {
                 onClick={() => setShowAdvanced((v) => !v)}
               >
                 <FaFilter className="text-slate-500" /> Advanced
-              </button>
-              <button
-                className="ripple inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg text-white hover:opacity-95"
-                style={{ background: BRAND.primary }}
-                onClick={exportCSV}
-              >
-                <FaDownload className="text-white/90" /> Export
               </button>
             </div>
           </div>
@@ -1149,89 +718,12 @@ export const Users = () => {
             >
               {mode === "cards" ? "Table" : "Cards"}
             </button>
-            <button
-              className="ripple px-3 py-1.5 rounded-full text-sm text-white"
-              style={{ background: BRAND.primary }}
-              onClick={exportCSV}
-            >
-              <FaDownload className="inline -mt-0.5 mr-1" />
-              Export
-            </button>
           </motion.nav>
         )}
       </AnimatePresence>
 
       {/* View Drawer */}
-      <AnimatePresence>
-        {drawer && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/30"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDrawer(null)}
-            />
-            <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0, transition: { duration: 0.35, ease } }}
-              exit={{ x: "100%" }}
-              className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
-            >
-              <div className="p-4 border-b flex items-center justify-between">
-                <h3
-                  className="text-lg font-semibold"
-                  style={{ color: BRAND.dark }}
-                >
-                  User Details
-                </h3>
-                <button
-                  className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
-                  onClick={() => setDrawer(null)}
-                  title="Close"
-                >
-                  <FaTimes className="mx-auto" />
-                </button>
-              </div>
-              <div className="p-6 space-y-4">
-                <div className="flex items-center gap-4">
-                  <img
-                    src={drawer.avatar}
-                    alt={drawer.name}
-                    className="w-16 h-16 rounded-full object-cover ring-2 ring-white shadow"
-                  />
-                  <div>
-                    <div className="text-xl font-bold">{drawer.name}</div>
-                    <div className="text-slate-500">{drawer.email}</div>
-                    <div className="mt-2 flex items-center gap-2">
-                      <RoleBadge r={drawer.role} />{" "}
-                      <StatusBadge s={drawer.status} />
-                    </div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <span className="text-slate-500">Joined:</span>{" "}
-                    {new Date(drawer.joined).toLocaleDateString()}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">User ID:</span> #
-                    {drawer.id}
-                  </div>
-                </div>
-                <div className="pt-2 border-t">
-                  <div className="text-sm text-slate-500 mb-2">Notes</div>
-                  <p className="text-slate-700">
-                    Wire this to your backend to show attendance, enrolled
-                    courses, and last login.
-                  </p>
-                </div>
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-
+      <ViewDrawer user={drawer} onClose={() => setDrawer(null)} />
       {/* Edit modal */}
       <AnimatePresence>
         {editUser && (
@@ -1253,7 +745,7 @@ export const Users = () => {
                 <div className="flex items-center justify-between mb-4">
                   <h3
                     className="text-lg font-semibold"
-                    style={{ color: BRAND.dark }}
+                    style={{ color: "#2C3E50" }}
                   >
                     Update User
                   </h3>
@@ -1295,7 +787,7 @@ export const Users = () => {
               <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
                 <h3
                   className="text-lg font-semibold mb-2"
-                  style={{ color: BRAND.dark }}
+                  style={{ color: "#2C3E50" }}
                 >
                   Confirm Delete
                 </h3>
