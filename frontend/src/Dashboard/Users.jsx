@@ -1,6 +1,6 @@
 // /src/Dashboard/common pages/Users.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { Field } from "./UserSections/EditForm";
 import { EditForm } from "./UserSections/EditForm";
 import ViewDrawer from "./UserSections/ViewDrawer";
@@ -14,7 +14,6 @@ import {
   FaPen,
   FaTrashAlt,
   FaEye,
-  FaChevronDown,
 } from "react-icons/fa";
 import {
   useMedia,
@@ -53,7 +52,6 @@ export const Users = () => {
   const isMobile = useMedia("(max-width: 767px)");
   const commandRef = useRef(null);
   const listTopRef = useRef(null);
-
   const [q, setQ] = useState("");
   const [role, setRole] = useState("All");
   const [status, setStatus] = useState("All");
@@ -63,16 +61,15 @@ export const Users = () => {
   const [selected, setSelected] = useState([]);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [mode, setMode] = useState("cards");
-  useEffect(() => {
-    setMode(isMobile ? "cards" : "table");
-  }, [isMobile]);
-
   const [drawer, setDrawer] = useState(null);
   const [editUser, setEditUser] = useState(null);
   const [deleteUser, setDeleteUser] = useState(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
+
+  useEffect(() => {
+    setMode(isMobile ? "cards" : "table");
+  }, [isMobile]);
 
   const perPage = 6;
 
@@ -184,7 +181,7 @@ export const Users = () => {
       style={{ background: "#F5F7FA" }}
     >
       {/* Hero / heading */}
-      <motion.div
+      <div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease }}
@@ -207,7 +204,7 @@ export const Users = () => {
             Manage members, roles, status, and onboarding.
           </p>
         </div>
-      </motion.div>
+      </div>
 
       {/* Stat tiles */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -234,7 +231,7 @@ export const Users = () => {
             icon: <FaStar />,
           },
         ].map((k, i) => (
-          <motion.div
+          <div
             key={k.t}
             initial={{ opacity: 0, y: 12 }}
             animate={{
@@ -257,13 +254,13 @@ export const Users = () => {
             />
             <div className="relative flex items-center gap-3">
               <div className="shrink-0 grid place-items-center w-11 h-11 rounded-full bg-white/10 ring-1 ring-white/15">
-                <motion.span
+                <span
                   className="text-[18px]"
                   whileHover={reduce ? undefined : { rotate: 2, scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 260, damping: 18 }}
                 >
                   {k.icon}
-                </motion.span>
+                </span>
               </div>
               <div>
                 <div className="text-sm/4 opacity-90">{k.t}</div>
@@ -272,7 +269,7 @@ export const Users = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -369,41 +366,40 @@ export const Users = () => {
           </div>
 
           {/* Advanced */}
-          <AnimatePresence initial={false}>
-            {showAdvanced && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-3 border-t pt-3"
-              >
-                <Field label="Joined After">
-                  <input
-                    type="date"
-                    value={minDate}
-                    onChange={(e) => {
-                      setMinDate(e.target.value);
-                      setPage(1);
-                    }}
-                    className="w-full px-3 py-2 rounded-md border border-slate-200"
-                  />
-                </Field>
-                <div className="grid items-end">
-                  <button
-                    className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
-                    onClick={() => {
-                      setMinDate("");
-                      setRole("All");
-                      setStatus("All");
-                      setSort({ key: "joined", dir: "desc" });
-                    }}
-                  >
-                    Reset Filters
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+
+          {showAdvanced && (
+            <div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-3 border-t pt-3"
+            >
+              <Field label="Joined After">
+                <input
+                  type="date"
+                  value={minDate}
+                  onChange={(e) => {
+                    setMinDate(e.target.value);
+                    setPage(1);
+                  }}
+                  className="w-full px-3 py-2 rounded-md border border-slate-200"
+                />
+              </Field>
+              <div className="grid items-end">
+                <button
+                  className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
+                  onClick={() => {
+                    setMinDate("");
+                    setRole("All");
+                    setStatus("All");
+                    setSort({ key: "joined", dir: "desc" });
+                  }}
+                >
+                  Reset Filters
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -482,62 +478,58 @@ export const Users = () => {
             </div>
           ) : (
             <ul className="divide-y">
-              <AnimatePresence initial={false}>
-                {pageData.map((u, idx) => (
-                  <motion.li
-                    key={u.id}
-                    initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.25, delay: 0.02 * idx },
-                    }}
-                    exit={{ opacity: 0, y: 4 }}
-                    className="group grid grid-cols-[48px_1.6fr_1.4fr_.9fr_.9fr_.9fr_180px] items-center px-2 py-3 transition-colors hover:bg-[#0E7C5A06]"
-                  >
-                    <div className="pl-2">
-                      <input
-                        type="checkbox"
-                        checked={selected.includes(u.id)}
-                        onChange={() => toggleOne(u.id)}
+              {pageData.map((u, idx) => (
+                <li
+                  key={u.id}
+                  initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.25, delay: 0.02 * idx },
+                  }}
+                  exit={{ opacity: 0, y: 4 }}
+                  className="group grid grid-cols-[48px_1.6fr_1.4fr_.9fr_.9fr_.9fr_180px] items-center px-2 py-3 transition-colors hover:bg-[#0E7C5A06]"
+                >
+                  <div className="pl-2">
+                    <input
+                      type="checkbox"
+                      checked={selected.includes(u.id)}
+                      onChange={() => toggleOne(u.id)}
+                    />
+                  </div>
+                  <button onClick={() => setDrawer(u)} className="text-left">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={u.avatar}
+                        alt={u.name}
+                        className="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm"
                       />
-                    </div>
-                    <button onClick={() => setDrawer(u)} className="text-left">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={u.avatar}
-                          alt={u.name}
-                          className="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-sm"
-                        />
-                        <div className="min-w-0">
-                          <div className="font-medium truncate text-[#0B1324]">
-                            {u.name}
-                          </div>
-                          <div className="text-xs text-slate-500">
-                            ID #{u.id}
-                          </div>
+                      <div className="min-w-0">
+                        <div className="font-medium truncate text-[#0B1324]">
+                          {u.name}
                         </div>
+                        <div className="text-xs text-slate-500">ID #{u.id}</div>
                       </div>
-                    </button>
-                    <div className="truncate">{u.email}</div>
-                    <div>
-                      <RoleBadge r={u.role} />
                     </div>
-                    <div>
-                      <StatusBadge s={u.status} />
-                    </div>
-                    <div>{new Date(u.joined).toLocaleDateString()}</div>
-                    <div className="pr-3 text-right">
-                      {/* Replaced 3-dots with an Actions dropdown */}
-                      <ActionsMenu
-                        onView={() => setDrawer(u)}
-                        onEdit={() => setEditUser(u)}
-                        onDelete={() => setDeleteUser(u)}
-                      />
-                    </div>
-                  </motion.li>
-                ))}
-              </AnimatePresence>
+                  </button>
+                  <div className="truncate">{u.email}</div>
+                  <div>
+                    <RoleBadge r={u.role} />
+                  </div>
+                  <div>
+                    <StatusBadge s={u.status} />
+                  </div>
+                  <div>{new Date(u.joined).toLocaleDateString()}</div>
+                  <div className="pr-3 text-right">
+                    {/* Replaced 3-dots with an Actions dropdown */}
+                    <ActionsMenu
+                      onView={() => setDrawer(u)}
+                      onEdit={() => setEditUser(u)}
+                      onDelete={() => setDeleteUser(u)}
+                    />
+                  </div>
+                </li>
+              ))}
             </ul>
           )}
 
@@ -584,7 +576,7 @@ export const Users = () => {
 
       {/* ===== CARDS (mobile-first) ===== */}
       {mode === "cards" && (
-        <motion.div
+        <div
           initial="hidden"
           animate="show"
           variants={{
@@ -601,7 +593,7 @@ export const Users = () => {
                 />
               ))
             : pageData.map((u, idx) => (
-                <motion.div
+                <div
                   key={u.id}
                   initial={{ opacity: 0, y: reduce ? 0 : 10 }}
                   animate={{
@@ -658,7 +650,7 @@ export const Users = () => {
                       <FaTrashAlt />
                     </IconBtn>
                   </div>
-                </motion.div>
+                </div>
               ))}
 
           {!loading && (
@@ -684,135 +676,130 @@ export const Users = () => {
               </div>
             </div>
           )}
-        </motion.div>
+        </div>
       )}
 
       {/* Sticky mobile quick bar */}
-      <AnimatePresence>
-        {isMobile && !(drawer || editUser || deleteUser) && (
-          <motion.nav
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 20, opacity: 0 }}
-            className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2"
+
+      {isMobile && !(drawer || editUser || deleteUser) && (
+        <nav
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 20, opacity: 0 }}
+          className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2"
+        >
+          <button
+            className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200"
+            onClick={() => {
+              commandRef.current?.scrollIntoView({ behavior: "smooth" });
+            }}
           >
-            <button
-              className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200"
-              onClick={() => {
-                commandRef.current?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              <FaFilter className="inline -mt-0.5 mr-1" />
-              Filters
-            </button>
-            <button
-              className={cls(
-                "ripple px-3 py-1.5 rounded-full text-sm border",
-                mode === "cards"
-                  ? "border-emerald-300 text-emerald-700 bg-emerald-50"
-                  : "border-slate-200"
-              )}
-              onClick={() =>
-                setMode((m) => (m === "cards" ? "table" : "cards"))
-              }
-            >
-              {mode === "cards" ? "Table" : "Cards"}
-            </button>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+            <FaFilter className="inline -mt-0.5 mr-1" />
+            Filters
+          </button>
+          <button
+            className={cls(
+              "ripple px-3 py-1.5 rounded-full text-sm border",
+              mode === "cards"
+                ? "border-emerald-300 text-emerald-700 bg-emerald-50"
+                : "border-slate-200"
+            )}
+            onClick={() => setMode((m) => (m === "cards" ? "table" : "cards"))}
+          >
+            {mode === "cards" ? "Table" : "Cards"}
+          </button>
+        </nav>
+      )}
 
       {/* View Drawer */}
       <ViewDrawer user={drawer} onClose={() => setDrawer(null)} />
       {/* Edit modal */}
-      <AnimatePresence>
-        {editUser && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setEditUser(null)}
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="fixed inset-0 z-50 grid place-items-center p-4"
-            >
-              <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3
-                    className="text-lg font-semibold"
-                    style={{ color: "#2C3E50" }}
-                  >
-                    Update User
-                  </h3>
-                  <button
-                    className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
-                    onClick={() => setEditUser(null)}
-                  >
-                    <FaTimes className="mx-auto" />
-                  </button>
-                </div>
-                <EditForm
-                  user={editUser}
-                  onCancel={() => setEditUser(null)}
-                  onSubmit={applyUpdate}
-                />
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
 
-      {/* Delete confirm */}
-      <AnimatePresence>
-        {deleteUser && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDeleteUser(null)}
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="fixed inset-0 z-50 grid place-items-center p-4"
-            >
-              <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
+      {editUser && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setEditUser(null)}
+          />
+          <div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="fixed inset-0 z-50 grid place-items-center p-4"
+          >
+            <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
+              <div className="flex items-center justify-between mb-4">
                 <h3
-                  className="text-lg font-semibold mb-2"
+                  className="text-lg font-semibold"
                   style={{ color: "#2C3E50" }}
                 >
-                  Confirm Delete
+                  Update User
                 </h3>
-                <p className="text-slate-600 mb-4">
-                  Delete <b>{deleteUser.name}</b>? This action cannot be undone.
-                </p>
-                <div className="flex items-center justify-end gap-2">
-                  <button
-                    className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
-                    onClick={() => setDeleteUser(null)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="ripple px-3 py-2 rounded-md text-white bg-rose-600 hover:opacity-95"
-                    onClick={() => applyDelete(deleteUser.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+                <button
+                  className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
+                  onClick={() => setEditUser(null)}
+                >
+                  <FaTimes className="mx-auto" />
+                </button>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              <EditForm
+                user={editUser}
+                onCancel={() => setEditUser(null)}
+                onSubmit={applyUpdate}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Delete confirm */}
+
+      {deleteUser && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setDeleteUser(null)}
+          />
+          <div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="fixed inset-0 z-50 grid place-items-center p-4"
+          >
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
+              <h3
+                className="text-lg font-semibold mb-2"
+                style={{ color: "#2C3E50" }}
+              >
+                Confirm Delete
+              </h3>
+              <p className="text-slate-600 mb-4">
+                Delete <b>{deleteUser.name}</b>? This action cannot be undone.
+              </p>
+              <div className="flex items-center justify-end gap-2">
+                <button
+                  className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
+                  onClick={() => setDeleteUser(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="ripple px-3 py-2 rounded-md text-white bg-rose-600 hover:opacity-95"
+                  onClick={() => applyDelete(deleteUser.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
