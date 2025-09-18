@@ -170,22 +170,14 @@ export const Users = () => {
     [data]
   );
 
-  /* motion helpers */
-  const tileHover = reduce
-    ? {}
-    : { whileHover: { y: -4, scale: 1.01 }, whileTap: { scale: 0.99 } };
-
   return (
     <div
-      className="relative flex-1 p-4 sm:p-6 md:p-8 overflow-hidden"
+      className="relative flex-1 p-4 sm:p-6 md:p-8 overflow-x-hidden"
       style={{ background: "#F5F7FA" }}
     >
       {/* Hero / heading */}
       <div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease }}
-        className="relative overflow-hidden rounded-2xl mb-6 p-6 sm:p-8 text-white shadow"
+        className="relative overflow-x-hidden rounded-2xl mb-6 p-6 sm:p-8 text-white shadow"
         style={{
           background: `linear-gradient(135deg,#0E7C5A, #0B5F46)`,
         }}
@@ -233,13 +225,6 @@ export const Users = () => {
         ].map((k, i) => (
           <div
             key={k.t}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.45, delay: 0.06 * i, ease },
-            }}
-            {...tileHover}
             className="relative overflow-hidden rounded-2xl p-5 text-white shadow-lg transition-shadow"
             style={{
               background: `linear-gradient(135deg, ${k.from}, ${k.to})`,
@@ -368,12 +353,7 @@ export const Users = () => {
           {/* Advanced */}
 
           {showAdvanced && (
-            <div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-3 border-t pt-3"
-            >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 border-t pt-3">
               <Field label="Joined After">
                 <input
                   type="date"
@@ -408,7 +388,7 @@ export const Users = () => {
 
       {/* ===== TABLE (md+) ===== */}
       {mode === "table" && (
-        <div className="hidden md:block bg-white/80 backdrop-blur rounded-2xl shadow overflow-hidden border border-slate-100">
+        <div className="hidden md:block bg-white/80 backdrop-blur rounded-2xl shadow overflow-x-hidden border border-slate-100">
           <div className="sticky top-0 z-10 bg-slate-50/70 backdrop-blur border-b">
             <div className="grid grid-cols-[48px_1.6fr_1.4fr_.9fr_.9fr_.9fr_180px] px-2 py-3 text-xs uppercase tracking-wide text-slate-500">
               <div className="pl-2">
@@ -481,12 +461,6 @@ export const Users = () => {
               {pageData.map((u, idx) => (
                 <li
                   key={u.id}
-                  initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.25, delay: 0.02 * idx },
-                  }}
                   exit={{ opacity: 0, y: 4 }}
                   className="group grid grid-cols-[48px_1.6fr_1.4fr_.9fr_.9fr_.9fr_180px] items-center px-2 py-3 transition-colors hover:bg-[#0E7C5A06]"
                 >
@@ -576,15 +550,7 @@ export const Users = () => {
 
       {/* ===== CARDS (mobile-first) ===== */}
       {mode === "cards" && (
-        <div
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 1 },
-            show: { opacity: 1, transition: { staggerChildren: 0.03 } },
-          }}
-          className="md:hidden grid gap-3"
-        >
+        <div className="md:hidden grid gap-3">
           {loading
             ? [...Array(6)].map((_, i) => (
                 <div
@@ -592,16 +558,9 @@ export const Users = () => {
                   className="h-24 rounded-2xl shadow bg-white shimmer"
                 />
               ))
-            : pageData.map((u, idx) => (
+            : pageData.map((u) => (
                 <div
                   key={u.id}
-                  initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.25, delay: 0.02 * idx },
-                  }}
-                  whileHover={reduce ? undefined : { y: -3, scale: 1.01 }}
                   className="bg-white rounded-2xl shadow p-4 flex items-center gap-3 transition hover-lift"
                 >
                   <input
@@ -682,12 +641,7 @@ export const Users = () => {
       {/* Sticky mobile quick bar */}
 
       {isMobile && !(drawer || editUser || deleteUser) && (
-        <nav
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 20, opacity: 0 }}
-          className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2"
-        >
+        <nav className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2">
           <button
             className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200"
             onClick={() => {
@@ -719,17 +673,9 @@ export const Users = () => {
         <>
           <div
             className="fixed inset-0 bg-black/40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onClick={() => setEditUser(null)}
           />
-          <div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            className="fixed inset-0 z-50 grid place-items-center p-4"
-          >
+          <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3
@@ -761,17 +707,9 @@ export const Users = () => {
         <>
           <div
             className="fixed inset-0 bg-black/40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onClick={() => setDeleteUser(null)}
           />
-          <div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            className="fixed inset-0 z-50 grid place-items-center p-4"
-          >
+          <div className="fixed inset-0 z-50 grid place-items-center p-4">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
               <h3
                 className="text-lg font-semibold mb-2"

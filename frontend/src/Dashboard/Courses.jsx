@@ -32,37 +32,6 @@ const BRAND = {
 const ease = [0.16, 1, 0.3, 1];
 const cls = (...s) => s.filter(Boolean).join(" ");
 
-/* ───────────────── FX / small CSS helpers ───────────────── */
-const GlobalFX = () => (
-  <style>{`
-    .ripple { position: relative; overflow: hidden; }
-    .ripple:after { content:""; position:absolute; inset:auto auto 50% 50%;
-      width:0;height:0;border-radius:9999px;background:rgba(255,255,255,.35);
-      transform:translate(-50%,50%); opacity:0; }
-    .ripple:active:after { width:220%; height:220%; opacity:1; transition: width .35s ease, height .35s ease, opacity .6s ease; }
-
-    .hover-lift { transition: transform .25s cubic-bezier(0.16,1,0.3,1), box-shadow .25s; }
-    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(2,8,20,.08); }
-
-    .aurora {
-      background:
-        radial-gradient(40% 60% at 12% 8%, rgba(13,148,136,.25), transparent 60%),
-        radial-gradient(36% 60% at 88% 12%, rgba(212,175,55,.18), transparent 60%),
-        radial-gradient(60% 70% at 50% 100%, rgba(14,124,90,.18), transparent 60%);
-      filter: blur(36px) saturate(115%); pointer-events:none;
-      animation: auroraMove 26s ease-in-out infinite alternate;
-    }
-    @keyframes auroraMove { 0% { transform: translate3d(-2%, -2%, 0) } 100% { transform: translate3d(2%, 2%, 0) } }
-
-    @keyframes pop { 0%{transform:scale(.6); opacity:0} 30%{opacity:1} 100%{transform:scale(1.2) translateY(-6px); opacity:0} }
-
-    .safe-bottom { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
-
-    .scrollbar-none::-webkit-scrollbar{ display:none }
-    .scrollbar-none{ -ms-overflow-style:none; scrollbar-width:none; }
-  `}</style>
-);
-
 /* ───────────────── Helpers ───────────────── */
 const useMedia = (query) => {
   const get = () =>
@@ -929,8 +898,6 @@ export const Courses = () => {
       className="relative flex-1 p-4 sm:p-6 md:p-8 overflow-hidden"
       style={{ background: BRAND.light }}
     >
-      <GlobalFX />
-
       {/* Toast */}
       <AnimatePresence>
         {toast && (
