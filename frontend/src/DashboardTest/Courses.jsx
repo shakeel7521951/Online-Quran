@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   FaSearch,
   FaFilter,
@@ -22,13 +21,6 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-/* ───────────────── Brand ───────────────── */
-const BRAND = {
-  primary: "#0E7C5A",
-  gold: "#D4AF37",
-  dark: "#2C3E50",
-  light: "#F5F7FA",
-};
 const ease = [0.16, 1, 0.3, 1];
 const cls = (...s) => s.filter(Boolean).join(" ");
 
@@ -70,7 +62,7 @@ const getQueryPage = () => {
 /* ───────────────── UI atoms ───────────────── */
 const StatusBadge = ({ s }) => {
   const map = {
-    Live: { fg: BRAND.primary, bg: "#0E7C5A1A" },
+    Live: { fg: "#0E7C5A", bg: "#0E7C5A1A" },
     Draft: { fg: "#64748B", bg: "#64748B1A" },
     Archived: { fg: "#991B1B", bg: "#991B1B1A" },
   };
@@ -119,7 +111,7 @@ const IconBtn = ({
       "border-rose-200   text-rose-600   hover:bg-rose-50   focus-visible:ring-rose-300",
   }[variant];
   return (
-    <motion.button
+    <button
       type="button"
       aria-label={label}
       onClick={disabled ? undefined : onClick}
@@ -135,7 +127,7 @@ const IconBtn = ({
       style={{ transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)" }}
     >
       <span className="text-[15px]">{children}</span>
-    </motion.button>
+    </button>
   );
 };
 
@@ -243,68 +235,66 @@ const Select = ({ label, value, options, onChange }) => {
                    focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 relative"
       >
         {current.label}
-        <motion.span
+        <span
           className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500"
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.18 }}
         >
           ▾
-        </motion.span>
+        </span>
       </button>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            ref={popRef}
-            initial={{ opacity: 0, y: -6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
-            transition={{ duration: 0.2, ease }}
-            className="fixed z-50 rounded-xl border border-slate-200 bg-white shadow-2xl overflow-hidden"
-            style={{
-              left: pos.left,
-              width: pos.width,
-              maxHeight: isPhone ? "50vh" : 320,
-              top: pos.flip ? undefined : pos.top,
-              bottom: pos.flip ? pos.bottom : undefined,
-            }}
-          >
-            <ul className="overflow-auto" role="menu" aria-label={label}>
-              {opts.map((o) => {
-                const active = o.value === value;
-                return (
-                  <li key={o.value}>
-                    <button
-                      role="menuitemradio"
-                      aria-checked={active}
-                      onClick={() => {
-                        onChange(o.value);
-                        setOpen(false);
-                      }}
+      {open && (
+        <div
+          ref={popRef}
+          initial={{ opacity: 0, y: -6, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -6, scale: 0.98 }}
+          transition={{ duration: 0.2, ease }}
+          className="fixed z-50 rounded-xl border border-slate-200 bg-white shadow-2xl overflow-hidden"
+          style={{
+            left: pos.left,
+            width: pos.width,
+            maxHeight: isPhone ? "50vh" : 320,
+            top: pos.flip ? undefined : pos.top,
+            bottom: pos.flip ? pos.bottom : undefined,
+          }}
+        >
+          <ul className="overflow-auto" role="menu" aria-label={label}>
+            {opts.map((o) => {
+              const active = o.value === value;
+              return (
+                <li key={o.value}>
+                  <button
+                    role="menuitemradio"
+                    aria-checked={active}
+                    onClick={() => {
+                      onChange(o.value);
+                      setOpen(false);
+                    }}
+                    className={cls(
+                      "w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-emerald-50 transition-colors",
+                      active
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "text-slate-700"
+                    )}
+                  >
+                    <span
                       className={cls(
-                        "w-full text-left px-3 py-2 flex items-center gap-2 hover:bg-emerald-50 transition-colors",
-                        active
-                          ? "bg-emerald-50 text-emerald-700"
-                          : "text-slate-700"
+                        "inline-flex items-center justify-center w-5",
+                        active ? "opacity-100" : "opacity-0"
                       )}
                     >
-                      <span
-                        className={cls(
-                          "inline-flex items-center justify-center w-5",
-                          active ? "opacity-100" : "opacity-0"
-                        )}
-                      >
-                        <FaCheck />
-                      </span>
-                      {o.label}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                      <FaCheck />
+                    </span>
+                    {o.label}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
@@ -583,7 +573,7 @@ const EditForm = ({ course, onCancel, onSubmit }) => {
           <button
             type="submit"
             className="ripple inline-flex items-center gap-2 px-3 py-2 rounded-md text-white hover:opacity-95"
-            style={{ background: BRAND.primary }}
+            style={{ background: "#0E7C5A" }}
           >
             <FaCheck /> {isEdit ? "Save Changes" : "Create Course"}
           </button>
@@ -594,13 +584,8 @@ const EditForm = ({ course, onCancel, onSubmit }) => {
 };
 
 /* ───────────────── Course Card ───────────────── */
-const CourseCard = ({ c, onView, onEdit, onDelete, reduce }) => (
-  <motion.div
-    initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-    animate={{ opacity: 1, y: 0, transition: { duration: 0.25 } }}
-    whileHover={reduce ? undefined : { y: -4, scale: 1.01 }}
-    className="group relative bg-white rounded-2xl shadow overflow-hidden border border-slate-100 hover-lift"
-  >
+const CourseCard = ({ c, onView, onEdit, onDelete }) => (
+  <div className="group relative bg-white rounded-2xl shadow overflow-hidden border border-slate-100 hover-lift">
     <div className="relative aspect-[16/9] sm:aspect-[5/2] overflow-hidden">
       <img
         src={c.thumb}
@@ -674,12 +659,11 @@ const CourseCard = ({ c, onView, onEdit, onDelete, reduce }) => (
         </div>
       </div>
     </div>
-  </motion.div>
+  </div>
 );
 
 /* ───────────────── Page ───────────────── */
 export const Courses = () => {
-  const reduce = useReducedMotion();
   const isMobile = useMedia("(max-width: 767px)");
   const isXS = useMedia("(max-width: 360px)");
   const isSM = useMedia("(max-width: 640px)");
@@ -888,42 +872,36 @@ export const Courses = () => {
     [data]
   );
 
-  const tileHover = reduce
-    ? {}
-    : { whileHover: { y: -4, scale: 1.01 }, whileTap: { scale: 0.99 } };
-
-  /* ---------- UI ---------- */
   return (
     <div
       className="relative flex-1 p-4 sm:p-6 md:p-8 overflow-hidden"
-      style={{ background: BRAND.light }}
+      style={{ background: "#F5F7FA" }}
     >
       {/* Toast */}
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white border border-emerald-200 text-emerald-800 rounded-full shadow-lg px-4 py-2 flex items-center gap-2"
-          >
-            <FaCheckCircle />
-            <div className="text-sm font-medium">{toast.title}</div>
-            {toast.desc && (
-              <div className="text-xs text-emerald-700">• {toast.desc}</div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+      {toast && (
+        <div
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -20, opacity: 0 }}
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-white border border-emerald-200 text-emerald-800 rounded-full shadow-lg px-4 py-2 flex items-center gap-2"
+        >
+          <FaCheckCircle />
+          <div className="text-sm font-medium">{toast.title}</div>
+          {toast.desc && (
+            <div className="text-xs text-emerald-700">• {toast.desc}</div>
+          )}
+        </div>
+      )}
 
       {/* Hero (keep Add here) */}
-      <motion.div
+      <div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease }}
         className="relative overflow-hidden rounded-2xl mb-6 p-5 sm:p-8 text-white shadow"
         style={{
-          background: `linear-gradient(135deg, ${BRAND.primary}, #0B5F46)`,
+          background: `linear-gradient(135deg, #0E7C5A, #0B5F46)`,
         }}
       >
         <div className="absolute inset-0 aurora opacity-35" />
@@ -937,20 +915,20 @@ export const Courses = () => {
                 Courses
               </h1>
             </div>
-            <motion.button
+            <button
               whileTap={{ scale: 0.98 }}
               whileHover={{ y: -1 }}
               onClick={openAdd}
               className="ripple inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/90 text-[#0B1324] ring-1 ring-white/50 hover:bg-white"
             >
               <FaPlus /> Add Course
-            </motion.button>
+            </button>
           </div>
           <p className="mt-1 opacity-90 text-sm">
             Manage Quran offerings with live status and enrollments.
           </p>
         </div>
-      </motion.div>
+      </div>
 
       {/* KPI tiles */}
       <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -977,7 +955,7 @@ export const Courses = () => {
             icon: <FaStar />,
           },
         ].map((k, i) => (
-          <motion.div
+          <div
             key={k.t}
             initial={{ opacity: 0, y: 12 }}
             animate={{
@@ -985,7 +963,6 @@ export const Courses = () => {
               y: 0,
               transition: { duration: 0.45, delay: 0.06 * i, ease },
             }}
-            {...tileHover}
             className="relative overflow-hidden rounded-2xl p-5 text-white shadow-lg transition-shadow"
             style={{
               background: `linear-gradient(135deg, ${k.from}, ${k.to})`,
@@ -1000,13 +977,7 @@ export const Courses = () => {
             />
             <div className="relative flex items-center gap-3 min-w-0">
               <div className="shrink-0 grid place-items-center w-11 h-11 rounded-full bg-white/10 ring-1 ring-white/15">
-                <motion.span
-                  className="text-[18px]"
-                  whileHover={reduce ? undefined : { rotate: 2, scale: 1.05 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                >
-                  {k.icon}
-                </motion.span>
+                <span className="text-[18px]">{k.icon}</span>
               </div>
               <div className="min-w-0">
                 <div className="text-sm/4 opacity-90 truncate">{k.t}</div>
@@ -1015,7 +986,7 @@ export const Courses = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -1023,7 +994,7 @@ export const Courses = () => {
       <div ref={commandRef} className="bg-white rounded-2xl shadow p-4 mb-4">
         <div className="grid gap-3">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-            <motion.div
+            <div
               className="flex-1 min-w-[200px] w-full flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2"
               whileFocus={{ boxShadow: "0 0 0 6px #0E7C5A22" }}
             >
@@ -1037,7 +1008,7 @@ export const Courses = () => {
                 placeholder="Search title or tutor…"
                 className="w-full outline-none bg-transparent"
               />
-            </motion.div>
+            </div>
 
             {/* Right actions: scrollable on tight screens */}
             <div className="ml-auto flex items-center gap-2 shrink-0 overflow-x-auto scrollbar-none">
@@ -1073,7 +1044,7 @@ export const Courses = () => {
               </button>
               <button
                 className="ripple inline-flex items-center gap-2 px-3 py-2 text-sm rounded-lg text-white hover:opacity-95"
-                style={{ background: BRAND.primary }}
+                style={{ background: "#0E7C5A" }}
                 onClick={exportCSV}
               >
                 <FaDownload className="text-white/90" /> Export
@@ -1117,53 +1088,50 @@ export const Courses = () => {
       {/* ====== CARDS VIEW ====== */}
       {mode === "cards" && (
         <div ref={listRef}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`cards-page-${page}`}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease }}
-              className="grid gap-4"
-              style={{
-                gridTemplateColumns: `repeat(auto-fill, minmax(${cardMin}px, 1fr))`,
-              }}
-            >
-              {loading ? (
-                [...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-64 rounded-2xl bg-white shadow animate-pulse"
-                  />
-                ))
-              ) : pageData.length ? (
-                pageData.map((c) => (
-                  <CourseCard
-                    key={c.id}
-                    c={c}
-                    reduce={reduce}
-                    onView={() => setDrawer(c)}
-                    onEdit={() => setEditCourse(c)}
-                    onDelete={() => setDeleteCourse(c)}
-                  />
-                ))
-              ) : (
-                <div className="col-span-full">
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.25 },
-                    }}
-                    className="grid place-items-center h-48 rounded-2xl bg-white border border-slate-100 text-slate-600"
-                  >
-                    No courses match your filters.
-                  </motion.div>
+          <div
+            key={`cards-page-${page}`}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease }}
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: `repeat(auto-fill, minmax(${cardMin}px, 1fr))`,
+            }}
+          >
+            {loading ? (
+              [...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-64 rounded-2xl bg-white shadow animate-pulse"
+                />
+              ))
+            ) : pageData.length ? (
+              pageData.map((c) => (
+                <CourseCard
+                  key={c.id}
+                  c={c}
+                  onView={() => setDrawer(c)}
+                  onEdit={() => setEditCourse(c)}
+                  onDelete={() => setDeleteCourse(c)}
+                />
+              ))
+            ) : (
+              <div className="col-span-full">
+                <div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.25 },
+                  }}
+                  className="grid place-items-center h-48 rounded-2xl bg-white border border-slate-100 text-slate-600"
+                >
+                  No courses match your filters.
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -1260,68 +1228,59 @@ export const Courses = () => {
                   </div>
                 ) : (
                   <ul className="divide-y">
-                    <AnimatePresence initial={false} mode="popLayout">
-                      {pageData.map((c, idx) => (
-                        <motion.li
-                          key={c.id}
-                          initial={{ opacity: 0, y: reduce ? 0 : 10 }}
-                          animate={{
-                            opacity: 1,
-                            y: 0,
-                            transition: { duration: 0.25, delay: 0.02 * idx },
-                          }}
-                          exit={{ opacity: 0, y: 4 }}
-                          className="grid grid-cols-[48px_1.6fr_1.2fr_.9fr_.9fr_.9fr_120px] items-center px-2 py-3 transition-colors hover:bg-[#0E7C5A06]"
-                        >
-                          <div className="pl-2">
-                            <input
-                              type="checkbox"
-                              checked={selected.includes(c.id)}
-                              onChange={() => toggleOne(c.id)}
-                            />
+                    {pageData.map((c, idx) => (
+                      <li
+                        key={c.id}
+                        className="grid grid-cols-[48px_1.6fr_1.2fr_.9fr_.9fr_.9fr_120px] items-center px-2 py-3 transition-colors hover:bg-[#0E7C5A06]"
+                      >
+                        <div className="pl-2">
+                          <input
+                            type="checkbox"
+                            checked={selected.includes(c.id)}
+                            onChange={() => toggleOne(c.id)}
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-medium truncate text-[#0B1324]">
+                            {c.title}
                           </div>
-                          <div className="min-w-0">
-                            <div className="font-medium truncate text-[#0B1324]">
-                              {c.title}
-                            </div>
-                            <div className="text-xs text-slate-500">
-                              ID #{c.id}
-                            </div>
+                          <div className="text-xs text-slate-500">
+                            ID #{c.id}
                           </div>
-                          <div className="truncate">{c.tutor}</div>
-                          <div>
-                            <LevelBadge lvl={c.level} />
+                        </div>
+                        <div className="truncate">{c.tutor}</div>
+                        <div>
+                          <LevelBadge lvl={c.level} />
+                        </div>
+                        <div className="tabular-nums">{c.students}</div>
+                        <div>{new Date(c.updated).toLocaleDateString()}</div>
+                        <div className="pr-3">
+                          <div className="flex items-center justify-end gap-3">
+                            <IconBtn
+                              label="View"
+                              variant="view"
+                              onClick={() => setDrawer(c)}
+                            >
+                              <FaEye />
+                            </IconBtn>
+                            <IconBtn
+                              label="Update"
+                              variant="edit"
+                              onClick={() => setEditCourse(c)}
+                            >
+                              <FaPen />
+                            </IconBtn>
+                            <IconBtn
+                              label="Delete"
+                              variant="delete"
+                              onClick={() => setDeleteCourse(c)}
+                            >
+                              <FaTrashAlt />
+                            </IconBtn>
                           </div>
-                          <div className="tabular-nums">{c.students}</div>
-                          <div>{new Date(c.updated).toLocaleDateString()}</div>
-                          <div className="pr-3">
-                            <div className="flex items-center justify-end gap-3">
-                              <IconBtn
-                                label="View"
-                                variant="view"
-                                onClick={() => setDrawer(c)}
-                              >
-                                <FaEye />
-                              </IconBtn>
-                              <IconBtn
-                                label="Update"
-                                variant="edit"
-                                onClick={() => setEditCourse(c)}
-                              >
-                                <FaPen />
-                              </IconBtn>
-                              <IconBtn
-                                label="Delete"
-                                variant="delete"
-                                onClick={() => setDeleteCourse(c)}
-                              >
-                                <FaTrashAlt />
-                              </IconBtn>
-                            </div>
-                          </div>
-                        </motion.li>
-                      ))}
-                    </AnimatePresence>
+                        </div>
+                      </li>
+                    ))}
                   </ul>
                 )}
 
@@ -1393,221 +1352,216 @@ export const Courses = () => {
       )}
 
       {/* Drawer */}
-      <AnimatePresence>
-        {drawer && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/30"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDrawer(null)}
-            />
-            <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0, transition: { duration: 0.35, ease } }}
-              exit={{ x: "100%" }}
-              className="fixed right-0 top-0 h-[100svh] w-full max-w-md bg-white shadow-2xl z-50 flex flex-col pb-[env(safe-area-inset-bottom)]"
-            >
-              <div className="p-4 border-b flex items-center justify-between">
+
+      {drawer && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/30"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setDrawer(null)}
+          />
+          <aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0, transition: { duration: 0.35, ease } }}
+            exit={{ x: "100%" }}
+            className="fixed right-0 top-0 h-[100svh] w-full max-w-md bg-white shadow-2xl z-50 flex flex-col pb-[env(safe-area-inset-bottom)]"
+          >
+            <div className="p-4 border-b flex items-center justify-between">
+              <h3
+                className="text-lg font-semibold"
+                style={{ color: "#2C3E50" }}
+              >
+                Course Details
+              </h3>
+              <button
+                className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
+                onClick={() => setDrawer(null)}
+                title="Close"
+              >
+                <FaTimes className="mx-auto" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4 overflow-y-auto overscroll-contain flex-1">
+              <div className="rounded-xl overflow-hidden border border-slate-100">
+                <img
+                  src={drawer.thumb}
+                  alt={`${drawer.title} cover`}
+                  loading="lazy"
+                  className="w-full h-40 object-cover"
+                />
+              </div>
+              <div>
+                <div className="text-xl font-bold">{drawer.title}</div>
+                <div className="text-slate-500">by {drawer.tutor}</div>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <LevelBadge lvl={drawer.level} />
+                  <StatusBadge s={drawer.status} />
+                  <span className="px-2 py-1 rounded-full text-[11px] bg-emerald-50 text-emerald-700">
+                    {drawer.category}
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <span className="text-slate-500">Students:</span>{" "}
+                  {drawer.students}
+                </div>
+                <div>
+                  <span className="text-slate-500">Rating:</span>{" "}
+                  {drawer.rating.toFixed(1)}
+                </div>
+                <div>
+                  <span className="text-slate-500">Duration:</span>{" "}
+                  {drawer.duration || "—"}
+                </div>
+                <div>
+                  <span className="text-slate-500">Sessions:</span>{" "}
+                  {drawer.sessions}
+                </div>
+                <div>
+                  <span className="text-slate-500">Price:</span> ${drawer.price}
+                </div>
+                <div>
+                  <span className="text-slate-500">Updated:</span>{" "}
+                  {new Date(drawer.updated).toLocaleDateString()}
+                </div>
+                <div>
+                  <span className="text-slate-500">Course ID:</span> #
+                  {drawer.id}
+                </div>
+              </div>
+              <div className="pt-2 border-t">
+                <div className="text-sm text-slate-500 mb-2">Notes</div>
+                <p className="text-slate-700">
+                  Connect to backend to show syllabus, session count, and
+                  enrolled cohorts.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </>
+      )}
+
+      {/* Edit/Create modal */}
+
+      {editCourse && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setEditCourse(null)}
+          />
+          <div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="fixed inset-0 z-50 grid place-items-center p-4"
+          >
+            <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
+              <div className="flex items-center justify-between mb-4">
                 <h3
                   className="text-lg font-semibold"
-                  style={{ color: BRAND.dark }}
+                  style={{ color: "#2C3E50" }}
                 >
-                  Course Details
+                  {editCourse.id ? "Update Course" : "Add Course"}
                 </h3>
                 <button
                   className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
-                  onClick={() => setDrawer(null)}
-                  title="Close"
+                  onClick={() => setEditCourse(null)}
                 >
                   <FaTimes className="mx-auto" />
                 </button>
               </div>
-              <div className="p-6 space-y-4 overflow-y-auto overscroll-contain flex-1">
-                <div className="rounded-xl overflow-hidden border border-slate-100">
-                  <img
-                    src={drawer.thumb}
-                    alt={`${drawer.title} cover`}
-                    loading="lazy"
-                    className="w-full h-40 object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="text-xl font-bold">{drawer.title}</div>
-                  <div className="text-slate-500">by {drawer.tutor}</div>
-                  <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <LevelBadge lvl={drawer.level} />
-                    <StatusBadge s={drawer.status} />
-                    <span className="px-2 py-1 rounded-full text-[11px] bg-emerald-50 text-emerald-700">
-                      {drawer.category}
-                    </span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <span className="text-slate-500">Students:</span>{" "}
-                    {drawer.students}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Rating:</span>{" "}
-                    {drawer.rating.toFixed(1)}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Duration:</span>{" "}
-                    {drawer.duration || "—"}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Sessions:</span>{" "}
-                    {drawer.sessions}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Price:</span> $
-                    {drawer.price}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Updated:</span>{" "}
-                    {new Date(drawer.updated).toLocaleDateString()}
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Course ID:</span> #
-                    {drawer.id}
-                  </div>
-                </div>
-                <div className="pt-2 border-t">
-                  <div className="text-sm text-slate-500 mb-2">Notes</div>
-                  <p className="text-slate-700">
-                    Connect to backend to show syllabus, session count, and
-                    enrolled cohorts.
-                  </p>
-                </div>
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Edit/Create modal */}
-      <AnimatePresence>
-        {editCourse && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setEditCourse(null)}
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="fixed inset-0 z-50 grid place-items-center p-4"
-            >
-              <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3
-                    className="text-lg font-semibold"
-                    style={{ color: BRAND.dark }}
-                  >
-                    {editCourse.id ? "Update Course" : "Add Course"}
-                  </h3>
-                  <button
-                    className="ripple w-9 h-9 rounded-md border border-slate-200 hover:bg-slate-50"
-                    onClick={() => setEditCourse(null)}
-                  >
-                    <FaTimes className="mx-auto" />
-                  </button>
-                </div>
-                <EditForm
-                  course={editCourse}
-                  onCancel={() => setEditCourse(null)}
-                  onSubmit={applyUpdate}
-                />
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              <EditForm
+                course={editCourse}
+                onCancel={() => setEditCourse(null)}
+                onSubmit={applyUpdate}
+              />
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Delete confirm */}
-      <AnimatePresence>
-        {deleteCourse && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setDeleteCourse(null)}
-            />
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="fixed inset-0 z-50 grid place-items-center p-4"
-            >
-              <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
-                <h3
-                  className="text-lg font-semibold mb-2"
-                  style={{ color: BRAND.dark }}
+
+      {deleteCourse && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setDeleteCourse(null)}
+          />
+          <div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { duration: 0.25 } }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            className="fixed inset-0 z-50 grid place-items-center p-4"
+          >
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6">
+              <h3
+                className="text-lg font-semibold mb-2"
+                style={{ color: "#2C3E50" }}
+              >
+                Confirm Delete
+              </h3>
+              <p className="text-slate-600 mb-4">
+                Delete <b>{deleteCourse.title}</b>? This action cannot be
+                undone.
+              </p>
+              <div className="flex items-center justify-end gap-2">
+                <button
+                  className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
+                  onClick={() => setDeleteCourse(null)}
                 >
-                  Confirm Delete
-                </h3>
-                <p className="text-slate-600 mb-4">
-                  Delete <b>{deleteCourse.title}</b>? This action cannot be
-                  undone.
-                </p>
-                <div className="flex items-center justify-end gap-2">
-                  <button
-                    className="ripple px-3 py-2 rounded-md border border-slate-200 hover:bg-slate-50"
-                    onClick={() => setDeleteCourse(null)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="ripple px-3 py-2 rounded-md text-white bg-rose-600 hover:opacity-95"
-                    onClick={() => applyDelete(deleteCourse.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+                  Cancel
+                </button>
+                <button
+                  className="ripple px-3 py-2 rounded-md text-white bg-rose-600 hover:opacity-95"
+                  onClick={() => applyDelete(deleteCourse.id)}
+                >
+                  Delete
+                </button>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Mobile quick bar (kept) */}
-      <AnimatePresence>
-        {isMobile && !(drawer || editCourse || deleteCourse) && (
-          <motion.nav
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 20, opacity: 0 }}
-            className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2 safe-bottom pointer-events-auto overflow-x-auto scrollbar-none"
-            style={{ bottom: `calc(12px + env(safe-area-inset-bottom))` }}
+
+      {isMobile && !(drawer || editCourse || deleteCourse) && (
+        <nav
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 20, opacity: 0 }}
+          className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur border border-slate-200 shadow-xl rounded-full px-3 py-2 flex items-center gap-2 safe-bottom pointer-events-auto overflow-x-auto scrollbar-none"
+          style={{ bottom: `calc(12px + env(safe-area-inset-bottom))` }}
+        >
+          <button
+            className="ripple px-3 py-1.5 rounded-full text-sm text-white"
+            style={{ background: "#0E7C5A" }}
+            onClick={openAdd}
           >
-            <button
-              className="ripple px-3 py-1.5 rounded-full text-sm text-white"
-              style={{ background: BRAND.primary }}
-              onClick={openAdd}
-            >
-              <FaPlus className="-mt-0.5 mr-1" />
-              Add
-            </button>
-            <button
-              className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200"
-              onClick={() => {
-                commandRef.current?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              <FaFilter className="inline -mt-0.5 mr-1" />
-              Filters
-            </button>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+            <FaPlus className="-mt-0.5 mr-1" />
+            Add
+          </button>
+          <button
+            className="ripple px-3 py-1.5 rounded-full text-sm border border-slate-200"
+            onClick={() => {
+              commandRef.current?.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            <FaFilter className="inline -mt-0.5 mr-1" />
+            Filters
+          </button>
+        </nav>
+      )}
     </div>
   );
 };

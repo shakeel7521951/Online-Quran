@@ -19,16 +19,28 @@ import Contact from "./pages/Contact";
 import FreeTrialClass from "./components/ServicesComp/FreeTrialClass";
 
 // Dashboard
-import { Sidebar } from "./Dashboard/common/Sidebar";
-import DashboardNavbar from "./Dashboard/common/Navbar";
-import { Dashboard } from "./Dashboard/Dashboard";
-import { Users } from "./Dashboard/Users";
-import { Tutors } from "./Dashboard/Tutors";
-import { Courses } from "./Dashboard/Courses";
-import { Reviews } from "./Dashboard/Reviews";
-import { Settings } from "./Dashboard/Settings";
+
+import { Dashboard } from "./DashboardTest/Dashboard";
+import { Users } from "./DashboardTest/Users";
+import { Tutors } from "./DashboardTest/Tutors";
+import { Courses } from "./DashboardTest/Courses";
+import { Reviews } from "./DashboardTest/Reviews";
+import { Settings } from "./DashboardTest/Settings";
+import Sidebar from "./DashboardTest/common/sidebar";
+import NavbarTest from "./DashboardTest/common/navbar";
+
+// new dashboard imports
+import DashSidebar from "./Dashboard/common/DashSidebar";
+import DashNavbar from "./Dashboard/common/DashNavbar";
 import AdminSignup from "./Dashboard/common/AdminSignup";
 import AdminVerifyOtp from "./Dashboard/common/AdminVerifyOtp";
+import DashboardHome from "./Dashboard/DashboardHome";
+import UsersPage from "./Dashboard/UsersPage";
+import TutorsPage from "./Dashboard/TutorsPage";
+import CoursesPage from "./Dashboard/CoursesPage";
+import ReviewsPage from "./Dashboard/ReviewsPage";
+import SettingsPage from "./Dashboard/SettingsPage";
+import { useState } from "react";
 
 // ===== Layouts =====
 const MainLayout = () => (
@@ -43,13 +55,39 @@ const AdminLayout = () => (
   <div className="flex min-h-screen">
     <Sidebar />
     <div className="flex-1 w-full flex flex-col">
-      <DashboardNavbar />
+      <NavbarTest />
       <main className="flex-1 p-6">
         <Outlet />
       </main>
     </div>
   </div>
 );
+
+// dashboard layout new
+const DashboardLayout = () => {
+  const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false); // desktop collapse
+  return (
+    <div>
+      <DashSidebar
+        open={open}
+        setOpen={setOpen}
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+      />
+      <div
+        className={`${
+          collapsed ? "md:ml-20" : "md:ml-64"
+        } transition-all duration-300`}
+      >
+        <DashNavbar setOpen={setOpen} />
+        <main className="p-4">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
 
 // ===== Router Config =====
 const router = createBrowserRouter([
@@ -74,7 +112,7 @@ const router = createBrowserRouter([
   },
   { path: "/FreeTrialClass", element: <FreeTrialClass /> },
   {
-    path: "/dashboard",
+    path: "/dashboardTest",
     element: (
       <AdminRoute>
         <AdminLayout />
@@ -87,8 +125,25 @@ const router = createBrowserRouter([
       { path: "courses", element: <Courses /> },
       { path: "reviews", element: <Reviews /> },
       { path: "settings", element: <Settings /> },
+    ],
+  },
+  {
+    // new dashboard layout
+    path: "/dashboard",
+    element: (
+      <AdminRoute>
+        <DashboardLayout />
+      </AdminRoute>
+    ),
+    children: [
+      { index: true, element: <DashboardHome /> },
+      { path: "users", element: <UsersPage /> },
+      { path: "tutors", element: <TutorsPage /> },
+      { path: "courses", element: <CoursesPage /> },
+      { path: "reviews", element: <ReviewsPage /> },
+      { path: "settings", element: <SettingsPage /> },
       { path: "adminSignup", element: <AdminSignup /> },
-      { path: "verify-otp", element: <AdminVerifyOtp  /> },
+      { path: "verify-otp", element: <AdminVerifyOtp /> },
     ],
   },
 ]);

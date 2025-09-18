@@ -17,19 +17,19 @@ import {
 const BORDER = "#e2e8f0";
 
 const MENU = [
-  { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },
-  { name: "Users", path: "/dashboard/users", icon: <FaUsers /> },
-  { name: "Tutors", path: "/dashboard/tutors", icon: <FaChalkboardTeacher /> },
-  { name: "Courses", path: "/dashboard/courses", icon: <FaBookOpen /> },
-  { name: "Reviews", path: "/dashboard/reviews", icon: <FaStar /> },
-  { name: "Settings", path: "/dashboard/settings", icon: <FaCog /> },
+  { name: "Dashboard", path: "/dashboardTest", icon: <FaHome /> },
+  { name: "Users", path: "/dashboardTest/users", icon: <FaUsers /> },
+  { name: "Tutors", path: "/dashboardTest/tutors", icon: <FaChalkboardTeacher /> },
+  { name: "Courses", path: "/dashboardTest/courses", icon: <FaBookOpen /> },
+  { name: "Reviews", path: "/dashboardTest/reviews", icon: <FaStar /> },
+  { name: "Settings", path: "/dashboardTest/settings", icon: <FaCog /> },
 ];
 
 const baseLink =
   "qa-link relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 " +
   "text-emerald-50/90 hover:text-white transition";
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const location = useLocation();
 
   const [open, setOpen] = useState(false);
@@ -271,3 +271,5 @@ export const Sidebar = () => {
     </div>
   );
 };
+
+export default Sidebar;

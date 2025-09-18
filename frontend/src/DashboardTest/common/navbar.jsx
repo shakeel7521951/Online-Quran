@@ -12,7 +12,7 @@ const PAGE_TITLES = {
   "/dashboard/settings": "Settings",
 };
 
-const DashboardNavbar = () => {
+const NavbarTest = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hide, setHide] = useState(false);
 
@@ -80,4 +80,4 @@ const DashboardNavbar = () => {
   );
 };
 
-export default DashboardNavbar;
+export default NavbarTest;
