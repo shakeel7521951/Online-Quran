@@ -1,8 +1,14 @@
 import React from 'react'
+import UsersCards from './usersPage/UsersCards'
+import UsersTable from './usersPage/UsersTable'
+
 
 function UsersPage() {
   return (
-    <div>UsersPage</div>
+    <div>
+      <UsersCards />
+      <UsersTable />
+    </div>
   )
 }
 
