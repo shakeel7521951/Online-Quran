@@ -9,12 +9,15 @@ import {
   FaStar,
   FaChevronLeft,
   FaChevronRight,
+  FaUsersCog,
 } from "react-icons/fa";
+import { Users } from "lucide-react";
 
 const MENU = [
   { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },
   { name: "Users", path: "/dashboard/users", icon: <FaUsers /> },
   { name: "Tutors", path: "/dashboard/tutors", icon: <FaChalkboardTeacher /> },
+  { name: "Students", path: "/dashboard/students", icon: <FaUsersCog /> },
   { name: "Courses", path: "/dashboard/courses", icon: <FaBookOpen /> },
   { name: "Reviews", path: "/dashboard/reviews", icon: <FaStar /> },
   { name: "Settings", path: "/dashboard/settings", icon: <FaCog /> },

@@ -7,6 +7,7 @@ const PAGE_TITLES = {
   "/dashboard": "Dashboard",
   "/dashboard/users": "Users",
   "/dashboard/tutors": "Tutors",
+  "/dashboard/students": "Students",
   "/dashboard/courses": "Courses",
   "/dashboard/reviews": "Reviews",
   "/dashboard/settings": "Settings",
