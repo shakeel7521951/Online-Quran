@@ -30,9 +30,10 @@ export default function QuickActions() {
 
   return (
     <section className="mt-10">
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-800 relative inline-block mb-4">
         Quick Actions
-      </h2>
+        <span className="absolute left-0 -bottom-1 w-12 h-1 bg-[#cdcd14] rounded-full"></span>
+      </h1>
 
       {/* Action Buttons Row */}
       <div className="flex flex-wrap gap-4">
@@ -59,9 +60,15 @@ export default function QuickActions() {
               <X className="w-5 h-5" />
             </button>
 
-            {openForm === "tutor" && <AddTutorForm onClose={() => setOpenForm(null)} />}
-            {openForm === "student" && <AddStudentForm onClose={() => setOpenForm(null)} />}
-            {openForm === "course" && <AddCourseForm onClose={() => setOpenForm(null)} />}
+            {openForm === "tutor" && (
+              <AddTutorForm onClose={() => setOpenForm(null)} />
+            )}
+            {openForm === "student" && (
+              <AddStudentForm onClose={() => setOpenForm(null)} />
+            )}
+            {openForm === "course" && (
+              <AddCourseForm onClose={() => setOpenForm(null)} />
+            )}
           </div>
         </div>
       )}

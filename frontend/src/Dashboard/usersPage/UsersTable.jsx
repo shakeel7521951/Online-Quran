@@ -73,9 +73,9 @@ export default function UsersTable() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3 p-3">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 relative inline-block">
-        Users Management
-        <span className="absolute left-0 -bottom-1 w-12 h-1 bg-[#cdcd14] rounded-full"></span>
-      </h1>
+          Users Management
+          <span className="absolute left-0 -bottom-1 w-12 h-1 bg-[#cdcd14] rounded-full"></span>
+        </h1>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
           {/* Search */}

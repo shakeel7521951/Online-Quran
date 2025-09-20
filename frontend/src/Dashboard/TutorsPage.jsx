@@ -1,14 +1,14 @@
 import React from 'react'
 import TutorsHeader from './tutorsPage/TutorsHeader'
 import TutorCards from './tutorsPage/TutorsCards'
-import TutorFilters from './tutorsPage/TutorFilters'
+import TutorTable from './tutorsPage/TutorsTable'
 
 function TutorsPage() {
   return (
     <div>
       <TutorsHeader />
       <TutorCards />
-      <TutorFilters />
+      <TutorTable />
     </div>
   )
 }
