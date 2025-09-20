@@ -11,7 +11,6 @@ import {
   FaChevronRight,
   FaUsersCog,
 } from "react-icons/fa";
-import { Users } from "lucide-react";
 
 const MENU = [
   { name: "Dashboard", path: "/dashboard", icon: <FaHome /> },

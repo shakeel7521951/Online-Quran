@@ -68,7 +68,7 @@ export default function TutorDrops({ search, setSearch, filter, setFilter }) {
         <Search className="absolute left-3 top-3 text-gray-400" size={18} />
         <input
           type="text"
-          placeholder="Search tutors by name, email, or country..."
+          placeholder="Search tutors by name or email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#0E7C5A] focus:outline-none"
