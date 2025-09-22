@@ -3,25 +3,29 @@ import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
 import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const swiperAry = [
   {
     id: 1,
-    bgimg: "https://plus.unsplash.com/premium_photo-1677587536653-0d02efbb70ee?w=1200&auto=format&fit=crop&q=60",
+    bgimg:
+      "https://plus.unsplash.com/premium_photo-1677587536653-0d02efbb70ee?w=1200&auto=format&fit=crop&q=60",
     heading: "Learn Quran Online",
     desc: "Start your journey with professional Quran tutors from the comfort of your home.",
   },
   {
     id: 2,
-    bgimg: "https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?w=1200&auto=format&fit=crop&q=60",
+    bgimg:
+      "https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?w=1200&auto=format&fit=crop&q=60",
     heading: "One-on-One Classes",
     desc: "Personalized teaching method tailored to each student's learning pace.",
   },
   {
     id: 3,
-    bgimg: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=1200&auto=format&fit=crop&q=60",
+    bgimg:
+      "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=1200&auto=format&fit=crop&q=60",
     heading: "Worldwide Access",
     desc: "Learn from anywhere, anytime with flexible scheduling options.",
   },
@@ -47,34 +51,38 @@ const Hero = () => {
       fadeEffect: { crossFade: true },
       speed: 1200,
     });
+
+    // AOS init
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
   }, []);
 
   return (
     <div className="w-full max-w-6xl mx-auto pt-25 sm:pt-40 px-4">
       {/* Title */}
       <div className="text-center mb-12">
-        <motion.h1
+        <h1
           className="text-3xl font-semibold text-gray-600 font-serif max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          data-aos="fade-down"
         >
           About Online Quran Academy
-        </motion.h1>
-        <motion.p
+        </h1>
+        <p
           className="text-md font-semibold text-gray-400 mt-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
+          data-aos="fade-up"
+          data-aos-delay="200"
         >
-          Discover the beautiful journey of learning Quran with our expert teachers and innovative platform
-        </motion.p>
+          Discover the beautiful journey of learning Quran with our expert
+          teachers and innovative platform
+        </p>
       </div>
 
       {/* Swiper */}
       <div className="swiper mySwiper w-full h-[500px] rounded-3xl shadow-2xl overflow-hidden relative">
         <div className="swiper-wrapper">
-          {swiperAry.map((item) => (
+          {swiperAry.map((item, i) => (
             <div
               key={item.id}
               className="swiper-slide flex items-center justify-center relative"
@@ -89,32 +97,31 @@ const Hero = () => {
 
               {/* Content Centered */}
               <div className="relative z-10 flex flex-col h-full justify-center items-center text-white text-center w-full px-4">
-                <motion.h2
+                <h2
                   className="text-3xl md:text-4xl font-bold mb-4"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 1 }}
+                  data-aos="zoom-in-up"
+                  data-aos-delay="100"
                 >
                   {item.heading}
-                </motion.h2>
-                <motion.p
+                </h2>
+                <p
                   className="text-lg md:text-xl opacity-95 max-w-md mx-auto"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 1 }}
+                  data-aos="fade-up"
+                  data-aos-delay="300"
                 >
                   {item.desc}
-                </motion.p>
-                <motion.div
+                </p>
+                <div
                   className="mt-8"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
+                  data-aos="flip-up"
+                  data-aos-delay="500"
                 >
-                 <Link to="/contact"> <button className="bg-amber-500 cursor-pointer hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    Start Learning
-                  </button></Link>
-                </motion.div>
+                  <Link to="/contact">
+                    <button className="bg-amber-500 cursor-pointer hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                      Start Learning
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
