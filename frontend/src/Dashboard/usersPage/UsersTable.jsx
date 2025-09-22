@@ -98,7 +98,7 @@ export default function UsersTable() {
       {/* Users Table */}
       <div className="rounded-2xl shadow-lg bg-white">
         <div className="overflow-x-auto w-full rounded-2xl">
-          <table className="w-full min-w-[800px] text-left border-collapse">
+          <table className="w-full min-w-[800px] text-left border-collapse text-nowrap">
             <thead className="bg-[#01855d] text-white">
               <tr>
                 <th className="px-6 py-3 text-sm font-semibold">Name</th>

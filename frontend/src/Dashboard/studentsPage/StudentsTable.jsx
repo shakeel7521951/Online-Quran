@@ -1,98 +1,96 @@
 import { useState } from "react";
 import { Eye, Edit, Trash2 } from "lucide-react";
-import TutorDrops from "./tutorDrops/TutorDrops";
-import ViewTutorModal from "./modelsSection/ViewTutorModel";
-import EditTutorModal from "./modelsSection/EditTutorModel";
-import DeleteTutorModal from "./modelsSection/DeleteTutorModel";
+import StudentDrops from "./studentsDrops/StudentsDrops";
+import ViewStudentModal from "./modelsSection/ViewStudentModel";
+import EditStudentModal from "./modelsSection/EditStudentModel";
+import DeleteStudentModal from "./modelsSection/DeleteStudentModel";
 
-const sampleTutors = [
+const sampleStudents = [
   {
     id: 1,
     name: "Abdul Rehman",
     email: "abdul@example.com",
-    role: "Qari",
+    phone: "+92 300 1234567",
+    class: "Hifz",
     status: "Active",
     gender: "Male",
+    age: 15,
     joined: "2025-09-01",
     avatar: "https://i.pravatar.cc/40?u=abdul",
-    experience: "5 Years",
-    studentsAssigned: 12,
-    reviews: 5.0,
   },
   {
     id: 2,
     name: "Ayesha Khan",
     email: "ayesha@example.com",
-    role: "Hafiz",
-    status: "Inactive",
+    phone: "+92 301 2345678",
+    class: "Nazra",
+    status: "Graduated",
     gender: "Female",
+    age: 12,
     joined: "2025-09-05",
     avatar: "https://i.pravatar.cc/40?u=ayesha",
-    experience: "3 Years",
-    studentsAssigned: 8,
-    reviews: 4.1,
   },
   {
     id: 3,
-    name: "Ali Raza",
-    email: "ali@example.com",
-    role: "Teacher",
-    status: "Active",
+    name: "Hamza Ali",
+    email: "hamza@example.com",
+    phone: "+92 302 3456789",
+    class: "Tajweed",
+    status: "Pending",
     gender: "Male",
-    joined: "2025-09-10",
-    avatar: "https://i.pravatar.cc/40?u=ali",
-    experience: "7 Years",
-    studentsAssigned: 20,
-    reviews: 3.9,
+    age: 18,
+    joined: "2025-08-20",
+    avatar: "https://i.pravatar.cc/40?u=hamza",
   },
   {
-    id: 3,
-    name: "shabnam",
-    email: "shabnam@example.com",
-    role: "Teacher",
-    status: "Active",
+    id: 4,
+    name: "Fatima Zahra",
+    email: "fatima@example.com",
+    phone: "+92 303 4567890",
+    class: "Advanced",
+    status: "Inactive",
     gender: "Female",
-    joined: "2024-09-10",
-    avatar: "https://i.pravatar.cc/40?u=ali",
-    experience: "4 Years",
-    studentsAssigned: 26,
-    reviews: 2.9,
+    age: 9,
+    joined: "2025-08-25",
+    avatar: "https://i.pravatar.cc/40?u=fatima",
   },
 ];
 
-export default function TutorTable() {
+export default function StudentTable() {
   const [search, setSearch] = useState("");
-  const [viewTutor, setViewTutor] = useState(null);
-  const [editTutor, setEditTutor] = useState(null);
-  const [deleteTutor, setDeleteTutor] = useState(null);
+  const [viewStudent, setViewStudent] = useState(null);
+  const [editStudent, setEditStudent] = useState(null);
+  const [deleteStudent, setDeleteStudent] = useState(null);
   const [filter, setFilter] = useState({
-    role: "All",
+    class: "All",
     status: "All",
     gender: "All",
-    reviews: "All",
+    ageGroup: "All",
   });
 
-  // Filter tutors by search + dropdowns
-  const filteredTutors = sampleTutors.filter((t) => {
+  // Filter students by search + dropdowns
+  const filteredStudents = sampleStudents.filter((s) => {
     const matchesSearch =
-      t.name.toLowerCase().includes(search.toLowerCase()) ||
-      t.email.toLowerCase().includes(search.toLowerCase());
+      s.name.toLowerCase().includes(search.toLowerCase()) ||
+      s.email.toLowerCase().includes(search.toLowerCase());
 
-    const matchesRole = filter.role === "All" || t.role === filter.role;
-    const matchesStatus = filter.status === "All" || t.status === filter.status;
-    const matchesGender = filter.gender === "All" || t.gender === filter.gender;
-    const matchesReviews =
-      filter.reviews === "All" ||
-      (filter.reviews === "5" && Math.round(t.reviews) === 5) ||
-      (filter.reviews === "4+" && t.reviews >= 4) ||
-      (filter.reviews === "3-" && t.reviews <= 3);
+    const matchesClass = filter.class === "All" || s.class === filter.class;
+    const matchesStatus = filter.status === "All" || s.status === filter.status;
+    const matchesGender = filter.gender === "All" || s.gender === filter.gender;
+
+    const matchesAge =
+      filter.ageGroup === "All" ||
+      (filter.ageGroup === "U10" && s.age < 10) ||
+      (filter.ageGroup === "10-15" && s.age >= 10 && s.age <= 15) ||
+      (filter.ageGroup === "15-20" && s.age >= 15 && s.age <= 20) ||
+      (filter.ageGroup === "20+" && s.age > 20);
 
     return (
       matchesSearch &&
-      matchesRole &&
+      matchesClass &&
       matchesStatus &&
       matchesGender &&
-      matchesReviews
+      matchesAge
     );
   });
 
@@ -101,13 +99,13 @@ export default function TutorTable() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3 p-3">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 relative inline-block">
-          Tutors Management
+          Students Management
           <span className="absolute left-0 -bottom-1 w-12 h-1 bg-[#cdcd14] rounded-full"></span>
         </h1>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-full">
           {/* Filters */}
-          <TutorDrops
+          <StudentDrops
             search={search}
             setSearch={setSearch}
             filter={filter}
@@ -124,24 +122,21 @@ export default function TutorTable() {
               <tr>
                 <th className="px-6 py-3 text-sm font-semibold">Name</th>
                 <th className="px-6 py-3 text-sm font-semibold">Email</th>
-                <th className="px-6 py-3 text-sm font-semibold">Role</th>
+                <th className="px-6 py-3 text-sm font-semibold">Phone</th>
+                <th className="px-6 py-3 text-sm font-semibold">Class</th>
                 <th className="px-6 py-3 text-sm font-semibold">Status</th>
                 <th className="px-6 py-3 text-sm font-semibold">Gender</th>
-                <th className="px-6 py-3 text-sm font-semibold">Experience</th>
-                <th className="px-6 py-3 text-sm font-semibold">Students</th>
-                <th className="px-6 py-3 text-sm font-semibold">Reviews</th>
+                <th className="px-6 py-3 text-sm font-semibold">Age</th>
                 <th className="px-6 py-3 text-sm font-semibold">Joined</th>
-                <th className="px-6 py-3 text-sm font-semibold text-center">
-                  Actions
-                </th>
+                <th className="px-6 py-3 text-sm font-semibold text-center">Actions</th>
               </tr>
             </thead>
 
             <tbody>
-              {filteredTutors.length > 0 ? (
-                filteredTutors.map((tutor, index) => (
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map((student, index) => (
                   <tr
-                    key={tutor.id}
+                    key={student.id}
                     className={`transition ${
                       index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-green-50`}
@@ -149,62 +144,58 @@ export default function TutorTable() {
                     {/* Avatar + Name */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
                       <img
-                        src={tutor.avatar}
-                        alt={tutor.name}
+                        src={student.avatar}
+                        alt={student.name}
                         className="w-10 h-10 rounded-full object-cover border border-gray-300"
                       />
-                      {tutor.name}
+                      {student.name}
                     </td>
 
-                    <td className="px-6 py-4 text-gray-600">{tutor.email}</td>
+                    <td className="px-6 py-4 text-gray-600">{student.email}</td>
+                    <td className="px-6 py-4 text-gray-600">{student.phone}</td>
 
                     <td className="px-6 py-4">
                       <span className="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
-                        {tutor.role}
+                        {student.class}
                       </span>
                     </td>
 
                     <td className="px-6 py-4">
                       <span
                         className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                          tutor.status === "Active"
+                          student.status === "Active"
                             ? "bg-green-100 text-green-700"
                             : "bg-red-100 text-red-700"
                         }`}
                       >
-                        {tutor.status}
+                        {student.status}
                       </span>
                     </td>
 
-                    <td className="px-6 py-4 text-gray-700">{tutor.gender}</td>
                     <td className="px-6 py-4 text-gray-700">
-                      {tutor.experience}
+                      {student.gender}
                     </td>
-                    <td className="px-6 py-4 text-gray-700">
-                      {tutor.studentsAssigned}
+                    <td className="px-6 py-4 text-gray-700">{student.age}</td>
+                    <td className="px-6 py-4 text-gray-500">
+                      {student.joined}
                     </td>
-                    <td className="px-6 py-4 text-yellow-600 font-semibold">
-                      ⭐ {tutor.reviews}
-                    </td>
-                    <td className="px-6 py-4 text-gray-500">{tutor.joined}</td>
-
                     {/* Actions */}
                     <td className="px-6 py-4 text-center">
                       <div className="flex justify-center space-x-2">
                         <button
-                          onClick={() => setViewTutor(tutor)}
+                          onClick={() => setViewStudent(student)}
                           className="p-2 rounded-lg hover:bg-green-100 text-green-600 transition"
                         >
                           <Eye size={18} />
                         </button>
                         <button
-                          onClick={() => setEditTutor(tutor)}
+                          onClick={() => setEditStudent(student)}
                           className="p-2 rounded-lg hover:bg-yellow-100 text-yellow-600 transition"
                         >
                           <Edit size={18} />
                         </button>
                         <button
-                          onClick={() => setDeleteTutor(tutor)}
+                          onClick={() => setDeleteStudent(student)}
                           className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition"
                         >
                           <Trash2 size={18} />
@@ -219,7 +210,7 @@ export default function TutorTable() {
                     colSpan="8"
                     className="px-6 py-6 text-center text-gray-500 italic"
                   >
-                    No tutors found
+                    No students found
                   </td>
                 </tr>
               )}
@@ -227,22 +218,22 @@ export default function TutorTable() {
           </table>
 
           {/* Modals */}
-          {viewTutor && (
-            <ViewTutorModal
-              user={viewTutor}
-              onClose={() => setViewTutor(null)}
+          {viewStudent && (
+            <ViewStudentModal
+              user={viewStudent}
+              onClose={() => setViewStudent(null)}
             />
           )}
-          {editTutor && (
-            <EditTutorModal
-              user={editTutor}
-              onClose={() => setEditTutor(null)}
+          {editStudent && (
+            <EditStudentModal
+              user={editStudent}
+              onClose={() => setEditStudent(null)}
             />
           )}
-          {deleteTutor && (
-            <DeleteTutorModal
-              user={deleteTutor}
-              onClose={() => setDeleteTutor(null)}
+          {deleteStudent && (
+            <DeleteStudentModal
+              user={deleteStudent}
+              onClose={() => setDeleteStudent(null)}
             />
           )}
         </div>

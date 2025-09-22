@@ -42,7 +42,6 @@ import ReviewsPage from "./Dashboard/ReviewsPage";
 import SettingsPage from "./Dashboard/SettingsPage";
 import { useState } from "react";
 import StudentsPage from "./Dashboard/StudentsPage";
-
 // ===== Layouts =====
 const MainLayout = () => (
   <div>
