@@ -1,24 +1,24 @@
-import React from "react";
-import { FaFacebookF } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io5";
-import { FaLinkedinIn } from "react-icons/fa";
-import { FaPhone } from "react-icons/fa6";
-import { MdOutlineMail } from "react-icons/md";
-import { FaLocationDot } from "react-icons/fa6";
-import { MdOutlinePermIdentity } from "react-icons/md";
-import { MdLocalPhone } from "react-icons/md";
-import { MdOutlineMailOutline } from "react-icons/md";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { FaPhone, FaLocationDot } from "react-icons/fa6";
+import { MdOutlineMail, MdOutlinePermIdentity, MdLocalPhone, MdOutlineMailOutline } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1000, easing: "ease-in-out", once: true });
+  }, []);
+
   return (
-    <div className="relative w-full  min-h-screen  flex items-center justify-center overflow-hidden ">
+    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-white ">
+      
       {/* SVG wave at bottom */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"
-        className="absolute   -top-90 md:-top-70 w-full h-200 text-center"
+        className="absolute -top-90 md:-top-70 w-full h-200 text-center"
       >
         <path
           fill="#E2B77F"
@@ -27,131 +27,107 @@ const Hero = () => {
         ></path>
       </svg>
 
-      {/* Overlay for text clarity */}
-      <div className="   bg-black/30"></div>
-
-      <div className="  z-10 w-xl md:w-auto  flex flex-col md:flex-row gap-2 md:gap-10 ">
-        <div className="px-10 w-full   items-center mt-25 md:w-auto md:mt-0 bg-transparent py-2 ">
-          <motion.img
+      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-10 w-full max-w-6xl p-6 pt-30">
+        
+        {/* Left Column */}
+        <motion.div
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-            src="/newcont.png"
-            className="w-60"
-            alt=""
-          />
-          <div className="flex flex-col ">
-            <motion.h1
-             initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-              className="text-3xl font-semibold mb-2"
-            >
-              Get in Touch
-            </motion.h1>
-            <motion.p
-            initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-              className="text-xs md:w-xs my-2"
-            >
-              Get in touch with Online Quran Academy. We're here to answer any
-              questions and help you begin your Quranic journey.
-            </motion.p>
-            <div>
-              <motion.div
-             initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 , delay:1 }}
-                className="flex my-2 items-center gap-3"
-              >
-                <div className="p-2 border  border-[#E2B77F] rounded-full">
-                  <FaPhone className="text-[#E2B77F]" />
-                </div>
-                <p className="text-sm font-semibold">+997979797</p>
-              </motion.div>
-              <motion.div
-             initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1,delay:2 }}
-                className="flex my-2 items-center gap-3"
-              >
-                <div className="p-2 border  border-[#E2B77F] rounded-full">
-                  <MdOutlineMail className="text-[#E2B77F]" />
-                </div>
-                <p className="text-sm font-semibold">
-                  onlinequran234@gmail.com
-                </p>
-              </motion.div>
-              <motion.div
-         initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 ,delay:3}}
-                className="flex my-2 items-center gap-3"
-              >
-                <div className="p-2 border  border-[#E2B77F] rounded-full">
-                  <FaLocationDot className="text-[#E2B77F]" />
-                </div>
-                <p className="text-sm font-semibold">
-                  Online Quran Academy , Qatar{" "}
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-        {/* form  */}
-        <motion.div
-        initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="w-full md:w-sm border border-gray-100 p-2 h-auto shadow-sm bg-white rounded-2xl"
+          className="flex flex-col items-center md:items-start text-center md:text-left gap-4"
         >
-          <div className="flex items-center text-sm font-semibold gap-2 border border-gray-200 bg-gray-100 rounded-md px-2 py-2 my-5">
-            <MdOutlinePermIdentity />
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="focus:outline-none w-full"
-            />
-          </div>
-          <div className="flex items-center text-sm font-semibold gap-2 border border-gray-200 bg-gray-100 rounded-md px-2 py-2 my-5">
-            <MdOutlinePermIdentity />
-            <input
-              type="text"
-              placeholder="Father Name"
-              className="focus:outline-none w-full"
-            />
-          </div>
-          <div className="flex items-center text-sm font-semibold gap-2 border border-gray-200 bg-gray-100 rounded-md px-2 py-2 my-5">
-            <MdLocalPhone />
-            <input
-              type="phone"
-              placeholder="Phone Number"
-              className="focus:outline-none w-full"
-            />
-          </div>
-          <div className="flex items-center text-sm font-semibold gap-2 border border-gray-200 bg-gray-100 rounded-md px-2 py-2 my-5">
-            <MdOutlineMailOutline />
-            <input
-              type="text"
-              placeholder="Email Address"
-              className="focus:outline-none w-full"
-            />
-          </div>
+          <motion.img
+            src="/newcont.png"
+            className="w-60 rounded-lg "
+            alt="Online Quran Academy"
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          />
+          <motion.h1
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            className="text-3xl md:text-4xl font-bold text-black"
+          >
+            Get in Touch
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            className="text-sm md:text-base text-gray-600 max-w-md"
+          >
+            Contact Online Quran Academy. We’re here to answer questions and help you begin your Quranic journey.
+          </motion.p>
 
-          <div className="flex  items-center gap-2 text-sm font-semibold border border-gray-200 bg-gray-100 rounded-md px-2 py-2 my-5">
-            <textarea
-              name=""
-              placeholder="Message"
-              className="h-30 w-full focus:outline-none text-sm font-semibold"
-              id=""
-            ></textarea>
+          {/* Contact Info */}
+          <div className="flex flex-col gap-3 mt-4">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1 }}
+              data-aos="fade-right"
+              className="flex items-center gap-3 text-black"
+            >
+              <div className="p-2 border border-[#E2B77F] rounded-full">
+                <FaPhone className="text-[#E2B77F]" />
+              </div>
+              <span className="text-sm font-semibold">+997979797</span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              data-aos="fade-right"
+              className="flex items-center gap-3 text-black"
+            >
+              <div className="p-2 border border-[#E2B77F] rounded-full ">
+                <MdOutlineMail className="text-[#E2B77F]" />
+              </div>
+              <span className="text-sm font-semibold">onlinequran234@gmail.com</span>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.4 }}
+              data-aos="fade-right"
+              className="flex items-center gap-3 text-black"
+            >
+              <div className="p-2 border border-[#E2B77F] rounded-full ">
+                <FaLocationDot className="text-[#E2B77F]" />
+              </div>
+              <span className="text-sm font-semibold">Online Quran Academy, Qatar</span>
+            </motion.div>
           </div>
-          <div className="text-sm px-5 py-2 bg-[#E2B77F] cursor-pointer hover:bg-[#e6cfb2] text-center  rounded-ss-md font-semibold">
-            <Link>
-              <button>Submit</button>
-            </Link>
+        </motion.div>
+
+        {/* Right Column - Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          data-aos="fade-left"
+          className="bg-white/90 backdrop-blur-md p-6 md:p-10 rounded-3xl w-full md:w-[400px] shadow-2xl flex flex-col gap-4"
+        >
+          <div className="flex flex-col gap-4">
+            <input className="p-3 rounded-md border border-gray-300 focus:outline-none" placeholder="Your Name" />
+            <input className="p-3 rounded-md border border-gray-300 focus:outline-none" placeholder="Father Name" />
+            <input className="p-3 rounded-md border border-gray-300 focus:outline-none" placeholder="Phone Number" />
+            <input className="p-3 rounded-md border border-gray-300 focus:outline-none" placeholder="Email Address" />
+            <textarea className="p-3 rounded-md border border-gray-300 focus:outline-none h-32" placeholder="Message"></textarea>
           </div>
+          <Link>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full hover:bg-[#E2B77F] bg-[#daa15d] text-white font-semibold py-3 rounded-xl mt-4 shadow-lg"
+            >
+              Submit
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </div>
