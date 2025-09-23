@@ -1,8 +1,13 @@
 import React from 'react'
+import SettingHeader from './settingsPage/SettingHeader'
+import SettingMain from './settingsPage/SettingMain'
 
 function SettingsPage() {
   return (
-    <div>SettingsPage</div>
+    <div>
+      <SettingHeader />
+      <SettingMain />
+    </div>
   )
 }
 
