@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 import API from "../../features/api";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
+// Error parsing remains unchanged
 const parseAxiosError = (error) => {
   if (error?.response) {
     const { status, data } = error.response;
@@ -33,13 +34,13 @@ const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [step, setStep] = useState("signup"); // "signup" | "verify" | "done"
+  const [step, setStep] = useState("signup");
   const [otp, setOtp] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
-  const [resendCooldown, setResendCooldown] = useState(0); // seconds
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
+    AOS.init({ duration: 900, once: true });
   }, []);
 
   useEffect(() => {
@@ -80,9 +81,8 @@ const Signup = () => {
 
     setIsSubmitting(true);
     try {
-      // ⚠️ Keep these paths exactly as your backend expects
       const res = await API.post("/auth/signup", {
-        username: formData.name, // backend expects "username"
+        username: formData.name,
         email: formData.email,
         password: formData.password,
       });
@@ -90,7 +90,7 @@ const Signup = () => {
         res?.data?.message || "Signup successful. Check your email for OTP."
       );
       setStep("verify");
-      setResendCooldown(30); // start cooldown
+      setResendCooldown(30);
     } catch (error) {
       console.error("Signup error:", error);
       alert(parseAxiosError(error));
@@ -105,7 +105,7 @@ const Signup = () => {
     setIsVerifying(true);
     try {
       const res = await API.post("/auth/verify-otp", {
-        email: formData.email, // uses the email from signup
+        email: formData.email,
         otp,
       });
       alert(res?.data?.message || "Email verified!");
@@ -134,126 +134,151 @@ const Signup = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center py-5 sm:py-10 justify-center bg-[#F8F5E6] px-4 relative overflow-hidden">
+    <section
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f8e9e6] via-[#f8f5e6] to-[#e7f8f6] px-4 py-5 sm:py-10 relative overflow-hidden"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 80% 20%, #d4af3733 10%, transparent 70%), radial-gradient(circle at 10% 90%, #0e7c5a33 10%, transparent 60%)",
+      }}
+    >
+      {/* Decorative Elements */}
+      <span className="absolute left-10 top-10 w-32 h-32 bg-[#d4af3710] rounded-full blur-3xl z-0"></span>
+      <span className="absolute right-0 bottom-0 w-56 h-56 bg-[#0e7c5a12] rounded-full blur-3xl z-0"></span>
+
       <div
-        className="relative z-10 bg-white/90 shadow-xl rounded-2xl w-full max-w-lg p-5 border border-[#D4AF37]/30"
+        className="relative z-10 bg-white/95 shadow-2xl rounded-3xl w-full max-w-lg p-7 border-2 border-[#D4AF37]/20 backdrop-blur-lg"
         data-aos="zoom-in"
       >
         {/* Step 1: Signup */}
         {step === "signup" && (
           <>
-            <h2 className="text-2xl font-extrabold text-center text-[#2C3E50] mb-3 leading-snug">
-              Create Your Account
-            </h2>
-            <div className="w-20 h-1.5 bg-[#D4AF37] rounded-full mx-auto mb-2"></div>
-            <p className="text-center text-gray-600 mb-5 text-lg">
-              Sign up to start your Quranic journey
-            </p>
+            <div className="flex flex-col items-center mb-2">
+              <div className="bg-[#D4AF37] bg-gradient-to-tr from-[#D4AF37] to-[#F8F5E6] rounded-full p-2 shadow-md mb-2">
+                <svg width={42} height={42} fill="none" viewBox="0 0 50 50">
+                  <circle cx="25" cy="25" r="24" stroke="#A98435" strokeWidth="2" fill="#FFF9E3" />
+                  <path d="M16 33c2-2.5 5.5-5 9-5s7 2.5 9 5" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" />
+                  <circle cx="21" cy="24" r="2" fill="#D4AF37" />
+                  <circle cx="29" cy="24" r="2" fill="#D4AF37" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-extrabold text-center text-[#2C3E50] mb-1 leading-tight tracking-tight">
+                Create Your Account
+              </h2>
+              <div className="w-24 h-1.5 bg-gradient-to-r from-[#D4AF37] via-[#A98435] to-[#0E7C5A] rounded-full mt-2 mb-1"></div>
+              <p className="text-center text-[#8B8C8C] mb-4 text-base font-medium">
+                Sign up to start your Quranic journey
+              </p>
+            </div>
 
             <form className="space-y-5 text-sm" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-5">
                 <div>
-                  <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                  <label className="block text-sm font-semibold text-[#2C3E50] mb-1">
                     Full Name
                   </label>
                   <input
                     type="text"
                     name="name"
+                    autoComplete="off"
                     value={formData.name}
                     onChange={handleChange}
                     className={`w-full border ${
-                      errors.name ? "border-red-500" : "border-gray-300"
-                    } rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37]`}
+                      errors.name ? "border-red-400" : "border-[#E1E4ED]"
+                    } rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-[#D4AF37] bg-[#FFFEFA] transition placeholder:text-gray-400`}
                     placeholder="John Doe"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                    <p className="mt-1 text-xs text-red-500">{errors.name}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                  <label className="block text-sm font-semibold text-[#2C3E50] mb-1">
                     Email Address
                   </label>
                   <input
                     type="email"
                     name="email"
+                    autoComplete="off"
                     value={formData.email}
                     onChange={handleChange}
                     className={`w-full border ${
-                      errors.email ? "border-red-500" : "border-gray-300"
-                    } rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37]`}
+                      errors.email ? "border-red-400" : "border-[#E1E4ED]"
+                    } rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-[#D4AF37] bg-[#FFFEFA] transition placeholder:text-gray-400`}
                     placeholder="you@example.com"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                    <p className="mt-1 text-xs text-red-500">{errors.email}</p>
                   )}
                 </div>
               </div>
 
               <div className="flex flex-col gap-5">
                 <div className="relative">
-                  <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                  <label className="block text-sm font-semibold text-[#2C3E50] mb-1">
                     Password
                   </label>
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
+                    autoComplete="new-password"
                     value={formData.password}
                     onChange={handleChange}
                     className={`w-full border ${
-                      errors.password ? "border-red-500" : "border-gray-300"
-                    } rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37] pr-10`}
+                      errors.password ? "border-red-400" : "border-[#E1E4ED]"
+                    } rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-[#D4AF37] bg-[#FFFEFA] pr-12 transition placeholder:text-gray-400`}
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-9 text-gray-500 hover:text-[#0E7C5A]"
+                    className="absolute right-3 top-9 text-gray-400 hover:text-[#A98435] transition"
+                    tabIndex={-1}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeIcon size={18} className="text-[#D4AF37]" />
+                      <EyeIcon size={20} className="text-[#D4AF37]" />
                     ) : (
-                      <EyeOffIcon size={18} className="text-[#D4AF37]" />
+                      <EyeOffIcon size={20} className="text-[#D4AF37]" />
                     )}
                   </button>
-
                   {errors.password && (
-                    <p className="mt-1 text-sm text-red-500">
+                    <p className="mt-1 text-xs text-red-500">
                       {errors.password}
                     </p>
                   )}
                 </div>
 
                 <div className="relative">
-                  <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                  <label className="block text-sm font-semibold text-[#2C3E50] mb-1">
                     Confirm Password
                   </label>
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     name="confirmPassword"
+                    autoComplete="new-password"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     className={`w-full border ${
                       errors.confirmPassword
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    } rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37] pr-10`}
+                        ? "border-red-400"
+                        : "border-[#E1E4ED]"
+                    } rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-[#D4AF37] bg-[#FFFEFA] pr-12 transition placeholder:text-gray-400`}
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-9 text-gray-500 hover:text-[#0E7C5A]"
+                    className="absolute right-3 top-9 text-gray-400 hover:text-[#A98435] transition"
+                    tabIndex={-1}
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeIcon size={18} className="text-[#D4AF37]" />
+                      <EyeIcon size={20} className="text-[#D4AF37]" />
                     ) : (
-                      <EyeOffIcon size={18} className="text-[#D4AF37]" />
+                      <EyeOffIcon size={20} className="text-[#D4AF37]" />
                     )}
                   </button>
                   {errors.confirmPassword && (
-                    <p className="mt-1 text-sm text-red-500">
+                    <p className="mt-1 text-xs text-red-500">
                       {errors.confirmPassword}
                     </p>
                   )}
@@ -263,11 +288,11 @@ const Signup = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`px-15 py-2.5 rounded-lg font-semibold transition-all duration-200 
+                  className={`px-16 py-2.5 rounded-xl font-bold text-lg tracking-wide transition-all shadow-lg duration-200 
       ${
         isSubmitting
           ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-          : "bg-[#A98435] text-white hover:bg-[#D4AF37] shadow-md hover:shadow-lg"
+          : "bg-gradient-to-tr from-[#A98435] via-[#D4AF37] to-[#0E7C5A] text-white hover:scale-105 hover:shadow-2xl"
       }`}
                 >
                   {isSubmitting ? "Processing..." : "Sign Up"}
@@ -279,7 +304,7 @@ const Signup = () => {
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-[#D4AF37] font-semibold hover:text-[#b8902c] transition"
+                className="text-[#D4AF37] font-semibold hover:text-[#A98435] transition"
               >
                 Login
               </Link>
@@ -290,27 +315,36 @@ const Signup = () => {
         {/* Step 2: OTP Verify */}
         {step === "verify" && (
           <>
-            <h2 className="text-xl font-bold text-center text-[#2C3E50] mb-3">
-              Verify Your Email
-            </h2>
-            <p className="text-center text-gray-600 text-sm mb-5">
-              Enter the OTP sent to{" "}
-              <span className="font-medium">{formData.email}</span>
-            </p>
-
-            <form onSubmit={handleVerifyOtp} className="space-y-5">
+            <div className="flex flex-col items-center mb-3">
+              <div className="bg-[#0E7C5A] bg-gradient-to-tr from-[#0E7C5A] to-[#D4AF37] rounded-full p-2 shadow mb-2">
+                <svg width={36} height={36} fill="none" viewBox="0 0 38 38">
+                  <circle cx="19" cy="19" r="18" stroke="#0E7C5A" strokeWidth="2" fill="#E5F7F2" />
+                  <path d="M12 20l5 5 9-11" stroke="#D4AF37" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-center text-[#2C3E50] mb-2">
+                Verify Your Email
+              </h2>
+              <p className="text-center text-[#8B8C8C] text-sm mb-3">
+                Enter the OTP sent to <span className="font-medium">{formData.email}</span>
+              </p>
+            </div>
+            <form onSubmit={handleVerifyOtp} className="space-y-4">
               <input
                 type="text"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#D4AF37]"
+                className="w-full border border-[#E1E4ED] rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-[#D4AF37] bg-[#FFFEFA] text-lg text-center tracking-widest placeholder:text-gray-400"
                 placeholder="Enter OTP"
+                autoFocus
+                maxLength={8}
+                inputMode="numeric"
               />
               <button
                 type="submit"
                 disabled={isVerifying}
-                className={`w-full bg-[#D4AF37] text-white py-2 rounded-lg hover:bg-[#B7950B] transition ${
-                  isVerifying ? "opacity-75 cursor-not-allowed" : ""
+                className={`w-full bg-gradient-to-r from-[#D4AF37] to-[#0E7C5A] text-white py-2.5 rounded-xl font-bold text-lg hover:scale-105 shadow-lg transition ${
+                  isVerifying ? "opacity-60 cursor-not-allowed" : ""
                 }`}
               >
                 {isVerifying ? "Verifying..." : "Verify OTP"}
@@ -320,7 +354,7 @@ const Signup = () => {
             <button
               onClick={handleResendOtp}
               disabled={resendCooldown > 0}
-              className={`mt-4 w-full text-sm ${
+              className={`mt-4 w-full text-sm font-medium ${
                 resendCooldown > 0
                   ? "text-gray-400 cursor-not-allowed"
                   : "text-[#0E7C5A] hover:underline"
