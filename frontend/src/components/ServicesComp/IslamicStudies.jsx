@@ -6,10 +6,10 @@ import { Book, Scale, Star, Target, History, Heart } from "lucide-react";
 export default function IslamicStudies() {
   useEffect(() => {
     AOS.init({
-      duration: 1200, // smooth speed
-      easing: "ease-in-out", // professional easing
-      once: true, // animation only once
-      offset: 100, // trigger slightly earlier
+      duration: 1200,
+      easing: "ease-in-out",
+      once: true,
+      offset: 100,
     });
   }, []);
 
@@ -87,18 +87,28 @@ export default function IslamicStudies() {
         {/* Header */}
         <div
           className="text-center mb-12"
-          data-aos="fade-up"
-          data-aos-delay="100"
+          data-aos="fade-down"
         >
-          <div className="inline-flex items-center justify-center bg-[#D4AF37] text-black px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div
+            className="inline-flex items-center justify-center bg-[#D4AF37] text-black px-4 py-2 rounded-full text-sm font-medium mb-4"
+            data-aos="zoom-in"
+          >
             Premium Islamic Education
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2
+            className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
+            data-aos="fade-up"
+          >
             Comprehensive{" "}
             <span className="text-[#D4AF37]">Islamic Studies</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+
+          <p
+            className="text-gray-600 max-w-2xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             Deepen your understanding of Islam through our structured and engaging courses
           </p>
         </div>
@@ -110,7 +120,7 @@ export default function IslamicStudies() {
               key={index}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer"
               data-aos="fade-up"
-              data-aos-delay={index * 150} // staggered delay
+              data-aos-delay={index * 150}
             >
               {/* Image */}
               <div className="relative h-40 overflow-hidden">
@@ -124,6 +134,7 @@ export default function IslamicStudies() {
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center text-white"
                     style={{ backgroundColor: category.color }}
+                    data-aos="zoom-in"
                   >
                     <category.icon className="w-5 h-5" />
                   </div>
@@ -132,18 +143,31 @@ export default function IslamicStudies() {
 
               {/* Content */}
               <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3 group-hover:text-[#D4AF37] transition-colors duration-300">
+                <h3
+                  className="text-lg font-semibold text-gray-800 mb-3 group-hover:text-[#D4AF37] transition-colors duration-300"
+                  data-aos="fade-up"
+                  data-aos-delay="50"
+                >
                   {category.title}
                 </h3>
                 <ul className="space-y-2">
                   {category.items.slice(0, 2).map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start">
+                    <li
+                      key={itemIndex}
+                      className="flex items-start"
+                      data-aos="fade-right"
+                      data-aos-delay={itemIndex * 50}
+                    >
                       <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full mt-2 mr-3 flex-shrink-0"></span>
                       <span className="text-gray-600 text-sm">{item}</span>
                     </li>
                   ))}
                   {category.items.length > 2 && (
-                    <li className="text-sm text-[#D4AF37] font-medium">
+                    <li
+                      className="text-sm text-[#D4AF37] font-medium"
+                      data-aos="fade-left"
+                      data-aos-delay="100"
+                    >
                       +{category.items.length - 2} more topics
                     </li>
                   )}

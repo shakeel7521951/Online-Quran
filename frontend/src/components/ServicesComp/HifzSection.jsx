@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, CalendarCheck, RefreshCw, X } from "lucide-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function HifzSection() {
   const [selectedFeature, setSelectedFeature] = useState(null);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: "ease-out",
+    });
+  }, []);
 
   const features = [
     {
@@ -36,9 +46,13 @@ export default function HifzSection() {
           transition={{ duration: 1.2, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 relative inline-block"
+          data-aos="fade-down"
         >
           Quran Memorization (Hifz Program)
-          <span className="block w-24 h-[2px] bg-[#D4AF37] mx-auto mt-2 rounded-full"></span>
+          <span
+            className="block w-24 h-[2px] bg-[#D4AF37] mx-auto mt-2 rounded-full"
+            data-aos="zoom-in"
+          ></span>
         </motion.h2>
 
         {/* Feature Cards */}
@@ -51,22 +65,31 @@ export default function HifzSection() {
               transition={{ duration: 1.2, delay: index * 0.2, ease: "easeOut" }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.03, y: -3 }}
-              className="bg-gradient-to-r from-white to-gray-50 border border-[#D4AF37]/40 rounded-xl p-4 md:p-5 text-center transition duration-300"
+              className="bg-gradient-to-r from-white to-gray-50 border border-[#D4AF37]/40 rounded-xl p-4 md:p-5 text-center transition duration-300 cursor-pointer"
+              data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
+              onClick={() => setSelectedFeature(item)}
             >
               {/* Icon */}
-              <div className="flex justify-center mb-3">{item.icon}</div>
+              <div className="flex justify-center mb-3" data-aos="zoom-in">
+                {item.icon}
+              </div>
 
               {/* Title */}
-              <h3 className="text-base md:text-lg font-semibold text-[#D4AF37] mb-2">
+              <h3
+                className="text-base md:text-lg font-semibold text-[#D4AF37] mb-2"
+                data-aos="fade-up"
+              >
                 {item.title}
               </h3>
 
               {/* Description */}
-              <p className="text-gray-700 text-xs md:text-sm leading-relaxed mb-3">
+              <p
+                className="text-gray-700 text-xs md:text-sm leading-relaxed mb-3"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
                 {item.desc}
               </p>
-
-        
             </motion.div>
           ))}
         </div>
@@ -81,6 +104,7 @@ export default function HifzSection() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
             onClick={() => setSelectedFeature(null)}
+            data-aos="fade-in"
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -89,25 +113,36 @@ export default function HifzSection() {
               transition={{ duration: 0.3 }}
               className="bg-white rounded-xl shadow-2xl max-w-md w-full p-5 relative"
               onClick={(e) => e.stopPropagation()}
+              data-aos="zoom-in"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedFeature(null)}
                 className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+                data-aos="fade-left"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Icon */}
-              <div className="flex justify-center mb-3">{selectedFeature.icon}</div>
+              <div className="flex justify-center mb-3" data-aos="zoom-in">
+                {selectedFeature.icon}
+              </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-[#D4AF37] mb-3">
+              <h3
+                className="text-xl font-bold text-[#D4AF37] mb-3"
+                data-aos="fade-up"
+              >
                 {selectedFeature.title}
               </h3>
 
               {/* More Detail */}
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <p
+                className="text-gray-700 text-sm leading-relaxed"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
                 {selectedFeature.more}
               </p>
             </motion.div>
