@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import image2 from '../../assets/recite.jpg'
+import image2 from "../../assets/recite.jpg";
+
 const WhyChooseUs = () => {
   const PRIMARY = "#0E7C5A"; // Deep green
   const ACCENT = "#D4AF37"; // Gold
@@ -10,7 +11,7 @@ const WhyChooseUs = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 800,
+      duration: 900,
       once: true,
     });
   }, []);
@@ -32,22 +33,35 @@ const WhyChooseUs = () => {
                 src={image2}
                 className="w-full h-auto rounded-2xl shadow-xl object-cover hover:scale-105 transition-all duration-300"
                 alt="Quran Learning Experience"
+                data-aos="zoom-in-up"
               />
-              <div className="absolute -z-10 -inset-4 bg-gradient-to-br from-[#D4AF37]/20 to-[#0E7C5A]/20 rounded-3xl"></div>
+              <div
+                className="absolute -z-10 -inset-4 bg-gradient-to-br from-[#D4AF37]/20 to-[#0E7C5A]/20 rounded-3xl"
+                data-aos="fade-in"
+              ></div>
             </div>
           </div>
 
           {/* Content Column */}
           <div className="w-full lg:w-1/2" data-aos="fade-left">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight font-serif text-[#2C3E50]">
+            <h2
+              className="text-4xl md:text-5xl font-bold mb-6 leading-tight font-serif text-[#2C3E50]"
+              data-aos="zoom-in"
+            >
               Why <span style={{ color: ACCENT }}>Choose Us?</span>
             </h2>
             <div
               className="w-20 h-1 mb-8"
               style={{ backgroundColor: ACCENT }}
+              data-aos="fade-right"
+              data-aos-delay="200"
             ></div>
 
-            <p className="text-gray-700 mb-6 leading-relaxed text-lg">
+            <p
+              className="text-gray-700 mb-6 leading-relaxed text-lg"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
               At Quran Learn Academy, we strive to enlighten Muslims with the
               teachings of the Holy Quran, guiding lives according to the
               principles of Islam. With a step-by-step process and focus on{" "}
@@ -55,7 +69,11 @@ const WhyChooseUs = () => {
               comprehensive learning experience for every student.
             </p>
 
-            <p className="text-gray-700 mb-10 leading-relaxed text-lg">
+            <p
+              className="text-gray-700 mb-10 leading-relaxed text-lg"
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
               Our flexible online classes allow you to learn at your own pace,
               from the comfort of your home—anytime, anywhere. Whether at home
               or traveling, your connection with the Quran continues without
@@ -71,15 +89,18 @@ const WhyChooseUs = () => {
                 "Online Quran memorization",
                 "Female Quran teachers for women & children",
                 "Expert Quran teachers with English fluency",
-               
               ].map((feature, index) => (
                 <div
                   key={index}
                   className="flex items-start"
                   data-aos="fade-up"
-                  data-aos-delay={index * 100} // staggered animation
+                  data-aos-delay={index * 150}
                 >
-                  <div className="flex-shrink-0 mt-1 mr-3">
+                  <div
+                    className="flex-shrink-0 mt-1 mr-3"
+                    data-aos="zoom-in"
+                    data-aos-delay={index * 200}
+                  >
                     <div
                       className="w-6 h-6 rounded-full flex items-center justify-center shadow-md"
                       style={{ backgroundColor: PRIMARY }}
@@ -97,7 +118,11 @@ const WhyChooseUs = () => {
                       </svg>
                     </div>
                   </div>
-                  <span className="text-gray-700 text-base leading-snug">
+                  <span
+                    className="text-gray-700 text-base leading-snug"
+                    data-aos="fade-left"
+                    data-aos-delay={index * 220}
+                  >
                     {feature}
                   </span>
                 </div>

@@ -1,5 +1,6 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Intro = () => {
   const teamMembers = [
@@ -101,145 +102,103 @@ const Intro = () => {
     { number: "50+", label: "Qualified Teachers" },
   ];
 
+  useEffect(() => {
+    AOS.init({ duration: 1000, once: true });
+  }, []);
+
   return (
     <div className="min-h-screen py-16 px-4">
       <div className="max-w-6xl mx-auto">
+
         {/* Header Section */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
+        <div className="text-center mb-16" data-aos="fade-down">
           <h1 className="font-serif text-4xl text-[#B49762] mb-2 font-semibold">
             Who We Are
           </h1>
-          <p className="text-md text-gray-400 max-w-3xl mx-auto">
+          <p className="text-md text-gray-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
             Meet the dedicated team behind Online Quran Academy, passionate
             educators committed to spreading Quranic knowledge with authenticity
             and love.
           </p>
-        </motion.div>
+        </div>
 
         {/* Statistics */}
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.2 }}
-        >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
-            <motion.div
+            <div
               key={index}
               className="bg-white rounded-2xl shadow-sm p-6 text-center"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              data-aos="zoom-in"
+              data-aos-delay={index * 150}
             >
               <div className="text-2xl md:text-3xl font-bold text-[#A97635] mb-2">
                 {stat.number}
               </div>
               <div className="text-gray-600">{stat.label}</div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Our Story */}
-        <motion.div
-          className="bg-white rounded-2xl shadow-sm p-8 mb-16"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-        >
+        <div className="bg-white rounded-2xl shadow-sm p-8 mb-16" data-aos="fade-right">
           <h2 className="text-3xl mb-3 text-[#A97635] font-serif">Our Story</h2>
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
+            <div data-aos="fade-left">
               <p className="text-gray-600 mb-4 leading-relaxed">
                 Founded in 2003, Online Quran Academy began with a simple
                 mission: to make authentic Quranic education accessible to
-                Muslims worldwide. What started as a small initiative with a
-                handful of students has grown into a global platform serving
-                thousands of learners.
+                Muslims worldwide...
               </p>
               <p className="text-gray-600 mb-4 leading-relaxed">
                 Our founder, Dr. Ahmed Al-Misri, recognized the challenges many
-                Muslims faced in accessing qualified Quran teachers. With
-                advancements in technology, he envisioned a platform that could
-                bridge this gap while maintaining the traditional teacher-student
-                relationship.
+                Muslims faced in accessing qualified Quran teachers...
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Today, we take pride in our team of certified teachers who are
-                not only experts in their fields but also passionate about
-                nurturing the next generation of Quran learners. Each teacher
-                undergoes rigorous training and continuous development to ensure
-                the highest quality of education.
+                Today, we take pride in our team of certified teachers...
               </p>
             </div>
-            <motion.div
-              className="flex justify-center"
-              initial={{ scale: 0.8, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div data-aos="zoom-in">
               <img
                 src="https://media.istockphoto.com/id/2148521874/photo/holy-quran-woman-reading-the-quran-muslim-worship-ramadan-holy-day.webp?a=1&b=1&s=612x612&w=0&k=20&c=QsnQJ4EP9Ik0byKpk8SSFvL29lz4jThkmhDFknL1k-g="
                 alt="Quran Teaching"
                 className="rounded-2xl shadow-md w-full max-w-md"
               />
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Our Values */}
-        <motion.div
-          className="mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.2 }}
-        >
-          <h2 className="text-3xl text-center mb-3 text-[#B49762] font-serif font-semibold">
+        <div className="mb-16">
+          <h2 className="text-3xl text-center mb-3 text-[#B49762] font-serif font-semibold" data-aos="fade-down">
             Our Values
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="bg-white rounded-2xl p-6 text-center hover:shadow-md transition-shadow shadow-sm duration-300"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                data-aos="fade-up"
+                data-aos-delay={index * 150}
               >
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                  {value.title}
-                </h3>
+                <h3 className="text-xl font-semibold text-gray-800 mb-3">{value.title}</h3>
                 <p className="text-gray-600">{value.description}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Team Members */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ staggerChildren: 0.2 }}
-        >
-          <h2 className="text-3xl text-center text-[#B49762] mb-3 font-serif">
+        <div>
+          <h2 className="text-3xl text-center text-[#B49762] mb-3 font-serif" data-aos="fade-down">
             Meet Our Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member) => (
-              <motion.div
+            {teamMembers.map((member, index) => (
+              <div
                 key={member.id}
                 className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
+                data-aos="flip-left"
+                data-aos-delay={index * 150}
               >
                 <div className="relative">
                   <img
@@ -252,21 +211,16 @@ const Intro = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-[#B49762] font-medium mb-2">
-                    {member.role}
-                  </p>
-                  <p className="text-amber-600 text-sm mb-4">
-                    {member.specialization}
-                  </p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-1">{member.name}</h3>
+                  <p className="text-[#B49762] font-medium mb-2">{member.role}</p>
+                  <p className="text-amber-600 text-sm mb-4">{member.specialization}</p>
                   <p className="text-gray-600 text-sm">{member.description}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
+
       </div>
     </div>
   );

@@ -52,14 +52,12 @@ const FAQSection = () => {
 
   const toggleFAQ = (index) => {
     if (activeIndex === index) {
-      // Closing animation
       setClosingIndex(index);
       setTimeout(() => {
         setActiveIndex(null);
         setClosingIndex(null);
-      }, 300); // Match this with the CSS transition duration
+      }, 300);
     } else {
-      // Opening animation
       if (activeIndex !== null) {
         setClosingIndex(activeIndex);
         setTimeout(() => {
@@ -82,13 +80,23 @@ const FAQSection = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-16" data-aos="fade-up">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#0C7655] font-serif">
+        <div className="text-center mb-16">
+          <h2
+            className="text-4xl md:text-5xl font-bold mb-6 text-[#0C7655] font-serif"
+            data-aos="fade-down"
+          >
             Frequently Asked <span className="text-[#D4AF37]">Questions</span>
           </h2>
-          <div className="w-24 h-1.5 bg-[#D4AF37] mx-auto mb-6 rounded-full"></div>
-          <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
-            Find answers to common questions about our Quranic education programs. We're here to guide you on your spiritual learning journey.
+          <div
+            className="w-24 h-1.5 bg-[#D4AF37] mx-auto mb-6 rounded-full"
+            data-aos="zoom-in"
+          ></div>
+          <p
+            className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed"
+            data-aos="fade-up"
+          >
+            Find answers to common questions about our Quranic education
+            programs. We're here to guide you on your spiritual learning journey.
           </p>
         </div>
 
@@ -99,7 +107,7 @@ const FAQSection = () => {
               <div
                 key={index}
                 className="overflow-hidden transition-all duration-300 rounded-xl shadow-md hover:shadow-lg"
-                data-aos="fade-up"
+                data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
                 data-aos-delay={index * 100}
               >
                 <button
@@ -107,30 +115,52 @@ const FAQSection = () => {
                     activeIndex === index ? "rounded-t-xl" : "rounded-xl"
                   }`}
                   onClick={() => toggleFAQ(index)}
+                  data-aos="flip-up"
                 >
                   <div className="flex items-center">
-                    <span className="text-xl mr-4">{faq.icon}</span>
-                    <h3 className="font-semibold text-lg md:text-xl text-gray-800">
+                    <span className="text-xl mr-4" data-aos="zoom-in">
+                      {faq.icon}
+                    </span>
+                    <h3
+                      className="font-semibold text-lg md:text-xl text-gray-800"
+                      data-aos="fade-up"
+                    >
                       {faq.question}
                     </h3>
                   </div>
-                  <span className="ml-4 min-w-[20px] text-center font-bold text-lg transition-transform duration-300"
-                        style={{ transform: activeIndex === index ? "rotate(180deg)" : "rotate(0deg)" }}>
+                  <span
+                    className="ml-4 min-w-[20px] text-center font-bold text-lg transition-transform duration-300"
+                    style={{
+                      transform:
+                        activeIndex === index ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                    data-aos="zoom-in"
+                  >
                     {activeIndex === index ? "⏶" : "⏷"}
                   </span>
                 </button>
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
-                    activeIndex === index ? "max-h-screen opacity-100" : closingIndex === index ? "max-h-0 opacity-0" : "max-h-0 opacity-0"
+                    activeIndex === index
+                      ? "max-h-screen opacity-100"
+                      : closingIndex === index
+                      ? "max-h-0 opacity-0"
+                      : "max-h-0 opacity-0"
                   }`}
                   style={{
-                    transition: activeIndex === index 
-                      ? "max-height 0.5s ease-in-out, opacity 0.3s ease-in-out 0.1s" 
-                      : "max-height 0.5s ease-in-out, opacity 0.2s ease-in-out"
+                    transition:
+                      activeIndex === index
+                        ? "max-height 0.5s ease-in-out, opacity 0.3s ease-in-out 0.1s"
+                        : "max-height 0.5s ease-in-out, opacity 0.2s ease-in-out",
                   }}
                 >
-                  <div className="p-6 bg-white border-t border-emerald-100 rounded-b-xl">
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  <div
+                    className="p-6 bg-white border-t border-emerald-100 rounded-b-xl"
+                    data-aos="fade-up"
+                  >
+                    <p className="text-gray-600 leading-relaxed" data-aos="fade-up">
+                      {faq.answer}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -139,15 +169,19 @@ const FAQSection = () => {
 
           {/* Right Column (Image + Support) */}
           <div className="lg:w-1/2 w-full" data-aos="fade-left">
-            <div className="relative group">
+            <div className="relative group" data-aos="zoom-in-up">
               <div className="shine-wrapper rounded-xl overflow-hidden">
                 <img
                   alt="Quran learning illustration"
                   className="w-full h-auto rounded-xl transform transition-transform duration-500 group-hover:scale-105"
                   src={image4}
+                  data-aos="flip-left"
                 />
               </div>
-              <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition duration-500">
+              <div
+                className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition duration-500"
+                data-aos="fade-up"
+              >
                 <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-sm">
                   <svg
                     className="w-6 h-6 text-[#0C7655]"
@@ -155,6 +189,7 @@ const FAQSection = () => {
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
+                    data-aos="zoom-in"
                   >
                     <path
                       strokeLinecap="round"

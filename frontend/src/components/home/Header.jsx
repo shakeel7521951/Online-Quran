@@ -8,13 +8,11 @@ register();
 function Header() {
   const swiperRef = useRef(null);
 
-  // Professional color palette with Islamic aesthetic
-  const PRIMARY = "#0E7C5A"; // Refined Islamic green
-  const SECONDARY = "#2C3E50"; // Deep navy for contrast
-  const ACCENT = "#D4AF37"; // Gold accent for elegance
-  const LIGHT = "#F8F5E6"; // Cream background for text readability
+  const PRIMARY = "#0E7C5A"; 
+  const SECONDARY = "#2C3E50"; 
+  const ACCENT = "#D4AF37"; 
+  const LIGHT = "#F8F5E6"; 
 
-  // Slides data
   const slides = [
     {
       image:
@@ -52,7 +50,6 @@ function Header() {
       },
       injectStyles: [
         `
-        /* Pagination Styling (Smaller & Elegant) */
         .swiper-pagination {
           bottom: 20px !important;
           display: flex;
@@ -82,22 +79,20 @@ function Header() {
     Object.assign(swiperContainer, params);
     swiperContainer.initialize();
 
-    // Init AOS
     AOS.init({
-      duration: 800,
+      duration: 900,
       once: true,
+      easing: "ease-in-out",
     });
   }, []);
 
   return (
     <div className="relative h-screen w-full font-sans overflow-hidden">
-      {/* Decorative Islamic pattern overlay */}
       <div className="absolute inset-0 z-0 opacity-10 bg-repeat pattern-islamic"></div>
 
       <swiper-container ref={swiperRef} init="false" class="h-full">
         {slides.map((slide, index) => (
           <swiper-slide key={index} className="relative">
-            {/* Background Image with overlay */}
             <div className="absolute inset-0">
               <img
                 className="w-full h-full object-cover"
@@ -105,16 +100,12 @@ function Header() {
                 alt={slide.alt}
                 loading={index === 0 ? "eager" : "lazy"}
               />
-              {/* Enhanced gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
               <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
 
             {/* Content */}
-            <div
-              className="relative z-10 flex flex-col justify-center items-center h-full text-center px-6"
-              data-aos="fade-up"
-            >
+            <div className="relative z-10 flex flex-col justify-center items-center h-full text-center px-6">
               <div className="max-w-4xl mx-auto">
                 <h1
                   className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
@@ -122,12 +113,16 @@ function Header() {
                     color: LIGHT,
                     textShadow: "0 2px 8px rgba(0,0,0,0.6)",
                   }}
+                  data-aos="fade-down"
                 >
                   {slide.title}
                 </h1>
 
-                {/* Decorative Bismillah */}
-                <div className="flex items-center justify-center mb-8 mt-2">
+                <div
+                  className="flex items-center justify-center mb-8 mt-2"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
                   <div
                     className="w-20 h-px mx-4 opacity-80"
                     style={{ backgroundColor: ACCENT }}
@@ -144,28 +139,36 @@ function Header() {
                   ></div>
                 </div>
 
-                <p className="text-lg md:text-xl text-gray-100 max-w-2xl mx-auto mb-10 leading-relaxed">
+                <p
+                  className="text-lg md:text-xl text-gray-100 max-w-2xl mx-auto mb-10 leading-relaxed"
+                  data-aos="fade-right"
+                  data-aos-delay="300"
+                >
                   {slide.text}
                 </p>
 
                 <div
                   className="flex flex-col sm:flex-row gap-4 justify-center"
                   data-aos="zoom-in"
-                  data-aos-delay="200"
+                  data-aos-delay="400"
                 >
-                  
-                <Link to="/services">    <button
+                  <Link to="/services">
+                    <button
                       className="px-3 py-2 rounded-lg cursor-pointer  font-semibold shadow-lg hover:scale-105  transition-all duration-300"
                       style={{
                         backgroundColor: PRIMARY,
                         color: LIGHT,
                       }}
                       aria-label="Explore Quran Courses"
+                      data-aos="flip-left"
+                      data-aos-delay="500"
                     >
                       Explore Our Courses
-                    </button></Link>
-                
-                  <Link to="/FreeTrialClass">    <button
+                    </button>
+                  </Link>
+
+                  <Link to="/FreeTrialClass">
+                    <button
                       className="px-3 py-2  cursor-pointer rounded-lg  font-semibold border-2 shadow-lg hover:scale-105  transition-all duration-300"
                       style={{
                         borderColor: ACCENT,
@@ -173,11 +176,12 @@ function Header() {
                         backgroundColor: "transparent",
                       }}
                       aria-label="Free Trial Class"
+                      data-aos="flip-right"
+                      data-aos-delay="600"
                     >
                       Free Trial Class
-                    </button></Link>
-                
-                  
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

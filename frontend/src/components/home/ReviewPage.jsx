@@ -12,7 +12,6 @@ const ReviewPage = () => {
       easing: "ease-out-cubic",
     });
 
-    // Auto-rotate reviews
     const interval = setInterval(() => {
       setActiveReview((prev) => (prev + 1) % reviews.length);
     }, 5000);
@@ -81,6 +80,7 @@ const ReviewPage = () => {
         className={`h-5 w-5 ${i < rating ? "text-amber-400" : "text-gray-300"}`}
         viewBox="0 0 20 20"
         fill="currentColor"
+        data-aos="zoom-in"
       >
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.785.57-1.84-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
       </svg>
@@ -99,96 +99,127 @@ const ReviewPage = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-16" data-aos="fade-down">
-          <h2 className="text-4xl md:text-5xl font-bold text-emerald-900 mb-6 font-serif">
-            What Our <span className="text-[#D4AF37]">Students Say</span>
+          <h2
+            className="text-4xl md:text-5xl font-bold text-emerald-900 mb-6 font-serif"
+            data-aos="fade-right"
+          >
+            What Our <span className="text-[#D4AF37]" data-aos="zoom-in">Students Say</span>
           </h2>
-          <div className="w-24 h-1.5 bg-[#D4AF37] mx-auto mb-6 rounded-full"></div>
-          <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+          <div
+            className="w-24 h-1.5 bg-[#D4AF37] mx-auto mb-6 rounded-full"
+            data-aos="flip-left"
+          ></div>
+          <p
+            className="text-gray-700 text-lg max-w-2xl mx-auto"
+            data-aos="fade-up"
+          >
             Hear real stories from our students and families about their Quran
             learning journey with us.
           </p>
         </div>
 
-        {/* Main Featured Review (Desktop) */}
+        {/* Main Featured Review */}
         <div className="hidden md:block mb-12 max-w-4xl mx-auto" data-aos="zoom-in">
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100 relative">
-            <div className="absolute -top-4 -left-4 text-6xl text-emerald-100 opacity-80">
+          <div
+            className="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100 relative"
+            data-aos="fade-up"
+          >
+            <div
+              className="absolute -top-4 -left-4 text-6xl text-emerald-100 opacity-80"
+              data-aos="zoom-out"
+            >
               "
             </div>
-            <div className="flex items-start mb-6">
+            <div className="flex items-start mb-6" data-aos="fade-right">
               <img
                 src={reviews[activeReview].image}
                 alt={reviews[activeReview].name}
                 className="w-16 h-16 rounded-full object-cover mr-6 border-4 border-amber-200 shadow-md"
+                data-aos="zoom-in"
               />
               <div>
-                <h3 className="font-bold text-xl text-emerald-800">
+                <h3 className="font-bold text-xl text-emerald-800" data-aos="fade-left">
                   {reviews[activeReview].name}
                 </h3>
-                <p className="text-gray-500 mb-1">
+                <p className="text-gray-500 mb-1" data-aos="fade-up">
                   {reviews[activeReview].role}
                 </p>
-                <span className="inline-block bg-[#CDAD79] text-white text-xs font-medium px-3 py-1 rounded-full">
+                <span
+                  className="inline-block bg-[#CDAD79] text-white text-xs font-medium px-3 py-1 rounded-full"
+                  data-aos="flip-up"
+                >
                   {reviews[activeReview].course}
                 </span>
               </div>
             </div>
-            <p className="text-gray-700 text-lg leading-relaxed mb-6 italic">
+            <p
+              className="text-gray-700 text-lg leading-relaxed mb-6 italic"
+              data-aos="fade-up"
+            >
               "{reviews[activeReview].review}"
             </p>
-            <div className="flex items-center">
-              <div className="flex mr-4">
-                {renderStars(reviews[activeReview].rating)}
-              </div>
-              <span className="text-sm text-gray-500">
+            <div className="flex items-center" data-aos="fade-down">
+              <div className="flex mr-4">{renderStars(reviews[activeReview].rating)}</div>
+              <span className="text-sm text-gray-500" data-aos="fade-left">
                 Rated {reviews[activeReview].rating}/5
               </span>
             </div>
           </div>
 
           {/* Navigation Dots */}
-          <div className="flex justify-center mt-6 space-x-2">
+          <div className="flex justify-center mt-6 space-x-2" data-aos="zoom-in-up">
             {reviews.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveReview(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === activeReview
-                    ? "bg-[#CDAD79] w-8"
-                    : "bg-[#d3c6b2]"
+                  index === activeReview ? "bg-[#CDAD79] w-8" : "bg-[#d3c6b2]"
                 }`}
                 aria-label={`Go to review ${index + 1}`}
+                data-aos="fade-up"
               />
             ))}
           </div>
         </div>
 
-        
-
-       
-
         {/* Call To Action */}
         <div
           className="text-center bg-white py-10 px-6 rounded-2xl shadow-lg border border-emerald-100"
-          data-aos="fade-up"
-          data-aos-delay="200"
+          data-aos="zoom-in-up"
         >
-          <h3 className="text-2xl font-bold text-emerald-800 mb-4">
+          <h3
+            className="text-2xl font-bold text-emerald-800 mb-4"
+            data-aos="fade-right"
+          >
             Start Your Quranic Journey Today
           </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p
+            className="text-gray-600 mb-6 max-w-2xl mx-auto"
+            data-aos="fade-up"
+          >
             Join our community of learners who are connecting with the Quran
             from the comfort of their homes.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-           <a href="/FreeTrialClass">
-            <button className="bg-[#CDAD79] hover:bg-[#f0d7af] cursor-pointer text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md">
-              Book Free Trial
-            </button></a>
-           <a href="/services">
-            <button className="border border-[#f0d7af] text-[#CDAD79] hover:text-white hover:bg-[#CDAD79] hover:-translate-y-1 transition-all cursor-pointer font-semibold py-3 px-8 rounded-xl transition-all duration-300">
-              View All Courses
-            </button></a>
+          <div
+            className="flex flex-col sm:flex-row justify-center gap-4"
+            data-aos="flip-up"
+          >
+            <a href="/FreeTrialClass">
+              <button
+                className="bg-[#CDAD79] hover:bg-[#f0d7af] cursor-pointer text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md"
+                data-aos="fade-up"
+              >
+                Book Free Trial
+              </button>
+            </a>
+            <a href="/services">
+              <button
+                className="border border-[#f0d7af] text-[#CDAD79] hover:text-white hover:bg-[#CDAD79] hover:-translate-y-1 cursor-pointer font-semibold py-3 px-8 rounded-xl transition-all duration-300"
+                data-aos="fade-left"
+              >
+                View All Courses
+              </button>
+            </a>
           </div>
         </div>
       </div>
