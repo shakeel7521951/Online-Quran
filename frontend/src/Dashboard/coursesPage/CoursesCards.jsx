@@ -6,7 +6,7 @@ export default function CourseSummaryCards() {
       title: "Total Courses",
       value: 48,
       icon: <BookOpen className="w-6 h-6" />,
-      color: "bg-[#967B5A]", // brown-gold
+      color: "bg-[#967B5A]", // brown--gold
       border: "border-[#967B5A]",
     },
     {
