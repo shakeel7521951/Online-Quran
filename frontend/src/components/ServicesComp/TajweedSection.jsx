@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function TajweedSection() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: "ease-out",
+    });
+  }, []);
+
   return (
-    <section id="TajweedSection" className="py-8 px-4  overflow-hidden">
+    <section id="TajweedSection" className="py-8 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6 md:gap-8 items-center relative">
         
         {/* Divider Line (Bolder) - Only visible on larger screens */}
@@ -25,6 +35,7 @@ export default function TajweedSection() {
               scale: 1.03,
               transition: { duration: 0.3 },
             }}
+            data-aos="fade-right"
           />
         </motion.div>
 
@@ -37,13 +48,13 @@ export default function TajweedSection() {
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true, margin: "0px 0px -100px 0px" }}
             className="text-xl sm:text-2xl md:text-3xl font-bold text-[#D4AF37] mb-3 md:mb-4 text-center md:text-left"
+            data-aos="fade-up"
           >
             Tajweed & Pronunciation Lessons
           </motion.h2>
 
           {/* Card Template */}
-          {[
-            {
+          {[{
               title: "Dedicated Modules",
               desc: "Learn each Tajweed rule in detail through structured modules, ensuring clarity and precision.",
             },
@@ -76,11 +87,10 @@ export default function TajweedSection() {
                 transition: { duration: 0.3 },
               }}
               className="rounded-lg p-3 sm:p-4 bg-gradient-to-r from-[#111] to-[#1a1a1a] border border-[#D4AF37]/40 transition duration-300 cursor-pointer"
+              data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
             >
-              <h3 className="text-base font-semibold text-[#D4AF37]">
-                {card.title}
-              </h3>
-              <p className="text-gray-300 text-xs mt-1">{card.desc}</p>
+              <h3 className="text-base font-semibold text-[#D4AF37]">{card.title}</h3>
+              <p className="text-gray-300 text-xs mt-1" data-aos="fade-up">{card.desc}</p>
             </motion.div>
           ))}
         </div>

@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function TafseerSection() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: "ease-out",
+    });
+  }, []);
+
   const features = [
     {
       title: "Word-by-Word Translation",
@@ -30,12 +40,22 @@ export default function TafseerSection() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true }}
           className="text-center mb-12"
+          data-aos="fade-down"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-4">
+          <h2
+            className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-4"
+            data-aos="zoom-in"
+          >
             Translation & Tafseer Sessions
           </h2>
-          <div className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full"></div>
-          <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
+          <div
+            className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full"
+            data-aos="fade-right"
+          ></div>
+          <p
+            className="text-gray-600 mt-6 max-w-2xl mx-auto"
+            data-aos="fade-up"
+          >
             Deepen your understanding of the Quran with our comprehensive translation and Tafseer sessions
           </p>
         </motion.div>
@@ -50,12 +70,14 @@ export default function TafseerSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="bg-gray-50 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+              data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
             >
               {/* Image */}
               <motion.div
                 className="h-48 rounded-lg overflow-hidden mb-5"
                 whileHover={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 120 }}
+                data-aos="zoom-in"
               >
                 <img
                   src={item.img}
@@ -66,19 +88,23 @@ export default function TafseerSection() {
 
               {/* Text Content */}
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-[#D4AF37] mb-3">
+                <h3
+                  className="text-xl font-semibold text-[#D4AF37] mb-3"
+                  data-aos="fade-up"
+                >
                   {item.title}
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p
+                  className="text-gray-700 leading-relaxed"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
                   {item.desc}
                 </p>
               </div>
             </motion.div>
           ))}
         </div>
-
-        {/* Call to Action */}
-      
       </div>
     </section>
   );

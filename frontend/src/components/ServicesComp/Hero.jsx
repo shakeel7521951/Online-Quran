@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Search } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { ArrowRight, Search } from "lucide-react";
 
 export default function Hero() {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // ===== Service Cards =====
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true });
+  }, []);
+
   const services = [
     {
       title: "One-on-One Quran Classes",
@@ -64,7 +68,6 @@ export default function Hero() {
     },
   ];
 
-  // Filter services based on search query
   const filteredServices = services.filter(
     (service) =>
       service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -80,39 +83,31 @@ export default function Hero() {
     <div className="overflow-x-hidden overflow-y-hidden">
       {/* ===== Hero Banner ===== */}
       <div className="relative min-h-[95vh] w-full bg-black flex items-center">
-        {/* Background Image */}
         <img
           src="https://riyadalquran.com/wp-content/uploads/2019/07/readquranbook.jpg"
           alt="Our Services"
           className="h-full w-full object-cover absolute inset-0"
         />
-
-        {/* Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
 
-        {/* Text Content */}
         <div className="relative z-10 px-6 sm:px-12 lg:px-20 max-w-4xl">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+          <h1
+            data-aos="fade-down"
             className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg leading-tight"
           >
             Explore Our Professional{" "}
             <span className="text-[#D4AF37]">Quran Services</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+          </h1>
+          <p
+            data-aos="fade-up"
+            data-aos-delay="200"
             className="mt-4 text-base sm:text-lg text-gray-200 max-w-2xl"
           >
             Learn Quran online with certified teachers. Flexible schedules,
             one-on-one classes, and tailored programs for every learner.
-          </motion.p>
+          </p>
         </div>
 
-        {/* Decorative Bottom Shape Divider */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
           <svg
             className="relative block w-full h-12 sm:h-20 text-gray-50"
@@ -130,7 +125,6 @@ export default function Hero() {
 
       {/* ===== Services Section ===== */}
       <div className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        {/* ===== Search Bar ===== */}
         <div className="mb-6 max-w-md mx-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -140,37 +134,35 @@ export default function Hero() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent shadow-sm text-sm"
+              data-aos="fade-right"
             />
           </div>
           {searchQuery && (
-            <p className="text-xs text-gray-500 mt-1 text-center">
+            <p data-aos="fade-left" className="text-xs text-gray-500 mt-1 text-center">
               Showing {filteredServices.length} of {services.length} services
             </p>
           )}
         </div>
 
-        {/* ===== Cards Grid ===== */}
         {filteredServices.length === 0 ? (
           <div className="text-center py-8">
-            <h3 className="text-lg font-semibold text-gray-600">
+            <h3 data-aos="zoom-in" className="text-lg font-semibold text-gray-600">
               No services found
             </h3>
-            <p className="text-gray-500 mt-1">Try a different search term</p>
+            <p data-aos="fade-up" className="text-gray-500 mt-1">
+              Try a different search term
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {filteredServices.map((service, index) => (
-              <motion.div
+              <div
                 key={index}
                 className="flex flex-col bg-white shadow-md rounded-lg overflow-hidden border group w-full"
                 style={{ borderColor: "#D4AF37" }}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.04 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -4 }}
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
               >
-                {/* Image */}
                 <div className="h-32 sm:h-36 w-full overflow-hidden bg-gray-100">
                   <img
                     src={service.img}
@@ -183,26 +175,32 @@ export default function Hero() {
                   />
                 </div>
 
-                {/* Content */}
                 <div className="p-3 text-center flex flex-col flex-grow">
                   <h3
+                    data-aos="fade-right"
                     className="text-sm sm:text-base font-semibold mb-1"
                     style={{ color: "#D4AF37" }}
                   >
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 text-xs sm:text-sm mb-2 flex-grow">
+                  <p
+                    data-aos="fade-left"
+                    className="text-gray-600 text-xs sm:text-sm mb-2 flex-grow"
+                  >
                     {service.desc}
                   </p>
 
-                <Link to="/contact">  <button
-                    onClick={() => handleAction(service.action)}
-                    className="w-full flex  cursor-pointer items-center justify-center gap-1 px-2 py-1.5 rounded-md text-white bg-[#D4AF37] font-medium text-xs sm:text-sm transition hover:bg-black"
-                  >
-                    Explore <ArrowRight className="w-3 h-3" />
-                  </button></Link>
+                  <Link to="/contact">
+                    <button
+                      onClick={() => handleAction(service.action)}
+                      data-aos="zoom-in"
+                      className="w-full flex cursor-pointer items-center justify-center gap-1 px-2 py-1.5 rounded-md text-white bg-[#D4AF37] font-medium text-xs sm:text-sm transition hover:bg-black"
+                    >
+                      Explore <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </Link>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}
