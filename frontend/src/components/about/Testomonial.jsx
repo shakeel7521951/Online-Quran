@@ -3,6 +3,7 @@ import { GoDot } from "react-icons/go";
 import { IoMdStar, IoMdStarOutline } from "react-icons/io";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ReviewFormModal from "../home/model/ReviewFormModal";
 
 const TestomonialArray = [
   {
@@ -34,6 +35,7 @@ const TestomonialArray = [
 const Testomonial = () => {
   const [current, setCurrent] = useState(0);
   const intervalRef = useRef(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true });
@@ -132,6 +134,18 @@ const Testomonial = () => {
                   <li className="font-semibold text-sm">{item.name}</li>
                   <li className="text-sm text-black">{item.position}</li>
                 </ul>
+                {/* Text + Button */}
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-700 text-sm sm:text-base items-center justify-center">
+                    Leave us a quick
+                  </span>
+                  <button
+                    onClick={() => setOpenModal(true)}
+                    className="px-3 py-1 sm:px-4 sm:py-2 bg-green-600 hover:bg-green-700 text-white text-sm sm:text-base rounded-lg transition"
+                  >
+                    Review
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -161,6 +175,8 @@ const Testomonial = () => {
           </button>
         ))}
       </div>
+      {/* Show Modal */}
+      {openModal && <ReviewFormModal onClose={() => setOpenModal(false)} />}
     </div>
   );
 };

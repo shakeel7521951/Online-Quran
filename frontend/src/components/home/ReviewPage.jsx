@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ReviewFormModal from "./model/ReviewFormModal";
 
 const ReviewPage = () => {
   const [activeReview, setActiveReview] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -103,7 +105,10 @@ const ReviewPage = () => {
             className="text-4xl md:text-5xl font-bold text-emerald-900 mb-6 font-serif"
             data-aos="fade-right"
           >
-            What Our <span className="text-[#D4AF37]" data-aos="zoom-in">Students Say</span>
+            What Our{" "}
+            <span className="text-[#D4AF37]" data-aos="zoom-in">
+              Students Say
+            </span>
           </h2>
           <div
             className="w-24 h-1.5 bg-[#D4AF37] mx-auto mb-6 rounded-full"
@@ -119,7 +124,10 @@ const ReviewPage = () => {
         </div>
 
         {/* Main Featured Review */}
-        <div className="hidden md:block mb-12 max-w-4xl mx-auto" data-aos="zoom-in">
+        <div
+          className="hidden md:block mb-12 max-w-4xl mx-auto"
+          data-aos="zoom-in"
+        >
           <div
             className="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100 relative"
             data-aos="fade-up"
@@ -138,7 +146,10 @@ const ReviewPage = () => {
                 data-aos="zoom-in"
               />
               <div>
-                <h3 className="font-bold text-xl text-emerald-800" data-aos="fade-left">
+                <h3
+                  className="font-bold text-xl text-emerald-800"
+                  data-aos="fade-left"
+                >
                   {reviews[activeReview].name}
                 </h3>
                 <p className="text-gray-500 mb-1" data-aos="fade-up">
@@ -158,16 +169,43 @@ const ReviewPage = () => {
             >
               "{reviews[activeReview].review}"
             </p>
-            <div className="flex items-center" data-aos="fade-down">
-              <div className="flex mr-4">{renderStars(reviews[activeReview].rating)}</div>
-              <span className="text-sm text-gray-500" data-aos="fade-left">
+            <div
+              className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-green-50 p-3 sm:p-4 rounded-lg shadow-sm"
+              data-aos="fade-down"
+            >
+              {/* Stars */}
+              <div className="flex">
+                {renderStars(reviews[activeReview].rating)}
+              </div>
+
+              {/* Rating */}
+              <span
+                className="text-sm text-green-700 font-medium"
+                data-aos="fade-left"
+              >
                 Rated {reviews[activeReview].rating}/5
               </span>
+
+              {/* Text + Button */}
+              <div className="flex items-center gap-2">
+                <span className="text-gray-700 text-sm sm:text-base">
+                  Leave us a quick
+                </span>
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className="px-3 py-1 sm:px-4 sm:py-2 bg-green-600 hover:bg-green-700 text-white text-sm sm:text-base rounded-lg transition"
+                >
+                  Review
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Navigation Dots */}
-          <div className="flex justify-center mt-6 space-x-2" data-aos="zoom-in-up">
+          <div
+            className="flex justify-center mt-6 space-x-2"
+            data-aos="zoom-in-up"
+          >
             {reviews.map((_, index) => (
               <button
                 key={index}
@@ -223,6 +261,8 @@ const ReviewPage = () => {
           </div>
         </div>
       </div>
+      {/* Show Modal */}
+      {openModal && <ReviewFormModal onClose={() => setOpenModal(false)} />}
     </section>
   );
 };
