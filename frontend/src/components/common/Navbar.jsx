@@ -28,6 +28,13 @@ const Navbar = () => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+  const handleSignOut = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    navigate("/signin");
+    setMenu(false);
+  };
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-[#E2B77F] to-[#a5802f] shadow-lg">
       <div className="flex justify-between items-center w-full mx-auto py-3 px-4 sm:px-6">
@@ -69,17 +76,72 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Profile Circle */}
-        <ProfileCircle user={user} setUser={setUser} />
+        {/* Profile Circle (Desktop Only) */}
+        <div className="hidden md:block">
+          <ProfileCircle user={user} setUser={setUser} />
+        </div>
 
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMenu(!menu)}
           className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white"
         >
-          {menu ? <RxCross1 /> : <AiOutlineMenuFold />}
+          {menu ? <RxCross1 size={22} /> : <AiOutlineMenuFold size={22} />}
         </button>
       </div>
+
+      {/* Mobile Dropdown */}
+      {menu && (
+        <div className="md:hidden bg-[#a5802f] bg-opacity-95 backdrop-blur-lg shadow-lg">
+          <div className="flex flex-col items-center py-6 px-6 gap-4">
+            {/* Nav Links */}
+            <ul className="flex flex-col gap-2 w-full text-center text-white font-semibold">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={item.path}
+                    className="block px-3 py-2 rounded-md hover:bg-white/20"
+                    onClick={() => setMenu(false)}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+              {isAdmin && (
+                <li>
+                  <Link
+                    to="/dashboard"
+                    className="block px-3 py-2 rounded-md hover:bg-white/20"
+                    onClick={() => setMenu(false)}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+              )}
+            </ul>
+
+            {/* Single Sign In / Out Button */}
+            {!user ? (
+              <button
+                onClick={() => {
+                  setMenu(false);
+                  navigate("/login");
+                }}
+                className="mt-4 w-full py-2 bg-white text-green-600 rounded-lg font-bold hover:bg-white/90"
+              >
+                Sign In
+              </button>
+            ) : (
+              <button
+                onClick={handleSignOut}
+                className="mt-4 w-full py-2 bg-red-500 text-white rounded-lg font-bold hover:bg-red-600"
+              >
+                Sign Out
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
