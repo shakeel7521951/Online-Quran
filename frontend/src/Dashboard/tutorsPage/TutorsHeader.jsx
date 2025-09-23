@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Plus, RefreshCcw, Download } from "lucide-react";
+import TutorFormModal from "./modelsSection/TutorFormModal";
 
 export default function TutorsHeader() {
+  const [openForm, setOpenForm] = useState(false);
+
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
       {/* Page Title */}
@@ -11,7 +15,10 @@ export default function TutorsHeader() {
 
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
-        <button className="flex items-center gap-2 bg-[#967B5A] hover:bg-[#776147] text-white px-4 py-2 rounded-lg shadow transition">
+        <button
+          onClick={() => setOpenForm(true)}
+          className="flex items-center gap-2 bg-[#967B5A] hover:bg-[#776147] text-white px-4 py-2 rounded-lg shadow transition"
+        >
           <Plus size={18} />
           <span className="hidden sm:inline">Add Tutor</span>
         </button>
@@ -26,6 +33,9 @@ export default function TutorsHeader() {
           <span className="hidden sm:inline">Export</span>
         </button>
       </div>
+
+      {/* Tutor Form Modal */}
+      {openForm && <TutorFormModal onClose={() => setOpenForm(false)} />}
     </div>
   );
 }
