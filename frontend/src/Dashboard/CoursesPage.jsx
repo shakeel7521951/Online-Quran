@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import CourseHeader from "./coursesPage/CoursesHeader";
+import CourseSummaryCards from "./coursesPage/CoursesCards";
+import CourseTable from "./coursesPage/CoursesMain";
 
 function CoursesPage() {
   return (
-    <div>CoursesPage</div>
-  )
+    <div>
+      <CourseHeader />
+      <CourseSummaryCards />
+      <CourseTable />
+    </div>
+  );
 }
 
-export default CoursesPage
+export default CoursesPage;

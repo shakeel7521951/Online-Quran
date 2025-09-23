@@ -1,8 +1,8 @@
 import { X, Trash2 } from "lucide-react";
 
-export default function DeleteStudentModal({ user, onClose, onDelete }) {
+export default function DeleteCourseModal({ user, onClose, onDelete }) {
   const handleDelete = () => {
-    console.log("Deleting user:", user);
+    console.log("Deleting course:", user);
     onDelete(user); // Connect this to API
     onClose();
   };
@@ -34,7 +34,7 @@ export default function DeleteStudentModal({ user, onClose, onDelete }) {
 
           {/* Heading */}
           <h2 className="text-2xl font-bold mb-3 text-[#0B1324]">
-            Delete Student
+            Delete Course
           </h2>
           <p className="text-gray-600 mb-8 text-sm sm:text-base leading-relaxed text-wrap">
             By <span className="text-red-600 font-semibold">deleting </span>
