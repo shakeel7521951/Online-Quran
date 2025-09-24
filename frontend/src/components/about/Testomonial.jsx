@@ -4,6 +4,7 @@ import { IoMdStar, IoMdStarOutline, IoIosQuote } from "react-icons/io";
 import { FaUserGraduate, FaUserTie, FaUser } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ReviewFormModal from "../home/model/ReviewFormModal";
 
 const TestomonialArray = [
   {
