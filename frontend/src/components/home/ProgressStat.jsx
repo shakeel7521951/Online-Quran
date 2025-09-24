@@ -105,8 +105,7 @@ const StatCard = ({ stat, index }) => {
       ref={ref}
       className="group flex flex-col justify-center items-center 
                  bg-gradient-to-br from-white to-gray-50 
-                 border border-gray-200 rounded-2xl text-gray-800 shadow-lg 
-                 transform transition-all duration-500 hover:scale-105 hover:shadow-2xl 
+                 border border-gray-200 rounded-2xl text-gray-800 hover:shadow-sm transition-all duration-300
                  p-6 relative overflow-hidden"
       data-aos={stat.animation}
       data-aos-delay={stat.delay}

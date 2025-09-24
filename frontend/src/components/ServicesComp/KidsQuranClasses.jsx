@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { FaBook, FaGamepad, FaStar, FaChild, FaSmile } from "react-icons/fa";
 
 export default function KidsQuranClasses() {
   useEffect(() => {
@@ -16,50 +17,55 @@ export default function KidsQuranClasses() {
     {
       title: "Fun & Interactive Lessons",
       desc: "Specially designed lessons with stories, visuals, and activities that make learning enjoyable for kids.",
+      icon: FaGamepad,
+      color: "bg-[#D4AF37]"
     },
     {
       title: "Activities & Quizzes",
       desc: "Engaging exercises and quizzes to help children learn faster and stay motivated throughout their journey.",
+      icon: FaStar,
+      color: "bg-[#D4AF37]"
     },
     {
       title: "Noorani Qaida & Beginner Tajweed",
       desc: "Focus on Noorani Qaida and simple Tajweed rules to give children the right foundation in Quran reading.",
+      icon: FaBook,
+      color: "bg-[#D4AF37]"
     },
   ];
 
   return (
-    <section className="py-16 px-6 md:px-12 bg-white relative">
-      <div className="max-w-6xl mx-auto">
-        {/* Heading */}
+    <section className="py-20 px-6 md:px-12 bg-gradient-to-br from-white to-gray-50 relative overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 left-0 w-72 h-72 bg-[#D4AF37]/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Heading Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
           data-aos="fade-down"
         >
-          <h2
-            className="text-3xl md:text-4xl font-bold text-[#D4AF37] mb-4"
-            data-aos="zoom-in"
-          >
-            Kids Quran Classes
-          </h2>
-          <div
-            className="w-28 h-1 bg-[#D4AF37] mx-auto rounded-full mb-6"
-            data-aos="fade-right"
-          ></div>
-          <p
-            className="text-gray-600 text-lg max-w-2xl mx-auto"
-            data-aos="fade-up"
-          >
-            Engaging and interactive Quran learning designed specifically for children
+          <div className="inline-flex items-center gap-3 mb-4" data-aos="zoom-in">
+            <FaChild className="text-3xl text-[#D4AF37]" />
+            <h2 className="text-4xl md:text-5xl font-bold text-[#D4AF37]">
+              Kids Quran Classes
+            </h2>
+            <FaSmile className="text-3xl text-[#D4AF37]" />
+          </div>
+          <div className="w-32 h-1.5 bg-gradient-to-r from-[#D4AF37] to-amber-200 mx-auto rounded-full mb-6" data-aos="fade-right"></div>
+          <p className="text-gray-700 text-xl max-w-3xl mx-auto leading-relaxed" data-aos="fade-up">
+            Engaging and interactive Quran learning designed specifically for children with fun activities and qualified teachers
           </p>
         </motion.div>
 
         {/* Main Content */}
-        <div className="flex flex-col lg:flex-row gap-10 items-center">
-          {/* Single Prominent Image */}
+        <div className="flex flex-col lg:flex-row gap-12 items-center">
+          {/* Image Section */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -68,16 +74,20 @@ export default function KidsQuranClasses() {
             className="lg:w-1/2"
             data-aos="fade-right"
           >
-            <div className="rounded-2xl overflow-hidden shadow-lg" data-aos="zoom-in">
-              <img
-                src="https://nooracademy.com/wp-content/uploads/2021/05/How-Can-I-Get-My-Child-To-Read-T.webp"
-                alt="Child learning Quran"
-                className="w-full h-[400px] object-cover"
-              />
+            <div className="relative" data-aos="zoom-in">
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#D4AF37] to-amber-200 rounded-2xl blur-lg opacity-30"></div>
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://nooracademy.com/wp-content/uploads/2021/05/How-Can-I-Get-My-Child-To-Read-T.webp"
+                  alt="Child learning Quran"
+                  className="w-full h-[450px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Features List */}
+          {/* Features Section */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -86,46 +96,67 @@ export default function KidsQuranClasses() {
             className="lg:w-1/2"
             data-aos="fade-left"
           >
-            <div className="space-y-8">
-              {features.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-start gap-5 p-4 rounded-lg hover:bg-gray-50 transition-colors duration-300"
-                  data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
-                >
-                  {/* Number Indicator */}
-                  <div
-                    className="flex-shrink-0 w-10 h-10 bg-[#D4AF37] text-white rounded-full flex items-center justify-center font-semibold text-lg"
-                    data-aos="zoom-in"
+            <div className="space-y-6">
+              {features.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02 }}
+                    className="group"
                   >
-                    {index + 1}
-                  </div>
-                  
-                  {/* Content */}
-                  <div>
-                    <h3
-                      className="text-xl font-semibold text-[#D4AF37] mb-2"
-                      data-aos="fade-up"
+                    <div 
+                      className="flex items-start gap-6 p-6 rounded-xl bg-white shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 group-hover:border-[#D4AF37]/20"
+                      data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
                     >
-                      {item.title}
-                    </h3>
-                    <p
-                      className="text-gray-700 leading-relaxed"
-                      data-aos="fade-up"
-                      data-aos-delay="100"
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                      {/* Icon Container */}
+                      <div className="relative">
+                        <div className={`w-14 h-14 ${item.color} rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                          <IconComponent className="text-2xl text-white" />
+                        </div>
+                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-md">
+                          <span className="text-[#D4AF37] font-bold text-sm">{index + 1}</span>
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-[#D4AF37] transition-colors duration-300">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-600 leading-relaxed">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
 
-            {/* Call to Action (if any) */}
+            {/* Additional Info Box */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-8 p-6 bg-gradient-to-r from-[#D4AF37] to-amber-200 rounded-xl shadow-lg"
+              data-aos="fade-up"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md">
+                  <FaChild className="text-2xl text-[#D4AF37]" />
+                </div>
+                <div>
+                  <h4 className="text-white font-bold text-lg mb-1">Specialized for Kids</h4>
+                  <p className="text-white/90 text-sm">Age-appropriate teaching methods and friendly instructors</p>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

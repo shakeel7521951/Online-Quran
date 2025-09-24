@@ -70,7 +70,7 @@ const TeachingMethod = () => {
         {steps.map((step, index) => (
           <div
             key={step.id}
-            className="relative group bg-white/80 backdrop-blur-lg border-2 border-[#EBC693] shadow-xl rounded-2xl px-8 py-10 flex flex-col items-center text-center hover:scale-[1.05] hover:border-[#3a291c] transition-all duration-300 ease-in-out"
+            className="relative group bg-white/80 backdrop-blur-lg border-2 border-[#EBC693] shadow-xl rounded-2xl px-8 py-10 flex flex-col items-center text-center  hover:border-[#fac093]  hover:shadow-2xl transition-all duration-300"
             data-aos={step.aos}
             data-aos-delay={index * 150}
           >

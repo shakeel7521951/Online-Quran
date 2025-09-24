@@ -135,7 +135,7 @@ const Intro = () => {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-lg p-8 text-center group hover:shadow-xl hover:transform hover:-translate-y-2 transition-all duration-300 border border-amber-100"
+              className="bg-white rounded-2xl shadow-lg p-8 text-center group hover:shadow-xl transition-all duration-300 border border-amber-100"
               data-aos="zoom-in"
               data-aos-delay={index * 150}
             >
@@ -201,7 +201,7 @@ const Intro = () => {
             {values.map((value, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 border border-amber-100 group hover:transform hover:-translate-y-2"
+                className="bg-white rounded-2xl p-8 text-center border border-amber-100 group hover:shadow-sm transition-all duration-300"
                 data-aos="fade-up"
                 data-aos-delay={index * 150}
               >
@@ -233,7 +233,7 @@ const Intro = () => {
             {teamMembers.map((member, index) => (
               <div
                 key={member.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100 group"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-amber-100 group"
                 data-aos="flip-left"
                 data-aos-delay={index * 150}
               >

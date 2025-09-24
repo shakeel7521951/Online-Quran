@@ -68,7 +68,7 @@ const Vision = () => {
         <div className="grid md:grid-cols-3 gap-8 md:gap-10 lg:gap-12">
           {/* Card 1 */}
           <div
-            className="relative bg-white p-8 md:p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden border-l-4 border-[#B49762] transform hover:-translate-y-2"
+            className="relative bg-white p-8 md:p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden border-l-4 border-[#B49762] transform "
             data-aos="fade-right"
             data-aos-delay="200"
           >
@@ -106,7 +106,7 @@ const Vision = () => {
 
           {/* Card 2 - Featured Card */}
           <div
-            className="relative bg-white p-8 md:p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden border-l-4 border-[#B49762] transform hover:-translate-y-2 scale-105"
+            className="relative bg-white p-8 md:p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden border-l-4 border-[#B49762] transform "
             data-aos="fade-up"
             data-aos-delay="300"
           >
@@ -148,7 +148,7 @@ const Vision = () => {
 
           {/* Card 3 */}
           <div
-            className="relative bg-white p-8 md:p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden border-l-4 border-[#B49762] transform hover:-translate-y-2"
+            className="relative bg-white p-8 md:p-10 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 group overflow-hidden border-l-4 border-[#B49762] transform "
             data-aos="fade-left"
             data-aos-delay="400"
           >

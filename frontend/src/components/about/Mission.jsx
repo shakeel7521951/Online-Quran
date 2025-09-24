@@ -102,7 +102,7 @@ const Mission = () => {
             return (
               <div
                 key={card.id}
-                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 p-8 border border-gray-100 overflow-hidden" // Reduced translate-y from -3 to -2
+                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform  p-8 border border-gray-100 overflow-hidden" // Reduced translate-y from -3 to -2
                 data-aos={card.aos}
                 data-aos-delay={index * 100}
               >
@@ -156,7 +156,7 @@ const Mission = () => {
             return (
               <div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg p-6 text-center group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" // Reduced translate-y from -2 to -1
+                className="bg-white rounded-2xl shadow-lg p-6 text-center group hover:shadow-xl transition-all duration-300 transform " // Reduced translate-y from -2 to -1
                 data-aos="zoom-in"
                 data-aos-delay={index * 150}
               >

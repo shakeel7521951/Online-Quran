@@ -177,7 +177,7 @@ const KeyFeatures = () => {
                 data-aos={feature.animation}
                 data-aos-duration={feature.duration}
                 data-aos-delay={index * 100}
-                className={`group relative overflow-hidden rounded-2xl p-5 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl backdrop-blur-sm bg-white/10 border border-white/20 hover:border-${ACCENT}/50`}
+                className={`group relative overflow-hidden rounded-2xl p-5 cursor-pointer hover:shadow-xl transition-all duration-300 backdrop-blur-sm bg-white/10 border border-white/20 hover:border-${ACCENT}/50`}
                 style={{
                   backdropFilter: 'blur(10px)',
                 }}

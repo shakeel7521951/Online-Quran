@@ -154,7 +154,7 @@ const QuranCourses = () => {
             {mainCourses.map((course, index) => (
               <div 
                 key={index}
-                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-emerald-100 transform hover:-translate-y-2"
+                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-emerald-100"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
@@ -221,7 +221,7 @@ const QuranCourses = () => {
             {faqCourses.map((course, index) => (
               <div
                 key={index}
-                className="group bg-gradient-to-br from-white to-emerald-50/50 rounded-xl p-6 border border-emerald-100 hover:border-emerald-300 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+                className="group bg-gradient-to-br from-white to-emerald-50/50 rounded-xl p-6 border border-emerald-100 hover:border-emerald-300 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer transform"
                 data-aos="zoom-in"
                 data-aos-delay={index * 80}
                 onClick={() => setSelectedFaq(course)}
@@ -250,7 +250,7 @@ const QuranCourses = () => {
 
           <div className="text-center mt-12">
             <button 
-              className="px-8 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:shadow-xl transform hover:scale-105"
+              className="px-8 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:delay-400 hover:shadow-xl transform hover:scale-105"
               style={{ 
                 background: `linear-gradient(135deg, ${PRIMARY}, ${ACCENT})`,
                 boxShadow: `0 6px 20px ${PRIMARY}40`

@@ -83,7 +83,7 @@ const WhyChooseUs = () => {
               ></div>
               
               <div 
-                className="relative rounded-2xl overflow-hidden shadow-2xl group"
+                className="relative rounded-xl overflow-hidden shadow-2xl group"
                 style={{
                   border: `4px solid ${PRIMARY}20`,
                   boxShadow: `0 20px 40px rgba(0,0,0,0.1)`
@@ -176,7 +176,7 @@ const WhyChooseUs = () => {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="group relative overflow-hidden rounded-xl p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  className="group relative overflow-hidden rounded-xl p-4  hover:shadow-xl transition-all duration-300"
                   style={{
                     backgroundColor: 'rgba(255,255,255,0.8)',
                     border: `1px solid ${PRIMARY}30`,

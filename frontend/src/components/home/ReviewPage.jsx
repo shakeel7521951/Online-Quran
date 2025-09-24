@@ -211,10 +211,10 @@ const ReviewPage = () => {
                 key={index}
                 onClick={() => setActiveReview(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === activeReview ? "bg-[#CDAD79] w-8" : "bg-[#d3c6b2]"
+                  index === activeReview ? "bg-[#CDAD79] w-3" : "bg-[#d3c6b2]"
                 }`}
                 aria-label={`Go to review ${index + 1}`}
-                data-aos="fade-up"
+                data-aos=""
               />
             ))}
           </div>
@@ -244,7 +244,7 @@ const ReviewPage = () => {
           >
             <a href="/FreeTrialClass">
               <button
-                className="bg-[#CDAD79] hover:bg-[#f0d7af] cursor-pointer text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md"
+                className="bg-[#CDAD79] hover:bg-[#dfbb81] cursor-pointer text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md"
                 data-aos="fade-up"
               >
                 Book Free Trial

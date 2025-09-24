@@ -127,7 +127,7 @@ const FAQSection = () => {
                     activeIndex === index ? "rounded-t-2xl bg-white" : "rounded-2xl"
                   }`}
                   onClick={() => toggleFAQ(index)}
-                  data-aos="flip-up"
+                  data-aos=""
                 >
                   <div className="flex items-center">
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-100 to-amber-100 flex items-center justify-center mr-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
@@ -137,7 +137,7 @@ const FAQSection = () => {
                     </div>
                     <h3
                       className="font-semibold text-lg md:text-xl text-gray-800 group-hover:text-[#0C7655] transition-colors duration-300"
-                      data-aos="fade-up"
+                      data-aos=""
                     >
                       {faq.question}
                     </h3>

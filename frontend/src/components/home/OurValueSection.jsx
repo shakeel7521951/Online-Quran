@@ -85,7 +85,7 @@ const OurValueSection = () => {
             {values.map((value, index) => (
               <div
                 key={index}
-                className="group relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-500 border-l-4 hover:-translate-y-1"
+                className="group relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-400"
                 style={{borderLeftColor: "#D4AF37"}}
                 data-aos={value.animation}
                 data-aos-delay={index * 200}
