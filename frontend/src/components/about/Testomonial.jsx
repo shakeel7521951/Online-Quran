@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { GoDot } from "react-icons/go";
-import { IoMdStar, IoMdStarOutline } from "react-icons/io";
+import { IoMdStar, IoMdStarOutline, IoIosQuote } from "react-icons/io";
+import { FaUserGraduate, FaUserTie, FaUser } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const TestomonialArray = [
   {
     id: 1,
-    img: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=500&auto=format&fit=crop&q=60",
+    img: "https://plus.unsplash.com/premium_photo-1678559460700-8a1d42ce8239?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bXVzbGltJTIwbWFufGVufDB8fDB8fHww",
     stars: 5,
     msg: "Alhamdulillah, learning Quran online has been life-changing. The teacher is patient and explains with tajweed rules clearly. My recitation has improved a lot.",
     name: "Ahmed Khan",
     position: "Student",
+    icon: <FaUserGraduate />
   },
   {
     id: 2,
@@ -20,23 +22,30 @@ const TestomonialArray = [
     msg: "The one-on-one classes are excellent. My daughter has memorized several surahs already and enjoys every session with her ustadha.",
     name: "Fatima Zahra",
     position: "Parent",
+    icon: <FaUserTie />
   },
   {
     id: 3,
-    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60",
+    img: "https://images.unsplash.com/photo-1627091908405-30bd51eec537?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bXVzbGltJTIwbWFufGVufDB8fDB8fHww",
     stars: 4,
     msg: "I live abroad and this academy made it easy to stay connected with the Quran. Flexible timing helps me manage my busy schedule.",
     name: "Muhammad Ali",
     position: "Professional",
+    icon: <FaUser />
   },
 ];
 
 const Testomonial = () => {
   const [current, setCurrent] = useState(0);
   const intervalRef = useRef(null);
+  const sliderRef = useRef(null);
 
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ 
+      duration: 1000, 
+      once: true,
+      offset: 100 // Increased offset to prevent early triggering
+    });
     startAutoSlide();
     return () => stopAutoSlide();
   }, []);
@@ -58,89 +67,115 @@ const Testomonial = () => {
   };
 
   return (
-    <div className="px-4 sm:px-6 py-10 mb-5 bg-gradient-to-br from-[#644E38] to-[#D4B183]  max-w-full">
+    <div className="px-4 sm:px-6 py-16 mb-5 bg-gradient-to-br from-[#644E38] to-[#D4B183] relative overflow-hidden w-full">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-white/10 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white/10 to-transparent"></div>
+      
       {/* Heading */}
-      <h1
-        className="text-center text-2xl md:text-4xl font-semibold mb-6 text-white"
-        data-aos="fade-down"
-      >
-        What Our Students Say
-      </h1>
-
-      <p
-        className="text-center flex items-center justify-center gap-4 text-lg font-semibold text-yellow-200"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
-        <hr className="w-16 border-t-2 border-yellow-200" />
-        STUDENT TESTIMONIALS
-        <hr className="w-16 border-t-2 border-yellow-200" />
-      </p>
-
-      {/* Slider */}
-      <div className="overflow-hidden max-w-5xl mx-auto mt-12">
-        <div
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${current * 100}%)` }}
+      <div className="text-center mb-12 relative z-10 max-w-6xl mx-auto">
+        <h1
+          className="text-3xl md:text-5xl font-bold mb-4 text-white drop-shadow-md"
+          data-aos="fade-down"
         >
-          {TestomonialArray.map((item, index) => (
-            <div
-              key={item.id}
-              className="min-w-full flex flex-col items-center gap-6 md:gap-10 bg-white rounded-xl border border-gray-200 p-6 sm:p-10"
-              data-aos="zoom-in-up"
-              data-aos-delay={index * 200}
-            >
-              <div
-                className="w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] rounded-full overflow-hidden border-2 border-green-400 hover:scale-105 transition cursor-pointer"
-                data-aos="flip-left"
-              >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
+          What Our Students Say
+        </h1>
 
-              <div className="text-center md:text-left">
-                {/* ⭐ Dynamic Star Rating */}
-                <div
-                  className="flex justify-center md:justify-start text-yellow-400 mb-3"
-                  data-aos="fade-right"
-                  data-aos-delay="300"
-                >
-                  {Array.from({ length: 5 }).map((_, idx) =>
-                    idx < item.stars ? (
-                      <IoMdStar key={idx} />
-                    ) : (
-                      <IoMdStarOutline key={idx} />
-                    )
-                  )}
+        <div
+          className="flex items-center justify-center gap-4 text-lg font-semibold text-yellow-200"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <hr className="w-20 border-t-2 border-yellow-200" />
+          <span className="tracking-wider">STUDENT TESTIMONIALS</span>
+          <hr className="w-20 border-t-2 border-yellow-200" />
+        </div>
+      </div>
+
+      {/* Slider Container - Fixed overflow */}
+      <div className="max-w-6xl mx-auto relative z-10 px-4">
+        <div 
+          ref={sliderRef}
+          className="overflow-hidden rounded-2xl"
+        >
+          <div
+            className="flex transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${current * 100}%)` }}
+          >
+            {TestomonialArray.map((item, index) => (
+              <div
+                key={item.id}
+                className="w-full flex-shrink-0 flex flex-col md:flex-row items-center gap-6 md:gap-8 bg-white/95 shadow-2xl border border-white/30 p-6 md:p-8 relative"
+                data-aos="zoom-in"
+                data-aos-delay={index * 200}
+              >
+                {/* Quote Icon */}
+                <div className="absolute top-2 left-4 bg-gradient-to-r from-[#644E38] to-[#D4B183] p-2 rounded-full shadow-lg">
+                  <IoIosQuote className="text-2xl text-white" />
                 </div>
 
-                <p
-                  className="italic text-black mb-4"
-                  data-aos="fade-up"
-                  data-aos-delay="400"
-                >
-                  "{item.msg}"
-                </p>
-                <ul
-                  className="list-none"
-                  data-aos="fade-up"
-                  data-aos-delay="500"
-                >
-                  <li className="font-semibold text-sm">{item.name}</li>
-                  <li className="text-sm text-black">{item.position}</li>
-                </ul>
+                {/* Image Container */}
+                <div className="flex flex-col items-center mt-6 md:mt-0">
+                  <div
+                    className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-green-400 hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg relative"
+                    data-aos="flip-left"
+                    data-aos-delay="300"
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    {/* Role Icon */}
+                    <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-[#644E38] to-[#D4B183] p-2 rounded-full text-white text-lg shadow-md">
+                      {item.icon}
+                    </div>
+                  </div>
+                  
+                  {/* Name and Position */}
+                  <div className="mt-4 text-center">
+                    <h3 className="font-bold text-lg text-[#644E38]">{item.name}</h3>
+                    <p className="text-sm text-gray-600">{item.position}</p>
+                  </div>
+                </div>
+
+                {/* Testimonial Content */}
+                <div className="flex-1 text-center md:text-left mt-4 md:mt-0">
+                  {/* Star Rating */}
+                  <div
+                    className="flex justify-center md:justify-start text-yellow-400 text-xl mb-4"
+                    data-aos="fade-right"
+                    data-aos-delay="400"
+                  >
+                    {Array.from({ length: 5 }).map((_, idx) =>
+                      idx < item.stars ? (
+                        <IoMdStar key={idx} className="drop-shadow-sm" />
+                      ) : (
+                        <IoMdStarOutline key={idx} />
+                      )
+                    )}
+                  </div>
+
+                  {/* Testimonial Text */}
+                  <p
+                    className="text-gray-700 text-base md:text-lg leading-relaxed mb-4 italic relative px-2"
+                    data-aos="fade-up"
+                    data-aos-delay="500"
+                  >
+                    <span className="absolute -left-1 -top-3 text-2xl text-[#D4B183]">"</span>
+                    {item.msg}
+                    <span className="absolute -right-1 -bottom-3 text-2xl text-[#D4B183]">"</span>
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Dots Navigation */}
       <div
-        className="flex justify-center items-center gap-2 mt-8 text-2xl text-yellow-500"
+        className="flex justify-center items-center gap-3 mt-8 relative z-10"
         data-aos="fade-up"
         data-aos-delay="600"
       >
@@ -149,17 +184,30 @@ const Testomonial = () => {
             key={index}
             onClick={() => handleDotClick(index)}
             aria-label={`Go to testimonial ${index + 1}`}
-            className="focus:outline-none"
-            data-aos="zoom-in"
-            data-aos-delay={index * 150}
+            className="focus:outline-none group"
           >
-            <GoDot
-              className={`cursor-pointer ${
-                current === index ? "text-yellow-600" : "text-yellow-400"
-              }`}
-            />
+            <div className={`p-1 rounded-full transition-all duration-300 ${
+              current === index 
+                ? "bg-yellow-500/30 scale-125" 
+                : "bg-white/20 hover:bg-white/30"
+            }`}>
+              <GoDot
+                className={`text-xl transition-all duration-300 ${
+                  current === index 
+                    ? "text-yellow-600 scale-110" 
+                    : "text-yellow-400 group-hover:text-yellow-500"
+                }`}
+              />
+            </div>
           </button>
         ))}
+      </div>
+
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5 overflow-hidden">
+        <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-white"></div>
+        <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-white"></div>
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-white"></div>
       </div>
     </div>
   );

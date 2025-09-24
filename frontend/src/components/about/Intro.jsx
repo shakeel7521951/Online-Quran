@@ -1,6 +1,21 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { 
+  FaUserGraduate, 
+  FaCalendarAlt, 
+  FaGlobeAmericas, 
+  FaChalkboardTeacher,
+  FaQuran,
+  FaHeart,
+  FaAward,
+  FaUsers,
+  FaStar,
+  FaBookOpen,
+  FaGraduationCap,
+  FaHandsHelping,
+  FaLaptop
+} from "react-icons/fa";
 
 const Intro = () => {
   const teamMembers = [
@@ -10,10 +25,9 @@ const Intro = () => {
       role: "Founder & Senior Quran Teacher",
       experience: "25+ years",
       specialization: "Tajweed and Qira'at",
-      image:
-        "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      description:
-        "PhD in Islamic Studies from Al-Azhar University. Dedicated to teaching Quran with proper Tajweed for over two decades.",
+      image: "https://plus.unsplash.com/premium_photo-1664300894274-cfdf8cd3af6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHx8",
+      description: "PhD in Islamic Studies from Al-Azhar University. Dedicated to teaching Quran with proper Tajweed for over two decades.",
+      icon: <FaQuran className="text-amber-600" />
     },
     {
       id: 2,
@@ -21,10 +35,9 @@ const Intro = () => {
       role: "Head of Women's Education",
       experience: "15+ years",
       specialization: "Quran Memorization",
-      image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      description:
-        "Specializes in Hifz programs for women and children. Certified Quran teacher with Ijazah in Hafs 'an Asim.",
+      image: "https://plus.unsplash.com/premium_photo-1681493954097-3a8190323231?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM5fHx8ZW58MHx8fHx8",
+      description: "Specializes in Hifz programs for women and children. Certified Quran teacher with Ijazah in Hafs 'an Asim.",
+      icon: <FaBookOpen className="text-amber-600" />
     },
     {
       id: 3,
@@ -32,10 +45,9 @@ const Intro = () => {
       role: "Senior Qari & Instructor",
       experience: "20+ years",
       specialization: "Advanced Tajweed",
-      image:
-        "https://images.unsplash.com/photo-1580309237429-661ea7cd1d53?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      description:
-        "Renowned Qari with participation in international Quran competitions. Expert in teaching proper pronunciation and melody.",
+      image: "https://plus.unsplash.com/premium_photo-1677523780272-b89f5f128472?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDExOHx8fGVufDB8fHx8fA%3D%3D",
+      description: "Renowned Qari with participation in international Quran competitions. Expert in teaching proper pronunciation and melody.",
+      icon: <FaGraduationCap className="text-amber-600" />
     },
     {
       id: 4,
@@ -43,10 +55,9 @@ const Intro = () => {
       role: "Children's Program Director",
       experience: "12+ years",
       specialization: "Quran for Kids",
-      image:
-        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      description:
-        "Develops engaging Quran learning programs for children. Specialized in child education psychology and Islamic pedagogy.",
+      image: "https://plus.unsplash.com/premium_photo-1683134266530-425af5d86e67?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fHw%3D",
+      description: "Develops engaging Quran learning programs for children. Specialized in child education psychology and Islamic pedagogy.",
+      icon: <FaHandsHelping className="text-amber-600" />
     },
     {
       id: 5,
@@ -54,10 +65,9 @@ const Intro = () => {
       role: "Technology & Education Specialist",
       experience: "8+ years",
       specialization: "Digital Learning",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      description:
-        "Combines traditional Quran teaching with modern technology. Manages our online learning platform and digital resources.",
+      image: "https://plus.unsplash.com/premium_photo-1699537317988-b0d94b666661?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDc3fHx8ZW58MHx8fHx8",
+      description: "Combines traditional Quran teaching with modern technology. Manages our online learning platform and digital resources.",
+      icon: <FaLaptop className="text-amber-600" />
     },
     {
       id: 6,
@@ -65,41 +75,40 @@ const Intro = () => {
       role: "Student Support Coordinator",
       experience: "10+ years",
       specialization: "Student Counseling",
-      image:
-        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
-      description:
-        "Provides guidance and support to students throughout their Quran learning journey. Ensures smooth learning experience.",
+      image: "https://plus.unsplash.com/premium_photo-1681492187779-5b021b43f4de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDUyfHx8ZW58MHx8fHx8",
+      description: "Provides guidance and support to students throughout their Quran learning journey. Ensures smooth learning experience.",
+      icon: <FaUsers className="text-amber-600" />
     },
   ];
 
   const values = [
     {
       title: "Authenticity",
-      description:
-        "We maintain the authentic teachings of Quran with proper Tajweed and Tafsir",
+      description: "We maintain the authentic teachings of Quran with proper Tajweed and Tafsir",
+      icon: <FaQuran className="text-amber-500" />
     },
     {
       title: "Compassion",
-      description:
-        "We teach with patience and understanding, creating a supportive environment",
+      description: "We teach with patience and understanding, creating a supportive environment",
+      icon: <FaHeart className="text-amber-500" />
     },
     {
       title: "Excellence",
-      description:
-        "We strive for excellence in Quranic education through continuous improvement",
+      description: "We strive for excellence in Quranic education through continuous improvement",
+      icon: <FaAward className="text-amber-500" />
     },
     {
       title: "Community",
-      description:
-        "We build a global community of Quran learners supporting each other",
+      description: "We build a global community of Quran learners supporting each other",
+      icon: <FaUsers className="text-amber-500" />
     },
   ];
 
   const stats = [
-    { number: "5,000+", label: "Students Taught" },
-    { number: "20+", label: "Years Experience" },
-    { number: "15+", label: "Countries Served" },
-    { number: "50+", label: "Qualified Teachers" },
+    { number: "5,000+", label: "Students Taught", icon: <FaUserGraduate className="text-amber-500" /> },
+    { number: "20+", label: "Years Experience", icon: <FaCalendarAlt className="text-amber-500" /> },
+    { number: "15+", label: "Countries Served", icon: <FaGlobeAmericas className="text-amber-500" /> },
+    { number: "50+", label: "Qualified Teachers", icon: <FaChalkboardTeacher className="text-amber-500" /> },
   ];
 
   useEffect(() => {
@@ -107,114 +116,156 @@ const Intro = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-16 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-7xl mx-auto">
 
-        {/* Header Section */}
-        <div className="text-center mb-16" data-aos="fade-down">
-          <h1 className="font-serif text-4xl text-[#B49762] mb-2 font-semibold">
+        {/* Enhanced Header Section */}
+        <div className="text-center mb-20 relative" data-aos="fade-down">
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-full"></div>
+          <h1 className="font-serif text-5xl md:text-6xl text-amber-700 mb-4 font-bold tracking-tight">
             Who We Are
           </h1>
-          <p className="text-md text-gray-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-            Meet the dedicated team behind Online Quran Academy, passionate
-            educators committed to spreading Quranic knowledge with authenticity
-            and love.
+          <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+            Meet the dedicated team behind Online Quran Academy, passionate educators committed to spreading Quranic knowledge with authenticity and love.
           </p>
         </div>
 
-        {/* Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        {/* Enhanced Statistics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-sm p-6 text-center"
+              className="bg-white rounded-2xl shadow-lg p-8 text-center group hover:shadow-xl hover:transform hover:-translate-y-2 transition-all duration-300 border border-amber-100"
               data-aos="zoom-in"
               data-aos-delay={index * 150}
             >
-              <div className="text-2xl md:text-3xl font-bold text-[#A97635] mb-2">
+              <div className="flex justify-center mb-4">
+                <div className="p-3 bg-amber-50 rounded-full group-hover:bg-amber-100 transition-colors duration-300">
+                  <div className="text-3xl">
+                    {stat.icon}
+                  </div>
+                </div>
+              </div>
+              <div className="text-3xl md:text-4xl font-bold text-amber-700 mb-2">
                 {stat.number}
               </div>
-              <div className="text-gray-600">{stat.label}</div>
+              <div className="text-gray-600 font-medium">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Our Story */}
-        <div className="bg-white rounded-2xl shadow-sm p-8 mb-16" data-aos="fade-right">
-          <h2 className="text-3xl mb-3 text-[#A97635] font-serif">Our Story</h2>
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div data-aos="fade-left">
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Founded in 2003, Online Quran Academy began with a simple
-                mission: to make authentic Quranic education accessible to
-                Muslims worldwide...
-              </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Our founder, Dr. Ahmed Al-Misri, recognized the challenges many
-                Muslims faced in accessing qualified Quran teachers...
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Today, we take pride in our team of certified teachers...
-              </p>
+        {/* Enhanced Our Story Section */}
+        <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-20 border border-amber-100" data-aos="fade-up">
+          <div className="grid md:grid-cols-2 gap-0">
+            <div className="p-10 md:p-12 flex flex-col justify-center">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                  <FaStar className="text-amber-600" />
+                </div>
+                <h2 className="text-3xl md:text-4xl text-amber-700 font-serif font-bold">Our Story</h2>
+              </div>
+              <div data-aos="fade-right" data-aos-delay="200">
+                <p className="text-gray-600 mb-4 leading-relaxed text-lg">
+                  Founded in 2003, Online Quran Academy began with a simple mission: to make authentic Quranic education accessible to Muslims worldwide. Our vision was to bridge the gap between traditional Islamic education and modern technology.
+                </p>
+                <p className="text-gray-600 mb-4 leading-relaxed text-lg">
+                  Our founder, Dr. Ahmed Al-Misri, recognized the challenges many Muslims faced in accessing qualified Quran teachers. With dedication and divine guidance, we've grown into a global institution serving thousands of students.
+                </p>
+                <p className="text-gray-600 leading-relaxed text-lg">
+                  Today, we take pride in our team of certified teachers who carry the legacy of authentic Islamic knowledge while embracing innovative teaching methodologies.
+                </p>
+              </div>
             </div>
-            <div data-aos="zoom-in">
+            <div className="relative min-h-96" data-aos="zoom-in" data-aos-delay="400">
               <img
                 src="https://media.istockphoto.com/id/2148521874/photo/holy-quran-woman-reading-the-quran-muslim-worship-ramadan-holy-day.webp?a=1&b=1&s=612x612&w=0&k=20&c=QsnQJ4EP9Ik0byKpk8SSFvL29lz4jThkmhDFknL1k-g="
                 alt="Quran Teaching"
-                className="rounded-2xl shadow-md w-full max-w-md"
+                className="absolute inset-0 w-full h-full object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-l from-amber-900/10 to-amber-700/20"></div>
             </div>
           </div>
         </div>
 
-        {/* Our Values */}
-        <div className="mb-16">
-          <h2 className="text-3xl text-center mb-3 text-[#B49762] font-serif font-semibold" data-aos="fade-down">
-            Our Values
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Enhanced Our Values */}
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl text-amber-700 font-serif font-bold mb-4" data-aos="fade-down">
+              Our Values
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+              The principles that guide our mission and shape our educational approach
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl p-6 text-center hover:shadow-md transition-shadow shadow-sm duration-300"
+                className="bg-white rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 border border-amber-100 group hover:transform hover:-translate-y-2"
                 data-aos="fade-up"
                 data-aos-delay={index * 150}
               >
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">{value.title}</h3>
-                <p className="text-gray-600">{value.description}</p>
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-amber-50 rounded-2xl group-hover:bg-amber-100 transition-colors duration-300">
+                    <div className="text-4xl">
+                      {value.icon}
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">{value.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Team Members */}
+        {/* Enhanced Team Members */}
         <div>
-          <h2 className="text-3xl text-center text-[#B49762] mb-3 font-serif" data-aos="fade-down">
-            Meet Our Team
-          </h2>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl text-amber-700 font-serif font-bold mb-4" data-aos="fade-down">
+              Meet Our Team
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+              Dedicated educators committed to your Quranic learning journey
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
               <div
                 key={member.id}
-                className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-amber-100 group"
                 data-aos="flip-left"
                 data-aos-delay={index * 150}
               >
-                <div className="relative">
+                <div className="relative overflow-hidden">
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute bottom-0 left-0 bg-[#B49762] text-white px-3 py-1 text-sm">
-                    {member.experience}
+                  <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                    <FaCalendarAlt className="mr-1" /> {member.experience}
                   </div>
+                  <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/40 to-transparent"></div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-1">{member.name}</h3>
-                  <p className="text-[#B49762] font-medium mb-2">{member.role}</p>
-                  <p className="text-amber-600 text-sm mb-4">{member.specialization}</p>
-                  <p className="text-gray-600 text-sm">{member.description}</p>
+                  <div className="flex items-start mb-4">
+                    <div className="p-2 bg-amber-50 rounded-lg mr-4 group-hover:bg-amber-100 transition-colors duration-300">
+                      <div className="text-xl">
+                        {member.icon}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
+                      <p className="text-amber-600 font-medium">{member.role}</p>
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <span className="inline-block bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">
+                      {member.specialization}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 leading-relaxed">{member.description}</p>
                 </div>
               </div>
             ))}

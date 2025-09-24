@@ -51,31 +51,36 @@ const TeachingMethod = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-[#3a291c] to-[#EBC693] py-12 px-6 overflow-hidden">
-      <div className="max-w-5xl mx-auto text-center mb-12 text-white" data-aos="zoom-in">
-        <h1 className="text-3xl md:text-4xl font-bold">
+    <div className="bg-gradient-to-b from-[#3a291c] to-[#EBC693] min-h-screen py-16 px-4 overflow-hidden">
+      <div
+        className="max-w-4xl mx-auto text-center mb-16"
+        data-aos="zoom-in"
+      >
+        <h1
+          className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#EBC693]  to-[#EBC693] bg-clip-text text-transparent "
+        >
           Our Online Quran Teaching Procedure
         </h1>
-        <p className="mt-4 text-lg">
+        <p className="mt-5 text-lg md:text-xl text-white/80 font-medium">
           We follow a structured process to ensure smooth learning for every student.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center">
         {steps.map((step, index) => (
           <div
             key={step.id}
-            className="bg-white shadow-md rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-lg transition"
+            className="relative group bg-white/80 backdrop-blur-lg border-2 border-[#EBC693] shadow-xl rounded-2xl px-8 py-10 flex flex-col items-center text-center hover:scale-[1.05] hover:border-[#3a291c] transition-all duration-300 ease-in-out"
             data-aos={step.aos}
             data-aos-delay={index * 150}
           >
-            <div className="mb-4">
+            <span className="absolute -top-6 left-1/2 -translate-x-1/2 rounded-full p-4 bg-gradient-to-br from-[#EBC693] via-white to-[#3a291c] shadow-lg group-hover:rotate-12 transition-all duration-300">
               {step.icon}
-            </div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            </span>
+            <h2 className="pt-8 text-xl font-bold text-[#3a291c] mb-3 drop-shadow">
               {step.title}
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-700 font-medium leading-relaxed">
               {step.desc}
             </p>
           </div>

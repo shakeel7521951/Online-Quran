@@ -26,7 +26,7 @@ const ReviewPage = () => {
       review:
         "Quran Learn Academy has been a blessing for our family. My son loves his teacher and has shown remarkable progress in Tajweed within just a few months. The personalized approach and regular progress reports keep us informed and engaged.",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMwHR3p_BIDOsvOJpIe0WQt-jdrhR9Q2KYVQ&s",
+        "https://plus.unsplash.com/premium_photo-1677621879477-946a3187e2f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D",
       rating: 5,
       course: "Tajweed for Kids",
     },
@@ -36,7 +36,7 @@ const ReviewPage = () => {
       review:
         "Learning the Quran online is so convenient! The teachers are patient and supportive, especially with Tajweed rules. The flexible scheduling allows me to balance my studies and work. Highly recommended for busy learners.",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFwQGUJ5SsvaJ-2AD90sLXtKQwv4lU7spWJtohqBeivZZPzpA617smv17RqPeZnYAZHEk&usqp=CAU",
+        "https://plus.unsplash.com/premium_photo-1679064458881-76904cf6d1aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDUzfHx8ZW58MHx8fHx8",
       rating: 5,
       course: "Advanced Tajweed",
     },
@@ -46,7 +46,7 @@ const ReviewPage = () => {
       review:
         "Alhamdulillah, I've started my Hifz journey here. The structured plan, daily support, and regular assessments keep me motivated and consistent. The teachers are knowledgeable and make memorization enjoyable.",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDes-EPfa3rerLeLO0ftpjVFm1KlPj_ODzU7t6aprsLUixMwJBSlRt4j-IrkWuzpq92Io&usqp=CAU",
+        "https://plus.unsplash.com/premium_photo-1678559460710-44e70ee6eb29?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D",
       rating: 4,
       course: "Hifz Program",
     },
@@ -56,7 +56,7 @@ const ReviewPage = () => {
       review:
         "I always wanted to understand the Quran deeply. The Tafseer classes are enlightening and help me connect with the verses on a personal level. The teachers provide historical context that brings the verses to life.",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTytWtiOudZxsDJTsgYsLFasLw7Vyb_SE8AbWNxrXgVRrrkyUpNzw1iYoHV21I_QpbM9vA&usqp=CAU",
+        "https://plus.unsplash.com/premium_photo-1677966328130-d4d38d26d9a5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE5fHx8ZW58MHx8fHx8",
       rating: 5,
       course: "Quranic Tafseer",
     },
@@ -66,7 +66,7 @@ const ReviewPage = () => {
       review:
         "As a recent revert to Islam, I was nervous about learning Quran. The teachers here have been incredibly supportive and patient. They explain things clearly and make me feel comfortable asking questions.",
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBj6q6AbtmjFlMenX1yISfYp3xqauMpdaUFweVlP3a_7PNgHgxHvh7VXpPdpLDPpViqp0&usqp=CAU",
+        "https://plus.unsplash.com/premium_photo-1661326306249-cd71bf52b965?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDU5fHx8ZW58MHx8fHx8",
       rating: 5,
       course: "Basic Quran Reading",
     },
@@ -184,7 +184,7 @@ const ReviewPage = () => {
 
         {/* Call To Action */}
         <div
-          className="text-center bg-white py-10 px-6 rounded-2xl shadow-lg border border-emerald-100"
+          className="text-center bg-white py-7 px-6 rounded-2xl shadow-lg border border-emerald-100"
           data-aos="zoom-in-up"
         >
           <h3

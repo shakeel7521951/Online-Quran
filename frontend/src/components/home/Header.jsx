@@ -51,26 +51,26 @@ function Header() {
       injectStyles: [
         `
         .swiper-pagination {
-          bottom: 20px !important;
+          bottom: 40px !important;
           display: flex;
           justify-content: center;
           align-items: center;
         }
         .swiper-pagination-bullet {
-          width: 10px;
-          height: 10px;
-          background-color: rgba(255,255,255,0.6);
-          margin: 0 6px !important;
+          width: 12px;
+          height: 12px;
+          background-color: rgba(255,255,255,0.4);
+          margin: 0 8px !important;
           opacity: 1;
           transition: all 0.3s ease;
           border: 1px solid ${PRIMARY}80;
         }
         .swiper-pagination-bullet-active {
           background-color: ${ACCENT};
-          width: 22px;
+          width: 28px;
           border-radius: 9999px;
           border-color: ${ACCENT};
-          box-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+          box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
         }
         `,
       ],
@@ -88,7 +88,13 @@ function Header() {
 
   return (
     <div className="relative h-screen w-full font-sans overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-10 bg-repeat pattern-islamic"></div>
+      {/* Subtle background pattern */}
+      <div 
+        className="absolute inset-0 z-0 opacity-5"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${PRIMARY.substring(1)}' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}
+      ></div>
 
       <swiper-container ref={swiperRef} init="false" class="h-full">
         {slides.map((slide, index) => (
@@ -100,18 +106,37 @@ function Header() {
                 alt={slide.alt}
                 loading={index === 0 ? "eager" : "lazy"}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
-              <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent"></div>
+              {/* Enhanced gradient overlay */}
+              <div 
+                className="absolute inset-0"
+                style={{
+                  background: `linear-gradient(135deg, ${SECONDARY}99 0%, ${PRIMARY}66 50%, transparent 100%)`
+                }}
+              ></div>
+              <div 
+                className="absolute bottom-0 left-0 right-0 h-2/5"
+                style={{
+                  background: `linear-gradient(to top, ${SECONDARY}EE 0%, transparent 100%)`
+                }}
+              ></div>
             </div>
 
-            {/* Content */}
+            {/* Enhanced Content */}
             <div className="relative z-10 flex flex-col justify-center items-center h-full text-center px-6">
               <div className="max-w-4xl mx-auto">
+                {/* Decorative element */}
+                <div 
+                  className="w-16 h-1 rounded-full mx-auto mb-8 opacity-80"
+                  style={{ backgroundColor: ACCENT }}
+                  data-aos="fade-down"
+                  data-aos-delay="100"
+                ></div>
+
                 <h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight"
                   style={{
                     color: LIGHT,
-                    textShadow: "0 2px 8px rgba(0,0,0,0.6)",
+                    textShadow: "0 4px 12px rgba(0,0,0,0.8)",
                   }}
                   data-aos="fade-down"
                 >
@@ -119,28 +144,41 @@ function Header() {
                 </h1>
 
                 <div
-                  className="flex items-center justify-center mb-8 mt-2"
+                  className="flex items-center justify-center mb-8 mt-4"
                   data-aos="fade-up"
                   data-aos-delay="200"
                 >
                   <div
-                    className="w-20 h-px mx-4 opacity-80"
-                    style={{ backgroundColor: ACCENT }}
+                    className="w-24 h-px mx-4 opacity-80"
+                    style={{ 
+                      backgroundColor: ACCENT,
+                      boxShadow: `0 0 8px ${ACCENT}80`
+                    }}
                   ></div>
                   <p
-                    className="text-xl md:text-2xl tracking-wider font-arabic"
-                    style={{ color: ACCENT }}
+                    className="text-xl md:text-2xl tracking-wider font-semibold"
+                    style={{ 
+                      color: ACCENT,
+                      textShadow: `0 0 10px ${ACCENT}40`
+                    }}
                   >
                     بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                   </p>
                   <div
-                    className="w-20 h-px mx-4 opacity-80"
-                    style={{ backgroundColor: ACCENT }}
+                    className="w-24 h-px mx-4 opacity-80"
+                    style={{ 
+                      backgroundColor: ACCENT,
+                      boxShadow: `0 0 8px ${ACCENT}80`
+                    }}
                   ></div>
                 </div>
 
                 <p
-                  className="text-lg md:text-xl text-gray-100 max-w-2xl mx-auto mb-10 leading-relaxed"
+                  className="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide"
+                  style={{ 
+                    color: LIGHT,
+                    textShadow: "0 2px 4px rgba(0,0,0,0.5)"
+                  }}
                   data-aos="fade-right"
                   data-aos-delay="300"
                 >
@@ -148,13 +186,13 @@ function Header() {
                 </p>
 
                 <div
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
+                  className="flex flex-col sm:flex-row gap-5 justify-center"
                   data-aos="zoom-in"
                   data-aos-delay="400"
                 >
                   <Link to="/services">
                     <button
-                      className="px-3 py-2 rounded-lg cursor-pointer  font-semibold shadow-lg hover:scale-105  transition-all duration-300"
+                      className="px-6 py-3 rounded-lg cursor-pointer font-semibold shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                       style={{
                         backgroundColor: PRIMARY,
                         color: LIGHT,
@@ -163,13 +201,16 @@ function Header() {
                       data-aos="flip-left"
                       data-aos-delay="500"
                     >
-                      Explore Our Courses
+                      <span className="relative z-10">Explore Our Courses</span>
+                      <div 
+                        className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                      ></div>
                     </button>
                   </Link>
 
                   <Link to="/FreeTrialClass">
                     <button
-                      className="px-3 py-2  cursor-pointer rounded-lg  font-semibold border-2 shadow-lg hover:scale-105  transition-all duration-300"
+                      className="px-6 py-3 cursor-pointer rounded-lg font-semibold border-2 shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                       style={{
                         borderColor: ACCENT,
                         color: ACCENT,
@@ -179,10 +220,14 @@ function Header() {
                       data-aos="flip-right"
                       data-aos-delay="600"
                     >
-                      Free Trial Class
+                      <span className="relative z-10">Free Trial Class</span>
+                      <div 
+                        className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                      ></div>
                     </button>
                   </Link>
                 </div>
+
               </div>
             </div>
           </swiper-slide>
