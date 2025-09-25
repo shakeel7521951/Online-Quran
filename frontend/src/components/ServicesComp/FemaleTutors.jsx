@@ -212,19 +212,19 @@ export default function FemaleTutors() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact">
-                <button className="px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black font-bold rounded-xl hover:from-[#B8941F] hover:to-[#D4AF37] transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-3">
-                  {/* <FaPlay className="text-black text-sm" /> */}
-                  Connect with a Female Tutor
-                </button>
-              </Link>
-              
-              <button className="px-8 py-4 border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37] hover:text-white transition-all duration-300 flex items-center gap-3">
-                <FaStar className="text-sm" />
-                Free Trial Class
-              </button>
-            </div>
+           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-start">
+  <Link to="/contact" className="w-full sm:w-auto">
+    <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-white font-bold rounded-xl hover:from-[#B8941F] hover:to-[#D4AF37] transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
+      Connect with a Female Tutor
+    </button>
+  </Link>
+
+  <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37] hover:text-white transition-all duration-300 flex items-center justify-center gap-3">
+    <FaStar className="text-sm" />
+    Free Trial Class
+  </button>
+</div>
+
 
             {/* Quick Stats */}
             <motion.div

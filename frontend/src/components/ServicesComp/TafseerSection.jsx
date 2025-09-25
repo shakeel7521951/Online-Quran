@@ -106,26 +106,64 @@ export default function TafseerSection() {
                 <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group-hover:border-[#D4AF37] h-full">
                   
                   {/* Image Container */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                    
-                    {/* Icon Overlay */}
-                    <div className="absolute top-4 right-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-xl flex items-center justify-center shadow-lg">
-                        <IconComponent className="text-white text-lg" />
-                      </div>
-                    </div>
+                  <div className="relative h-48 overflow-hidden rounded-xl group">
+  {/* Image */}
+  <img
+    src={item.img}
+    alt={item.title}
+    className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
+  />
 
-                    {/* Index Badge */}
-                    <div className="absolute top-4 left-4 w-8 h-8 bg-black/70 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm font-bold">{index + 1}</span>
-                    </div>
-                  </div>
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+  {/* Icon Overlay */}
+  <div className="absolute top-4 right-4">
+    <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-xl flex items-center justify-center shadow-lg">
+      <IconComponent className="text-white text-lg" />
+    </div>
+  </div>
+
+  {/* Index Badge */}
+  <div className="absolute top-4 left-4 w-8 h-8 bg-black/70 rounded-full flex items-center justify-center">
+    <span className="text-white text-sm font-bold">{index + 1}</span>
+  </div>
+
+  {/* Shine Effect */}
+  <div className="absolute inset-0 overflow-hidden rounded-xl">
+    <div className="shine"></div>
+  </div>
+
+  {/* CSS for Shine */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+    }
+    .group:hover .shine {
+      animation: shineDown 1.8s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
 
                   {/* Content */}
                   <div className="p-6 lg:p-8">
@@ -146,13 +184,6 @@ export default function TafseerSection() {
                       ))}
                     </div>
                   </div>
-
-                  {/* Hover Effect */}
-                  {/* <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                    <div className="w-10 h-10 bg-[#D4AF37] rounded-full flex items-center justify-center cursor-pointer">
-                      <FaPlay className="text-white text-sm ml-1" />
-                    </div>
-                  </div> */}
                 </div>
 
                 {/* Connecting Line for Desktop */}
@@ -216,7 +247,7 @@ export default function TafseerSection() {
               Start Tafseer Sessions
               {/* <FaPlay className="text-white text-sm" /> */}
             </button>
-            <button className="px-8 py-4 border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37] hover:text-white transition-all duration-300 inline-flex items-center gap-3">
+            <button className="px-10 sm:px-8 py-4 border-2 border-[#D4AF37] text-[#D4AF37] font-bold rounded-xl hover:bg-[#D4AF37] hover:text-white transition-all duration-300 inline-flex items-center gap-3">
               Free Trial Class
               <FaStar className="text-sm" />
             </button>

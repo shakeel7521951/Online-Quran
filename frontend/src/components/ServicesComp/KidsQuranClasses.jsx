@@ -74,17 +74,53 @@ export default function KidsQuranClasses() {
             className="lg:w-1/2"
             data-aos="fade-right"
           >
-            <div className="relative" data-aos="zoom-in">
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#D4AF37] to-amber-200 rounded-2xl blur-lg opacity-30"></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
-                <img
-                  src="https://nooracademy.com/wp-content/uploads/2021/05/How-Can-I-Get-My-Child-To-Read-T.webp"
-                  alt="Child learning Quran"
-                  className="w-full h-[450px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
-            </div>
+            <div className="relative group" data-aos="zoom-in">
+  {/* Outer Glow */}
+  <div className="absolute -inset-4 bg-gradient-to-r from-[#D4AF37] to-amber-200 rounded-2xl blur-lg opacity-30"></div>
+
+  {/* Image Container */}
+  <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+    <img
+      src="https://media.istockphoto.com/id/2199040166/photo/a-muslim-child-girl-reading-a-quran-inside-the-mosque.webp?a=1&b=1&s=612x612&w=0&k=20&c=LeP_B3pGJroJRkvdgDHnk6tjMMY_iCWcM-59SlD5Kok="
+      alt="Child learning Quran"
+      className="w-full h-[450px] object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+    {/* Shine Effect */}
+    <div className="shine"></div>
+  </div>
+
+  {/* Shine Animation CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+    }
+    .group:hover .shine {
+      animation: shineDown 1.8s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
           </motion.div>
 
           {/* Features Section */}

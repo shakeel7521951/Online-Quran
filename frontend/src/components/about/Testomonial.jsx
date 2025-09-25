@@ -18,7 +18,7 @@ const TestomonialArray = [
   },
   {
     id: 2,
-    img: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=500&auto=format&fit=crop&q=60",
+    img: "https://plus.unsplash.com/premium_photo-1677014616443-2954b327f404?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8RmF0aW1hJTIwWmFocmElMjBtdXNsaW18ZW58MHx8MHx8fDA%3D",
     stars: 5,
     msg: "The one-on-one classes are excellent. My daughter has memorized several surahs already and enjoys every session with her ustadha.",
     name: "Fatima Zahra",

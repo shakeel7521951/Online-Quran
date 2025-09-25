@@ -244,7 +244,7 @@ const ReviewPage = () => {
           >
             <a href="/FreeTrialClass">
               <button
-                className="bg-[#CDAD79] hover:bg-[#dfbb81] cursor-pointer text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md"
+                className="bg-[#CDAD79] hover:bg-[#dfbb81] cursor-pointer text-white font-semibold py-3 sm:px-8 px-10 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md"
                 data-aos="fade-up"
               >
                 Book Free Trial

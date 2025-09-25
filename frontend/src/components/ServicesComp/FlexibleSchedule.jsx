@@ -68,7 +68,7 @@ export default function FlexibleSchedule() {
 
           {/* Main Heading */}
           <h2 
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            className="text-3xl md:text-5xl font-bold text-white mb-4"
             data-aos="fade-up"
           >
             Learn At Your <span className="text-[#D4AF37]">Own Pace</span>
@@ -183,7 +183,7 @@ export default function FlexibleSchedule() {
               <div className="absolute inset-0 bg-white/20 group-hover:bg-white/30 transition-all duration-300"></div>
               
               {/* Button Content */}
-              <span className="relative flex items-center gap-3 text-lg">
+              <span className="relative flex items-center gap-3 text-lg text-nowrap">
                 <FaGraduationCap className="text-xl" />
                 Book Your Free Trial Class
               </span>

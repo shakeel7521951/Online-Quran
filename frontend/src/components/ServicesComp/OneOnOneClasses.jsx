@@ -69,24 +69,60 @@ export default function OneOnOneClasses() {
         </div>
 
         {/* Right Side - Image */}
-        <div className="relative w-full max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
-          {/* Tooltip */}
-          <div
-            data-aos="fade-down"
-            data-aos-delay="500"
-            className="absolute -top-5 sm:-top-6 md:-top-8 left-1/2 -translate-x-1/2 bg-[#D4AF37] text-white px-4 py-1 sm:px-5 sm:py-2 rounded-full shadow-md text-xs sm:text-sm md:text-base font-medium whitespace-nowrap z-50"
-          >
-            Live Interactive Session
-          </div>
+        <div className="relative w-full max-w-2xl mx-auto lg:mx-0 lg:max-w-none group overflow-hidden rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl">
+  {/* Tooltip */}
+  <div
+    data-aos="fade-down"
+    data-aos-delay="500"
+    className="absolute top-0 sm:-top-6 md:-top-2 left-1/2 -translate-x-1/2 bg-[#D4AF37] text-white px-4 py-1 sm:px-5 sm:py-2 rounded-full shadow-md text-xs sm:text-sm md:text-base font-medium whitespace-nowrap z-50"
+  >
+    Live Interactive Session
+  </div>
 
-          <img
-            data-aos="fade-up"
-            data-aos-delay="600"
-            src="https://equraneducation.com/wp-content/uploads/2024/01/learn-quran-online-one-on-one-quran-class.jpg"
-            alt="One-on-One Quran Classes"
-            className="rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl w-full h-auto object-cover"
-          />
-        </div>
+  {/* Image */}
+  <img
+    data-aos="fade-up"
+    data-aos-delay="600"
+    src="https://equraneducation.com/wp-content/uploads/2024/01/learn-quran-online-one-on-one-quran-class.jpg"
+    alt="One-on-One Quran Classes"
+    className="w-full h-auto object-cover rounded-xl sm:rounded-2xl"
+  />
+
+  {/* Shine Effect */}
+  <div className="absolute inset-0 overflow-hidden rounded-xl sm:rounded-2xl">
+    <div className="shine"></div>
+  </div>
+
+  {/* CSS for Shine */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+    }
+    .group:hover .shine {
+      animation: shineMove 1.5s ease;
+    }
+    @keyframes shineMove {
+      0% {
+        left: -75%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+  `}</style>
+</div>
+
       </div>
     </section>
   );

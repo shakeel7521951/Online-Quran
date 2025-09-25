@@ -92,28 +92,54 @@ export default function TajweedSection() {
             className="relative order-2 lg:order-1"
           >
             <div className="relative rounded-2xl overflow-hidden group">
-              <img
-                src="https://images.pexels.com/photos/33562907/pexels-photo-33562907.jpeg"
-                alt="Tajweed Lessons"
-                className="w-full h-[400px] lg:h-[500px] object-cover transform group-hover:scale-105 transition duration-700"
-              />
-              
-              {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-              
-              {/* Play Button Overlay */}
-              {/* <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className="w-16 h-16 lg:w-20 lg:h-20 bg-[#D4AF37] rounded-full flex items-center justify-center cursor-pointer shadow-2xl"
-                >
-                  <FaPlayCircle className="text-white text-2xl lg:text-3xl ml-1" />
-                </motion.div>
-              </div> */}
+  {/* Image */}
+  <img
+    src="https://images.pexels.com/photos/33562907/pexels-photo-33562907.jpeg"
+    alt="Tajweed Lessons"
+    className="w-full h-[400px] lg:h-[500px] object-cover transform group-hover:scale-105 transition duration-700"
+  />
 
-              {/* Decorative Border */}
-              <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-2xl transform rotate-1 scale-95 opacity-60"></div>
-            </div>
+  {/* Overlay Gradient */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+  {/* Decorative Border */}
+  {/* <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-2xl transform rotate-1 scale-95 opacity-60"></div> */}
+
+  {/* Shine Effect */}
+  <div className="absolute inset-0 overflow-hidden rounded-2xl">
+    <div className="shine"></div>
+  </div>
+
+  {/* Shine Animation CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+    }
+    .group:hover .shine {
+      animation: shineDown 2s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
 
             {/* Stats Cards */}
             <div className="grid grid-cols-3 gap-4 mt-6">
@@ -126,7 +152,7 @@ export default function TajweedSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="text-center p-3 bg-black/30 rounded-lg backdrop-blur-sm border border-[#D4AF37]/20"
+                    className="text-center p-3 bg-black/30 rounded-lg backdrop-blur-sm border border-[#D4AF37]/20 "
                   >
                     <IconComponent className="text-[#D4AF37] text-lg mx-auto mb-2" />
                     <div className="text-2xl font-bold text-white">{stat.number}</div>
@@ -160,7 +186,7 @@ export default function TajweedSection() {
                   className="group relative"
                 >
                   {/* Main Card */}
-                  <div className="relative bg-gradient-to-r from-black/40 to-gray-900/40 rounded-xl p-6 border border-[#D4AF37]/30 backdrop-blur-sm hover:border-[#D4AF37]/60 transition-all duration-300 overflow-hidden">
+                  <div className="relative bg-gradient-to-r from-black/40 to-gray-900/40 rounded-xl p-6 border border-[#D4AF37]/30 backdrop-blur-sm hover:border-[#D4AF37]/60 hover:shadow-xl transition-all duration-300 overflow-hidden">
                     
                     {/* Animated Background Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

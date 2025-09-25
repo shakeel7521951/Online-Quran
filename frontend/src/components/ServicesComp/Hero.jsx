@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { 
-  FaQuran, 
-  FaMicrophone, 
-  FaBrain, 
-  FaBook, 
-  FaChild, 
-  FaStar, 
-  FaClock, 
-  FaFemale, 
+import {
+  FaQuran,
+  FaMicrophone,
+  FaBrain,
+  FaBook,
+  FaChild,
+  FaStar,
+  FaClock,
+  FaFemale,
   FaGraduationCap,
   FaSearch,
   FaArrowRight
@@ -110,21 +110,21 @@ export default function Hero() {
           alt="Quran Learning"
           className="h-full w-full object-cover absolute inset-0 mix-blend-overlay"
         />
-        
+
         {/* Decorative Islamic Pattern */}
         <div className="absolute inset-0 opacity-10 bg-repeat" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C50 8.954 59.954-1 71-1S92 8.954 92 20S82.046 41 71 41 50 31.046 50 20zm0 60c0-11.046 9.954-21 21-21s21 9.954 21 21-9.954 21-21 21-21-9.954-21-21z' fill='%23D4AF37' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")`
         }} />
 
-        <div className="relative z-10 px-6 sm:px-12 lg:px-20 max-w-6xl text-center">
-          <div 
+        <div className="relative z-10 pt-20 sm:pt-5 px-6 sm:px-12 lg:px-20 max-w-6xl text-center">
+          <div
             data-aos="fade-down"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2  rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 mb-6"
           >
             <FaQuran className="text-[#D4AF37] text-sm" />
             <span className="text-[#D4AF37] text-sm font-medium">Premium Quran Education</span>
           </div>
-          
+
           <h1
             data-aos="fade-down"
             data-aos-delay="100"
@@ -135,13 +135,13 @@ export default function Hero() {
               Quran Learning
             </span>
           </h1>
-          
+
           <p
             data-aos="fade-up"
             data-aos-delay="200"
             className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8"
           >
-            Transform your spiritual journey with certified teachers, flexible schedules, 
+            Transform your spiritual journey with certified teachers, flexible schedules,
             and personalized Quran learning programs tailored for every age and level.
           </p>
 
@@ -155,9 +155,9 @@ export default function Hero() {
                 Start Learning Today
               </button>
             </Link>
-            <button 
+            <button
               onClick={() => handleAction("services")}
-              className="px-8 py-3 border-2 border-[#D4AF37] text-[#D4AF37] font-semibold rounded-lg hover:bg-[#D4AF37] hover:text-white transition-all duration-300"
+              className="px-12 sm:px-8 py-3 border-2 border-[#D4AF37] text-[#D4AF37] font-semibold rounded-lg hover:bg-[#D4AF37] hover:text-white transition-all duration-300"
             >
               Explore Services
             </button>
@@ -165,7 +165,7 @@ export default function Hero() {
         </div>
 
         {/* Enhanced Wave Divider */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden hidden md:flex">
           <svg
             className="relative block w-full h-20"
             viewBox="0 0 1200 120"
@@ -194,13 +194,13 @@ export default function Hero() {
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h2 
+            <h2
               data-aos="fade-up"
               className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             >
               Our <span className="text-[#D4AF37]">Quran Services</span>
             </h2>
-            <p 
+            <p
               data-aos="fade-up"
               data-aos-delay="100"
               className="text-lg text-gray-600 max-w-2xl mx-auto"
@@ -249,7 +249,7 @@ export default function Hero() {
                 return (
                   <div
                     key={index}
-                    className="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden border border-gray-100"
+                    className="group relative bg-white rounded-2xl hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
                     data-aos="fade-up"
                     data-aos-delay={index * 100}
                   >
@@ -261,17 +261,56 @@ export default function Hero() {
                     </div>
 
                     {/* Image Container */}
-                    <div className="h-48 w-full overflow-hidden relative">
+                    <div className="h-48 w-full overflow-hidden relative group">
+                      {/* Image */}
                       <img
                         src={service.img}
                         alt={service.title}
                         className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
                         onError={(e) => {
-                          e.target.src = "https://via.placeholder.com/400x300/EDF2F7/718096?text=Quran+Learning";
+                          e.target.src =
+                            "https://via.placeholder.com/400x300/EDF2F7/718096?text=Quran+Learning";
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+
+                      {/* Gradient overlay (dark at bottom) */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 overflow-hidden">
+                        <div className="shine"></div>
+                      </div>
+
+                      {/* Custom CSS */}
+                      <style jsx>{`
+    .shine {
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+    }
+    .group:hover .shine {
+      animation: shineMove 1.5s ease;
+    }
+    @keyframes shineMove {
+      0% {
+        left: -75%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+  `}</style>
                     </div>
+
 
                     {/* Content */}
                     <div className="p-6 pt-8">

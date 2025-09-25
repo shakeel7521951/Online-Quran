@@ -57,7 +57,7 @@ const TeachingMethod = () => {
         data-aos="zoom-in"
       >
         <h1
-          className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#EBC693]  to-[#EBC693] bg-clip-text text-transparent "
+          className="text-4xl md:text-5xl font-extrabold text-[#EBC693]"
         >
           Our Online Quran Teaching Procedure
         </h1>

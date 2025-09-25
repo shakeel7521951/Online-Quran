@@ -16,21 +16,21 @@ function Header() {
   const slides = [
     {
       image:
-        "https://usmaniaquranacademy.com/userfiles/theme/files/img/online-noorani-qaida-course.jpg",
+        "https://images.unsplash.com/photo-1665564309098-b7c40a22176d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDd8fHxlbnwwfHx8fHw%3D",
       title: "Online Noorani Qaida Course",
       text: "Start from the Arabic alphabet and master makharij with certified tutors.",
       alt: "A student learning Noorani Qaida online with a tutor",
     },
     {
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD0wyXT5-Ck0EwXsecYTUIQpSLH5MUzrKDS4_gI7GHsgG0YaLa5u6GC-4pOvGwV6P0OJk&usqp=CAU",
+        "https://images.unsplash.com/photo-1652087714531-5ab08352c96d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI1fHx8ZW58MHx8fHx8",
       title: "Interactive Quran Classes",
       text: "Live one-on-one sessions, feedback, and personalized lesson plans.",
       alt: "Interactive online Quran class with live teacher",
     },
     {
       image:
-        "https://quranpak.com.pk/wp-content/uploads/2019/10/onlinequrantea.png",
+        "https://plus.unsplash.com/premium_photo-1723532414101-404f12334ff6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDQwfHx8ZW58MHx8fHx8",
       title: "Learn Anytime, Anywhere",
       text: "Flexible timings for kids and adults—join from any device.",
       alt: "Student reading Quran on a laptop at home",
@@ -67,7 +67,7 @@ function Header() {
         }
         .swiper-pagination-bullet-active {
           background-color: ${ACCENT};
-          width: 28px;
+          width: 15px;
           border-radius: 9999px;
           border-color: ${ACCENT};
           box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
@@ -192,7 +192,7 @@ function Header() {
                 >
                   <Link to="/services">
                     <button
-                      className="px-6 py-3 rounded-lg cursor-pointer font-semibold shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                      className="px-7 py-4 rounded-lg cursor-pointer font-semibold shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                       style={{
                         backgroundColor: PRIMARY,
                         color: LIGHT,
@@ -210,7 +210,7 @@ function Header() {
 
                   <Link to="/FreeTrialClass">
                     <button
-                      className="px-6 py-3 cursor-pointer rounded-lg font-semibold border-2 shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                      className="px-10 sm:px-7 py-3 cursor-pointer rounded-lg font-semibold border-2 shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden group"
                       style={{
                         borderColor: ACCENT,
                         color: ACCENT,

@@ -25,8 +25,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           
           {/* Logo and Description */}
-          <div className="col-span-1 lg:col-span-1" data-aos="fade-up">
-            <Link to="/" data-aos="zoom-in">
+          <div className="col-span-1 lg:col-span-1" data-aos="">
+            <Link to="/" data-aos="">
               <h1 className="flex items-center gap-2 mb-4">
                 <img 
                   className="w-16 rounded-sm" 
@@ -61,7 +61,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="col-span-1" data-aos="fade-up">
+          <div className="col-span-1" data-aos="">
             <h3 className="text-lg font-semibold mb-4 border-white border-opacity-30 pb-2">Quick Links</h3>
             <ul className="space-y-2">
               <li data-aos="fade-right"><Link to="/" className="hover:text-[#ebc693] transition">Home</Link></li>
@@ -74,7 +74,7 @@ const Footer = () => {
           </div>
 
           {/* Courses */}
-          <div className="col-span-1" data-aos="fade-up">
+          <div className="col-span-1" data-aos="">
             <h3 className="text-lg font-semibold mb-4 border-white border-opacity-30 pb-2">Our Courses</h3>
             <ul className="space-y-2">
               <li data-aos="fade-left"><Link to="/quran-reading" className="hover:text-[#ebc693] transition">Quran Reading</Link></li>
@@ -87,7 +87,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="col-span-1" data-aos="fade-up">
+          <div className="col-span-1" data-aos="">
             <h3 className="text-lg font-semibold mb-4 border-white border-opacity-30 pb-2">Contact Us</h3>
             <div className="space-y-3">
               <div className="flex items-start" data-aos="zoom-in">
@@ -105,7 +105,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="mt-6" data-aos="fade-up">
+            <div className="mt-6" data-aos="">
               <h4 className="font-medium mb-2">Subscribe to Newsletter</h4>
               <div className="flex" data-aos="zoom-in-up">
                 <input 
@@ -122,7 +122,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-white border-opacity-30 mt-8 pt-6 text-center text-sm" data-aos="fade-up">
+        <div className="border-t border-white border-opacity-30 mt-8 pt-6 text-center text-sm" data-aos="">
           <p>© {new Date().getFullYear()} Online Quran Academy. All rights reserved.</p>
         </div>
       </div>

@@ -115,7 +115,7 @@ const StatCard = ({ stat, index }) => {
       
       {/* Icon */}
       <div 
-        className="text-4xl mb-4 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12 text-[#0E7C5A]"
+        className="text-4xl mb-4 transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-360 text-[#0E7C5A]"
         data-aos="zoom-in"
         data-aos-delay={stat.delay + 50}
       >

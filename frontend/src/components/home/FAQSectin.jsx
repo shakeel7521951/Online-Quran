@@ -181,17 +181,54 @@ const FAQSection = () => {
           {/* Enhanced Right Column (Image + Support) */}
           <div className="lg:w-1/2 w-full" data-aos="fade-left">
             <div className="relative group" data-aos="zoom-in-up">
-              <div className="shine-wrapper rounded-2xl overflow-hidden shadow-2xl">
-                <div className="relative overflow-hidden rounded-2xl">
-                  <img
-                    alt="Quran learning illustration"
-                    className="w-full h-auto rounded-2xl transform transition-transform duration-700 group-hover:scale-110"
-                    src={image4}
-                    data-aos="flip-left"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
-              </div>
+             <div className="shine-wrapper rounded-2xl overflow-hidden shadow-2xl group">
+  <div className="relative overflow-hidden rounded-2xl">
+    <img
+      alt="Quran learning illustration"
+      className="w-full h-auto rounded-2xl transform transition-transform duration-700 "
+      src={image4}
+      data-aos="flip-left"
+    />
+
+    {/* Dark gradient overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+    {/* ✨ Shine effect */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="shine"></div>
+    </div>
+  </div>
+
+  {/* Shine CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+    }
+    .group:hover .shine {
+      animation: shineDown 2s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
               
               {/* Enhanced hover element */}
               <div

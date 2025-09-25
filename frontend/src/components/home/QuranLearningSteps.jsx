@@ -217,25 +217,60 @@ const QuranLearningSteps = () => {
             data-aos="fade-left"
             data-aos-delay="200"
           >
-            <div className="relative max-w-md">
-              <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  loading="lazy"
-                  src={image1}
-                  className="object-cover w-full h-full hover:scale-105 transition-all duration-500"
-                  alt="Quran Teaching Academy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2C3E50]/30 to-transparent"></div>
-              </div>
-              
-              {/* Enhanced decorative elements around image */}
-              <div className="absolute -z-10 -inset-4 bg-gradient-to-br from-[#D4AF37]/20 to-[#0E7C5A]/20 rounded-3xl transform rotate-3"></div>
-              <div className="absolute -z-20 -inset-6 bg-gradient-to-tr from-[#D4AF37]/10 to-[#0E7C5A]/10 rounded-3xl transform -rotate-3"></div>
-              
-              {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#D4AF37]/10 rounded-full"></div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-[#0E7C5A]/10 rounded-full"></div>
-            </div>
+          <div className="relative max-w-md group">
+  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+    <img
+      loading="lazy"
+      src={image1}
+      className="object-cover w-full h-full group-hover:scale-105 transition-all duration-500"
+      alt="Quran Teaching Academy"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-[#2C3E50]/30 to-transparent"></div>
+
+    {/* Shine effect */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="shine"></div>
+    </div>
+  </div>
+
+  {/* Decorative layers */}
+  <div className="absolute -z-10 -inset-4 bg-gradient-to-br from-[#D4AF37]/20 to-[#0E7C5A]/20 rounded-3xl transform rotate-3"></div>
+  <div className="absolute -z-20 -inset-6 bg-gradient-to-tr from-[#D4AF37]/10 to-[#0E7C5A]/10 rounded-3xl transform -rotate-3"></div>
+
+  {/* Floating elements */}
+  <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#D4AF37]/10 rounded-full"></div>
+  <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-[#0E7C5A]/10 rounded-full"></div>
+
+  {/* CSS for shine */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+    }
+    .group:hover .shine {
+      animation: shineMove 1s ease forwards;
+    }
+    @keyframes shineMove {
+      0% {
+        left: -75%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+  `}</style>
+</div>
+
           </div>
         </div>
 

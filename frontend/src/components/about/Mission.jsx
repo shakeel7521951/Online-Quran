@@ -173,13 +173,13 @@ const Mission = () => {
         {/* Bottom Decorative Element */}
         <div className="text-center mt-12" data-aos="fade-up">
           <div className="inline-flex items-center space-x-2 text-amber-600 flex-wrap justify-center"> {/* Added flex-wrap and justify-center */}
-            <FaStar className="text-xl" />
-            <FaStar className="text-xl" />
-            <FaStar className="text-xl" />
+            <FaStar className="text-xl hidden md:flex" />
+            <FaStar className="text-xl hidden md:flex" />
+            <FaStar className="text-xl hidden md:flex" />
             <span className="text-gray-600 font-medium mx-2">Spreading Knowledge Since 2010</span> {/* Added mx-2 for spacing */}
-            <FaStar className="text-xl" />
-            <FaStar className="text-xl" />
-            <FaStar className="text-xl" />
+            <FaStar className="text-xl hidden md:flex" />
+            <FaStar className="text-xl hidden md:flex" />
+            <FaStar className="text-xl hidden md:flex" />
           </div>
         </div>
       </div>

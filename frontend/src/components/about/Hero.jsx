@@ -66,7 +66,7 @@ const Hero = () => {
       <div className="text-center mb-16 relative">
         
         <h1
-          className="text-4xl md:text-5xl font-bold text-gray-800 font-serif max-w-3xl mx-auto leading-tight"
+          className="text-4xl md:text-5xl pt-3 sm:pt-0 font-bold text-gray-800 font-serif max-w-3xl mx-auto leading-tight"
           data-aos="fade-down"
         >
           Discover the Beauty of Quranic Learning
@@ -129,12 +129,12 @@ const Hero = () => {
                   data-aos-delay="600"
                 >
                   <Link to="/contact">
-                    <button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2">
+                    <button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2 text-nowrap">
                       Start Learning <FaArrowRight className="text-sm" />
                     </button>
                   </Link>
                   <Link to="/about">
-                    <button className="bg-transparent border-2 border-white/60 hover:border-white text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 backdrop-blur-sm">
+                    <button className="bg-transparent border-2 border-white/60 hover:border-white text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 backdrop-blur-sm text-nowrap">
                       Learn More
                     </button>
                   </Link>
@@ -148,12 +148,19 @@ const Hero = () => {
         <div className="swiper-pagination !bottom-8 [&>.swiper-pagination-bullet]:bg-white [&>.swiper-pagination-bullet]:opacity-60 [&>.swiper-pagination-bullet-active]:bg-amber-400 [&>.swiper-pagination-bullet-active]:opacity-100 [&>.swiper-pagination-bullet]:w-3 [&>.swiper-pagination-bullet]:h-3 [&>.swiper-pagination-bullet]:mx-1"></div>
         
         {/* Enhanced Navigation with Icons */}
-        <div className="swiper-button-prev !text-white !left-4 after:!content-none !w-12 !h-12 rounded-full bg-black/20 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-black/30 transition-all duration-300">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </div>
-        <div className="swiper-button-next !text-white !right-4 after:!content-none !w-12 !h-12 rounded-full bg-black/20 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-black/30 transition-all duration-300">
+        <div className="!hidden md:!flex swiper-button-prev !text-white !left-4 after:!content-none !w-12 !h-12 rounded-full bg-black/20 backdrop-blur-sm border border-white/20 items-center justify-center hover:bg-black/30 transition-all duration-3!00">
+  <svg
+    className="w-6 h-6"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+  </svg>
+</div>
+
+        <div className="!hidden md:!flex swiper-button-next !text-white !right-4 after:!content-none !w-12 !h-12 rounded-full bg-black/20 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-black/30 transition-all duration-300">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>

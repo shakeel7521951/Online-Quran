@@ -73,61 +73,96 @@ const WhyChooseUs = () => {
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
           {/* Image Column - Enhanced */}
-          <div className="w-full lg:w-1/2" data-aos="fade-right">
-            <div className="relative max-w-md mx-auto lg:mx-0">
-              <div 
-                className="absolute -inset-4 rounded-3xl opacity-30 blur-md"
-                style={{ backgroundColor: ACCENT }}
-                data-aos="fade-in"
-                data-aos-delay="300"
-              ></div>
-              
-              <div 
-                className="relative rounded-xl overflow-hidden shadow-2xl group"
-                style={{
-                  border: `4px solid ${PRIMARY}20`,
-                  boxShadow: `0 20px 40px rgba(0,0,0,0.1)`
-                }}
-              >
-                <img
-                  loading="lazy"
-                  width="480"
-                  height="650"
-                  src={image2}
-                  className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-110"
-                  alt="Quran Learning Experience"
-                />
-                
-                {/* Image Overlay */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `linear-gradient(45deg, ${PRIMARY}10, ${ACCENT}10)`
-                  }}
-                ></div>
-                
-                {/* Decorative Corner Elements */}
-                <div 
-                  className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ borderColor: ACCENT }}
-                ></div>
-                <div 
-                  className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ borderColor: ACCENT }}
-                ></div>
-              </div>
-              
-              {/* Floating Element */}
-              <div 
-                className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full flex items-center justify-center text-white text-4xl shadow-2xl"
-                style={{ backgroundColor: PRIMARY }}
-                data-aos="zoom-in"
-                data-aos-delay="500"
-              >
-                <FaBook className="text-3xl" />
-              </div>
-            </div>
-          </div>
+         <div className="w-full lg:w-1/2" data-aos="fade-right">
+  <div className="relative max-w-md mx-auto lg:mx-0">
+    <div 
+      className="absolute -inset-4 rounded-3xl"
+      data-aos="fade-in"
+      data-aos-delay="300"
+    ></div>
+    
+    <div 
+      className="relative rounded-xl overflow-hidden shadow-xl group"
+      style={{
+        border: `4px solid ${PRIMARY}20`,
+        boxShadow: `0 20px 40px rgba(0,0,0,0.1)`
+      }}
+    >
+      {/* Image */}
+     <img
+  loading="lazy"
+  width="480"
+  height="600"
+  src={image2}
+  className="w-full h-[600px] object-cover transition-all duration-700 group-hover:scale-110"
+  alt="Quran Learning Experience"
+/>
+
+      {/* Overlay */}
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: `linear-gradient(45deg, ${PRIMARY}10, ${ACCENT}10)`
+        }}
+      ></div>
+
+      {/* ✨ Shine Effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="shine"></div>
+      </div>
+
+      {/* Decorative Corners */}
+      <div 
+        className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ borderColor: ACCENT }}
+      ></div>
+      <div 
+        className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ borderColor: ACCENT }}
+      ></div>
+    </div>
+    
+    {/* Floating Circle */}
+    <div 
+      className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full flex items-center justify-center text-white text-4xl shadow-2xl"
+      style={{ backgroundColor: PRIMARY }}
+      data-aos="zoom-in"
+      data-aos-delay="500"
+    >
+      <FaBook className="text-3xl" />
+    </div>
+  </div>
+
+  {/* Shine CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+    }
+    .group:hover .shine {
+      animation: shineMove 1s ease forwards;
+    }
+    @keyframes shineMove {
+      0% {
+        left: -75%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+  `}</style>
+</div>
+
 
           {/* Content Column - Enhanced */}
           <div className="w-full lg:w-1/2" data-aos="fade-left">

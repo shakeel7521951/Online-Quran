@@ -44,6 +44,7 @@ export default function IslamicStudies() {
         "Basics of prayer, fasting, zakat, hajj",
         "Halal & Haram in everyday life",
         "Purification (Taharah) and daily rulings",
+        "Golden Islamic Civilizations",
       ],
     },
     {
@@ -55,6 +56,7 @@ export default function IslamicStudies() {
         "Stories from the life of the Prophet ﷺ",
         "His character, struggles, and leadership",
         "Lessons for children, youth, and families",
+        "Great Scholars of Islam",
       ],
     },
     {
@@ -65,6 +67,7 @@ export default function IslamicStudies() {
       items: [
         "Belief in Allah, Angels, Books, Prophets, Qiyamah, Qadr",
         "Understanding the foundations of Islamic faith",
+        "Quranic Sciences & Tafsir",
       ],
     },
     {
@@ -76,6 +79,7 @@ export default function IslamicStudies() {
         "Stories of Prophets",
         "Golden Islamic civilizations",
         "Great scholars of Islam",
+        "Islamic History & Battles",
       ],
     },
     {
@@ -135,41 +139,75 @@ export default function IslamicStudies() {
           {categories.map((category, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 group cursor-pointer transform hover:-translate-y-2 border border-amber-100"
+              className="bg-white rounded-2xl shadow-xl overflow-hidden group cursor-pointer transform  border border-amber-100"
               data-aos="fade-up"
               data-aos-delay={index * 150}
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={category.image}
-                  alt={category.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                
-                {/* Icon Badge */}
-                <div className="absolute top-4 left-4 transform group-hover:scale-110 transition-transform duration-300">
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center text-white shadow-lg border-2 border-white/30"
-                    style={{ backgroundColor: category.color }}
-                    data-aos="zoom-in"
-                  >
-                    <category.icon className="text-xl" />
-                  </div>
-                </div>
-                
-                {/* Category Title Overlay */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3
-                    className="text-xl font-bold text-white"
-                    data-aos="fade-up"
-                    data-aos-delay="50"
-                  >
-                    {category.title}
-                  </h3>
-                </div>
-              </div>
+             <div className="relative h-48 overflow-hidden group">
+  <img
+    src={category.image}
+    alt={category.title}
+    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+
+  {/* Icon Badge */}
+  <div className="absolute top-4 left-4 transform group-hover:scale-110 transition-transform duration-300">
+    <div
+      className="w-14 h-14 rounded-xl flex items-center justify-center text-white shadow-lg border-2 border-white/30"
+      style={{ backgroundColor: category.color }}
+      data-aos="zoom-in"
+    >
+      <category.icon className="text-xl" />
+    </div>
+  </div>
+
+  {/* Category Title Overlay */}
+  <div className="absolute bottom-4 left-4 right-4">
+    <h3
+      className="text-xl font-bold text-white"
+      data-aos="fade-up"
+      data-aos-delay="50"
+    >
+      {category.title}
+    </h3>
+  </div>
+
+  {/* ✨ Shine Effect */}
+  <div className="shine"></div>
+
+  {/* CSS for Shine */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+      pointer-events: none;
+    }
+    .group:hover .shine {
+      animation: shineDown 1.8s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
 
               {/* Content */}
               <div className="p-6">

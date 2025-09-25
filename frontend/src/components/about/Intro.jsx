@@ -176,14 +176,52 @@ const Intro = () => {
                 </p>
               </div>
             </div>
-            <div className="relative min-h-96" data-aos="zoom-in" data-aos-delay="400">
-              <img
-                src="https://media.istockphoto.com/id/2148521874/photo/holy-quran-woman-reading-the-quran-muslim-worship-ramadan-holy-day.webp?a=1&b=1&s=612x612&w=0&k=20&c=QsnQJ4EP9Ik0byKpk8SSFvL29lz4jThkmhDFknL1k-g="
-                alt="Quran Teaching"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-amber-900/10 to-amber-700/20"></div>
-            </div>
+            <div className="relative min-h-96 group overflow-hidden rounded-2xl shadow-xl" data-aos="zoom-in" data-aos-delay="400">
+  {/* Background Image */}
+  <img
+    src="https://plus.unsplash.com/premium_photo-1678490286446-71e04ddce2dd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D"
+    alt="Quran Teaching"
+    className="absolute inset-0 w-full h-full object-cover"
+  />
+
+  {/* Dark overlay */}
+  <div className="absolute inset-0 bg-gradient-to-l from-amber-900/10 to-amber-700/20"></div>
+
+  {/* ✨ Shine Effect */}
+  <div className="absolute inset-0 overflow-hidden">
+    <div className="shine"></div>
+  </div>
+
+  {/* Shine CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+    }
+    .group:hover .shine {
+      animation: shineDown 1.8s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
           </div>
         </div>
 
@@ -237,17 +275,57 @@ const Intro = () => {
                 data-aos="flip-left"
                 data-aos-delay={index * 150}
               >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
-                    <FaCalendarAlt className="mr-1" /> {member.experience}
-                  </div>
-                  <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/40 to-transparent"></div>
-                </div>
+             <div className="relative overflow-hidden group rounded-xl">
+  {/* Image */}
+  <img
+    src={member.image}
+    alt={member.name}
+    className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500"
+  />
+
+  {/* Top-right badge */}
+  <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
+    <FaCalendarAlt className="mr-1" /> {member.experience}
+  </div>
+
+  {/* Bottom gradient */}
+  <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/40 to-transparent"></div>
+
+  {/* ✨ Shine Effect */}
+  <div className="absolute inset-0 overflow-hidden">
+    <div className="shine"></div>
+  </div>
+
+  {/* Shine CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewY(-10deg);
+    }
+    .group:hover .shine {
+      animation: shineDown 1.5s ease forwards;
+    }
+    @keyframes shineDown {
+      0% {
+        top: -100%;
+      }
+      100% {
+        top: 150%;
+      }
+    }
+  `}</style>
+</div>
+
                 <div className="p-6">
                   <div className="flex items-start mb-4">
                     <div className="p-2 bg-amber-50 rounded-lg mr-4 group-hover:bg-amber-100 transition-colors duration-300">

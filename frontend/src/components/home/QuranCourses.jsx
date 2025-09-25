@@ -285,56 +285,71 @@ const QuranCourses = () => {
       {/* Modals */}
       {selectedCourse && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" data-aos="zoom-in">
-            <div className="relative p-8">
-              <button onClick={closeModal} className="absolute top-6 right-6 text-gray-500 hover:text-gray-700 transition-colors duration-200">
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              
-              <div className="text-center mb-6">
-                <h2 className="text-3xl font-bold mb-2" style={{ color: PRIMARY }}>{selectedCourse.title}</h2>
-                <div className="w-20 h-1 mx-auto rounded-full" style={{ backgroundColor: ACCENT }}></div>
+  <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" data-aos="zoom-in">
+    <div className="relative p-8">
+      {/* Close button */}
+      <button
+        onClick={closeModal}
+        className="absolute top-2 sm:top-6 right-6 text-gray-500 hover:text-gray-700 transition-colors duration-200"
+      >
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Scrollable content */}
+      <div className="text-center mb-6">
+        <h2 className="text-xl font-bold mb-2" style={{ color: PRIMARY }}>
+          {selectedCourse.title}
+        </h2>
+        <div className="w-20 h-1 mx-auto rounded-full" style={{ backgroundColor: ACCENT }}></div>
+      </div>
+
+      <div className="space-y-6">
+        <p className="text-gray-700 text-lg leading-relaxed">{selectedCourse.detailedDescription}</p>
+
+        <div>
+          <h4 className="font-semibold text-lg mb-3" style={{ color: ACCENT }}>
+            Course Features
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {selectedCourse.features.map((feature, index) => (
+              <div key={index} className="flex items-center space-x-3">
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: PRIMARY }}></div>
+                <span className="text-gray-700">{feature}</span>
               </div>
-              
-              <div className="space-y-6">
-                <p className="text-gray-700 text-lg leading-relaxed">{selectedCourse.detailedDescription}</p>
-                
-                <div>
-                  <h4 className="font-semibold text-lg mb-3" style={{ color: ACCENT }}>Course Features</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {selectedCourse.features.map((feature, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: PRIMARY }}></div>
-                        <span className="text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex justify-center space-x-6 pt-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: PRIMARY }}>{selectedCourse.duration}</div>
-                    <div className="text-sm text-gray-600">Duration</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: PRIMARY }}>{selectedCourse.level}</div>
-                    <div className="text-sm text-gray-600">Level</div>
-                  </div>
-                </div>
-                
-                <button className="w-full py-4 rounded-xl font-bold text-white transition-all duration-300 hover:shadow-lg transform hover:scale-105"
-                        style={{ 
-                          background: `linear-gradient(135deg, ${PRIMARY}, ${ACCENT})`,
-                          boxShadow: `0 4px 15px ${PRIMARY}40`
-                        }}>
-                  Enroll Now - Start Your Free Trial
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+
+        <div className="flex justify-center space-x-6 pt-4">
+          <div className="text-center">
+            <div className="text-2xl font-bold" style={{ color: PRIMARY }}>
+              {selectedCourse.duration}
+            </div>
+            <div className="text-sm text-gray-600">Duration</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold" style={{ color: PRIMARY }}>
+              {selectedCourse.level}
+            </div>
+            <div className="text-sm text-gray-600">Level</div>
+          </div>
+        </div>
+
+        <button
+          className="w-full py-4 rounded-xl font-bold text-white transition-all duration-300 hover:shadow-lg transform hover:scale-105"
+          style={{
+            background: `linear-gradient(135deg, ${PRIMARY}, ${ACCENT})`,
+            boxShadow: `0 4px 15px ${PRIMARY}40`,
+          }}
+        >
+          Enroll Now - Start Your Free Trial
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
       )}
 
       {selectedFaq && (

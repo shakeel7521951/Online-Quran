@@ -138,23 +138,12 @@ export default function HifzSection() {
                   </div>
 
                   {/* Hover Effect */}
-                  <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                    <div className="w-10 h-10 bg-[#D4AF37] rounded-full flex items-center justify-center">
+                  <div className="absolute top-18 right-4 sm:right-6 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    <div className="w-8 h-8 bg-[#D4AF37] rounded-full flex items-center justify-center">
                       <FaPlay className="text-white text-sm ml-1" />
                     </div>
                   </div>
                 </div>
-
-                {/* Connecting Dots */}
-                {index < features.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <div className="flex space-x-1">
-                      {[1, 2, 3].map((dot) => (
-                        <div key={dot} className="w-2 h-2 bg-[#D4AF37]/30 rounded-full"></div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </motion.div>
             );
           })}

@@ -151,31 +151,68 @@ const OurValueSection = () => {
           data-aos="fade-left"
           data-aos-delay="400"
         >
-          <div className="relative w-full max-w-lg">
-            <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl group">
-              <img
-                alt="Quran learning values"
-                className="w-full h-full object-cover rounded-2xl transition-all duration-700 group-hover:scale-105"
-                loading="lazy"
-                src={image3}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#2C3E50]/40 to-transparent"></div>
-              
-              {/* Image caption */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-gradient-to-t from-[#2C3E50] to-transparent rounded-b-2xl">
-                <h3 className="font-semibold text-lg">Authentic Islamic Education</h3>
-                <p className="text-sm opacity-90">Teaching with devotion since 2010</p>
-              </div>
-            </div>
-            
-            {/* Enhanced decorative frames */}
-            <div className="absolute -z-10 -inset-4 bg-gradient-to-br from-[#D4AF37]/20 to-[#0E7C5A]/20 rounded-3xl transform rotate-3 transition-transform duration-500 group-hover:rotate-0"></div>
-            <div className="absolute -z-20 -inset-6 bg-gradient-to-tr from-[#D4AF37]/10 to-[#0E7C5A]/10 rounded-3xl transform -rotate-3 transition-transform duration-500 group-hover:rotate-0"></div>
-            
-            {/* Floating elements around image */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 bg-[#D4AF37]/10 rounded-full animate-pulse"></div>
-            <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-[#0E7C5A]/10 rounded-full animate-pulse delay-500"></div>
-          </div>
+          <div className="relative w-full max-w-lg group">
+  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+    <img
+      alt="Quran learning values"
+      className="w-full h-full object-cover rounded-2xl transition-all duration-700 group-hover:scale-105"
+      loading="lazy"
+      src={image3}
+    />
+
+    {/* Dark overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-[#2C3E50]/40 to-transparent"></div>
+
+    {/* ✨ Shine effect */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="shine"></div>
+    </div>
+
+    {/* Image caption */}
+    <div className="absolute bottom-0 left-0 right-0 p-6 text-white bg-gradient-to-t from-[#2C3E50] to-transparent rounded-b-2xl">
+      <h3 className="font-semibold text-lg">Authentic Islamic Education</h3>
+      <p className="text-sm opacity-90">Teaching with devotion since 2010</p>
+    </div>
+  </div>
+
+  {/* Decorative frames */}
+  <div className="absolute -z-10 -inset-4 bg-gradient-to-br from-[#D4AF37]/20 to-[#0E7C5A]/20 rounded-3xl transform rotate-3 transition-transform duration-500 group-hover:rotate-0"></div>
+  <div className="absolute -z-20 -inset-6 bg-gradient-to-tr from-[#D4AF37]/10 to-[#0E7C5A]/10 rounded-3xl transform -rotate-3 transition-transform duration-500 group-hover:rotate-0"></div>
+
+  {/* Floating elements */}
+  <div className="absolute -top-6 -right-6 w-24 h-24 bg-[#D4AF37]/10 rounded-full animate-pulse"></div>
+  <div className="absolute -bottom-6 -left-6 w-20 h-20 bg-[#0E7C5A]/10 rounded-full animate-pulse delay-500"></div>
+
+  {/* Shine CSS */}
+  <style jsx>{`
+    .shine {
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+    }
+    .group:hover .shine {
+      animation: shineMove 1s ease forwards;
+    }
+    @keyframes shineMove {
+      0% {
+        left: -75%;
+      }
+      100% {
+        left: 125%;
+      }
+    }
+  `}</style>
+</div>
+
         </div>
       </div>
 
