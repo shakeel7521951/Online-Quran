@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-[#D4AF37] to-[#8B6914] shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r font-serif from-[#ebc693] via-[#B49762] to-[#A97635] shadow-md">
       <div className="flex justify-between items-center max-w-7xl mx-auto py-3 px-4 sm:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
