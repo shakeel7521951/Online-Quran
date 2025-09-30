@@ -1,10 +1,12 @@
 import { X, Trash2 } from "lucide-react";
 
 export default function DeleteUserModal({ user, onClose, onDelete }) {
-  const handleDelete = () => {
-    console.log("Deleting user:", user);
-    onDelete(user); // Connect this to API
-    onClose();
+  const handleDelete = async () => {
+    try {
+      await onDelete(user._id); // Pass user ID to delete function
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
   };
 
   return (
@@ -37,15 +39,19 @@ export default function DeleteUserModal({ user, onClose, onDelete }) {
             Delete User
           </h2>
           <p className="text-gray-600 mb-8 text-sm sm:text-base leading-relaxed">
-            By <span className="text-red-600 font-semibold">deleting </span> 
-            this user, all associated data will be <span className="italic text-red-600 font-semibold">lost.</span> Proceed only if you’re certain.
+            By <span className="text-red-600 font-semibold">deleting </span>
+            this user, all associated data will be{" "}
+            <span className="italic text-red-600 font-semibold">
+              lost.
+            </span>{" "}
+            Proceed only if you’re certain.
           </p>
 
           {/* User Info Card */}
           <div className="bg-gradient-to-br from-[#F5F7FA] to-white rounded-2xl p-5 mb-8 shadow-sm border border-gray-100 space-y-2 text-left">
             <p>
               <span className="font-semibold text-[#0C6A4D] ml-3">Name:</span>{" "}
-              {user.name}
+              {user.username}
             </p>
             <p>
               <span className="font-semibold text-[#0C6A4D] ml-3">Email:</span>{" "}
@@ -53,7 +59,7 @@ export default function DeleteUserModal({ user, onClose, onDelete }) {
             </p>
             <p>
               <span className="font-semibold text-[#0C6A4D] ml-3">Role:</span>{" "}
-              {user.role}
+              {user.role === "admin" ? "Admin" : "User"}
             </p>
           </div>
 

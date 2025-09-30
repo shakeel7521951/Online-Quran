@@ -1,70 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import CourseDrops from "./coursesDrops/CoursesDrops";
 import ViewCourseModal from "./modelsSection/ViewCourseModel";
 import EditCourseModal from "./modelsSection/EditCourseModel";
 import DeleteCourseModal from "./modelsSection/DeleteCourseModel";
+import { coursesAPI } from "../../features/coursesAPI";
 
-const sampleCourses = [
-  {
-    id: 1,
-    title: "Nazra Basics",
-    category: "Nazra",
-    level: "Beginner",
-    status: "Active",
-    instructor: "Ustadh Ahmad",
-    studentsEnrolled: 45,
-    startDate: "2025-09-01",
-    duration: "3 Months",
-    sessions: 36,
-    price: "$120",
-    thumbnail: "https://i.pravatar.cc/80?u=nazra",
-  },
-  {
-    id: 2,
-    title: "Hifz Intermediate",
-    category: "Hifz",
-    level: "Intermediate",
-    status: "Completed",
-    instructor: "Ustadh Bilal",
-    studentsEnrolled: 60,
-    startDate: "2025-08-10",
-    duration: "6 Months",
-    sessions: 72,
-    price: "$300",
-    thumbnail: "https://i.pravatar.cc/80?u=hifz",
-  },
-  {
-    id: 3,
-    title: "Tajweed Mastery",
-    category: "Tajweed",
-    level: "Advanced",
-    status: "Active",
-    instructor: "Ustadh Kareem",
-    studentsEnrolled: 30,
-    startDate: "2025-09-15",
-    duration: "4 Months",
-    sessions: 48,
-    price: "$200",
-    thumbnail: "https://i.pravatar.cc/80?u=tajweed",
-  },
-  {
-    id: 4,
-    title: "Advanced Quran Studies",
-    category: "Advanced",
-    level: "Advanced",
-    status: "Upcoming",
-    instructor: "Ustadh Ahmad",
-    studentsEnrolled: 20,
-    startDate: "2025-10-05",
-    duration: "8 Months",
-    sessions: 96,
-    price: "$500",
-    thumbnail: "https://i.pravatar.cc/80?u=advanced",
-  },
-];
-
-export default function CourseTable() {
+export default function CourseTable({ onCourseAdded }) {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [viewCourse, setViewCourse] = useState(null);
   const [editCourse, setEditCourse] = useState(null);
@@ -76,15 +21,54 @@ export default function CourseTable() {
     instructor: "All",
   });
 
+  // Load courses on component mount
+  useEffect(() => {
+    loadCourses();
+  }, []);
+
+  const loadCourses = async () => {
+    try {
+      setLoading(true);
+      const response = await coursesAPI.getAllCourses();
+      if (response.success) {
+        setCourses(response.data);
+      }
+    } catch (error) {
+      console.error("Error loading courses:", error);
+      setError("Failed to load courses");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCourseAdded = (newCourse) => {
+    setCourses((prev) => [newCourse, ...prev]);
+  };
+
+  const handleCourseUpdated = (updatedCourse) => {
+    setCourses((prev) =>
+      prev.map((course) =>
+        course._id === updatedCourse._id ? updatedCourse : course
+      )
+    );
+  };
+
+  const handleCourseDeleted = (deletedCourseId) => {
+    setCourses((prev) =>
+      prev.filter((course) => course._id !== deletedCourseId)
+    );
+  };
+
   // Filter courses by search + dropdowns
-  const filteredCourses = sampleCourses.filter((c) => {
+  const filteredCourses = courses.filter((c) => {
     const matchesSearch = c.title.toLowerCase().includes(search.toLowerCase());
     const matchesCategory =
       filter.category === "All" || c.category === filter.category;
     const matchesLevel = filter.level === "All" || c.level === filter.level;
     const matchesStatus = filter.status === "All" || c.status === filter.status;
     const matchesInstructor =
-      filter.instructor === "All" || c.instructor === filter.instructor;
+      filter.instructor === "All" ||
+      (c.instructorId && c.instructorId.username === filter.instructor);
 
     return (
       matchesSearch &&
@@ -115,6 +99,13 @@ export default function CourseTable() {
         </div>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+          {error}
+        </div>
+      )}
+
       {/* Table */}
       <div className="rounded-2xl shadow-lg bg-white">
         <div className="overflow-x-auto w-full rounded-2xl">
@@ -130,7 +121,7 @@ export default function CourseTable() {
                 <th className="px-6 py-3 text-sm font-semibold">Duration</th>
                 <th className="px-6 py-3 text-sm font-semibold">Sessions</th>
                 <th className="px-6 py-3 text-sm font-semibold">Price</th>
-                <th className="px-6 py-3 text-sm font-semibold">Start Date</th>
+                <th className="px-6 py-3 text-sm font-semibold">Created</th>
                 <th className="px-6 py-3 text-sm font-semibold text-center">
                   Actions
                 </th>
@@ -138,25 +129,44 @@ export default function CourseTable() {
             </thead>
 
             <tbody>
-              {filteredCourses.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan="11"
+                    className="px-6 py-8 text-center text-gray-500"
+                  >
+                    Loading courses...
+                  </td>
+                </tr>
+              ) : filteredCourses.length > 0 ? (
                 filteredCourses.map((course, index) => (
                   <tr
-                    key={course.id}
+                    key={course._id}
                     className={`transition ${
                       index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-green-50`}
                   >
                     {/* Thumbnail + Title */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
-                      <img
-                        src={course.thumbnail}
-                        alt={course.title}
-                        className="w-12 h-12 rounded-lg object-cover border border-gray-300"
-                      />
+                      <div className="w-12 h-12 rounded-lg overflow-hidden border border-gray-300">
+                        {course.thumbnail ? (
+                          <img
+                            src={course.thumbnail}
+                            alt={course.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">
+                            {course.title.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
                       {course.title}
                     </td>
 
-                    <td className="px-6 py-4 text-gray-700">{course.category}</td>
+                    <td className="px-6 py-4 text-gray-700">
+                      {course.category}
+                    </td>
                     <td className="px-6 py-4 text-gray-700">{course.level}</td>
 
                     <td className="px-6 py-4">
@@ -176,16 +186,22 @@ export default function CourseTable() {
                     </td>
 
                     <td className="px-6 py-4 text-gray-700">
-                      {course.instructor}
+                      {course.instructorId
+                        ? `${course.instructorId.username} (${course.instructorId.role})`
+                        : "No instructor assigned"}
                     </td>
                     <td className="px-6 py-4 text-gray-700">
                       {course.studentsEnrolled}
                     </td>
-                    <td className="px-6 py-4 text-gray-700">{course.duration}</td>
-                    <td className="px-6 py-4 text-gray-700">{course.sessions}</td>
+                    <td className="px-6 py-4 text-gray-700">
+                      {course.duration}
+                    </td>
+                    <td className="px-6 py-4 text-gray-700">
+                      {course.sessions}
+                    </td>
                     <td className="px-6 py-4 text-gray-700">{course.price}</td>
                     <td className="px-6 py-4 text-gray-500">
-                      {course.startDate}
+                      {new Date(course.createdAt).toLocaleDateString()}
                     </td>
 
                     {/* Actions */}
@@ -237,12 +253,14 @@ export default function CourseTable() {
             <EditCourseModal
               course={editCourse}
               onClose={() => setEditCourse(null)}
+              onCourseUpdated={handleCourseUpdated}
             />
           )}
           {deleteCourse && (
             <DeleteCourseModal
               course={deleteCourse}
               onClose={() => setDeleteCourse(null)}
+              onCourseDeleted={handleCourseDeleted}
             />
           )}
         </div>

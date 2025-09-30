@@ -5,7 +5,6 @@ import {
   FaUsers,
   FaBookOpen,
   FaChalkboardTeacher,
-  FaCog,
   FaHome,
   FaStar,
   FaChevronLeft,
@@ -19,10 +18,13 @@ const BORDER = "#e2e8f0";
 const MENU = [
   { name: "Dashboard", path: "/dashboardTest", icon: <FaHome /> },
   { name: "Users", path: "/dashboardTest/users", icon: <FaUsers /> },
-  { name: "Tutors", path: "/dashboardTest/tutors", icon: <FaChalkboardTeacher /> },
+  {
+    name: "Tutors",
+    path: "/dashboardTest/tutors",
+    icon: <FaChalkboardTeacher />,
+  },
   { name: "Courses", path: "/dashboardTest/courses", icon: <FaBookOpen /> },
   { name: "Reviews", path: "/dashboardTest/reviews", icon: <FaStar /> },
-  { name: "Settings", path: "/dashboardTest/settings", icon: <FaCog /> },
 ];
 
 const baseLink =

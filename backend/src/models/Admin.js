@@ -26,6 +26,7 @@ const adminSchema = new mongoose.Schema(
 
     // Profile info
     profileImage: { type: String },
+    cloudinaryPublicId: { type: String }, // Cloudinary public ID for image management
     phone: { type: String },
     bio: { type: String },
     address: { type: String },

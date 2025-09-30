@@ -1,62 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import StudentDrops from "./studentsDrops/StudentsDrops";
 import ViewStudentModal from "./modelsSection/ViewStudentModel";
 import EditStudentModal from "./modelsSection/EditStudentModel";
 import DeleteStudentModal from "./modelsSection/DeleteStudentModel";
+import { studentsAPI } from "../../features/studentsAPI";
 
-const sampleStudents = [
-  {
-    id: 1,
-    name: "Abdul Rehman",
-    email: "abdul@example.com",
-    phone: "+92 300 1234567",
-    class: "Hifz",
-    status: "Active",
-    gender: "Male",
-    age: 15,
-    joined: "2025-09-01",
-    avatar: "https://i.pravatar.cc/40?u=abdul",
-  },
-  {
-    id: 2,
-    name: "Ayesha Khan",
-    email: "ayesha@example.com",
-    phone: "+92 301 2345678",
-    class: "Nazra",
-    status: "Graduated",
-    gender: "Female",
-    age: 12,
-    joined: "2025-09-05",
-    avatar: "https://i.pravatar.cc/40?u=ayesha",
-  },
-  {
-    id: 3,
-    name: "Hamza Ali",
-    email: "hamza@example.com",
-    phone: "+92 302 3456789",
-    class: "Tajweed",
-    status: "Pending",
-    gender: "Male",
-    age: 18,
-    joined: "2025-08-20",
-    avatar: "https://i.pravatar.cc/40?u=hamza",
-  },
-  {
-    id: 4,
-    name: "Fatima Zahra",
-    email: "fatima@example.com",
-    phone: "+92 303 4567890",
-    class: "Advanced",
-    status: "Inactive",
-    gender: "Female",
-    age: 9,
-    joined: "2025-08-25",
-    avatar: "https://i.pravatar.cc/40?u=fatima",
-  },
-];
-
-export default function StudentTable() {
+export default function StudentTable({ onStudentAdded }) {
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [viewStudent, setViewStudent] = useState(null);
   const [editStudent, setEditStudent] = useState(null);
@@ -68,8 +21,46 @@ export default function StudentTable() {
     ageGroup: "All",
   });
 
+  // Load students on component mount
+  useEffect(() => {
+    loadStudents();
+  }, []);
+
+  const loadStudents = async () => {
+    try {
+      setLoading(true);
+      const response = await studentsAPI.getAllStudents();
+      if (response.success) {
+        setStudents(response.data);
+      }
+    } catch (error) {
+      console.error("Error loading students:", error);
+      setError("Failed to load students");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleStudentAdded = (newStudent) => {
+    setStudents((prev) => [newStudent, ...prev]);
+  };
+
+  const handleStudentUpdated = (updatedStudent) => {
+    setStudents((prev) =>
+      prev.map((student) =>
+        student._id === updatedStudent._id ? updatedStudent : student
+      )
+    );
+  };
+
+  const handleStudentDeleted = (deletedStudentId) => {
+    setStudents((prev) =>
+      prev.filter((student) => student._id !== deletedStudentId)
+    );
+  };
+
   // Filter students by search + dropdowns
-  const filteredStudents = sampleStudents.filter((s) => {
+  const filteredStudents = students.filter((s) => {
     const matchesSearch =
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       s.email.toLowerCase().includes(search.toLowerCase());
@@ -114,6 +105,13 @@ export default function StudentTable() {
         </div>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+          {error}
+        </div>
+      )}
+
       {/* Table */}
       <div className="rounded-2xl shadow-lg bg-white">
         <div className="overflow-x-auto w-full rounded-2xl">
@@ -128,26 +126,45 @@ export default function StudentTable() {
                 <th className="px-6 py-3 text-sm font-semibold">Gender</th>
                 <th className="px-6 py-3 text-sm font-semibold">Age</th>
                 <th className="px-6 py-3 text-sm font-semibold">Joined</th>
-                <th className="px-6 py-3 text-sm font-semibold text-center">Actions</th>
+                <th className="px-6 py-3 text-sm font-semibold text-center">
+                  Actions
+                </th>
               </tr>
             </thead>
 
             <tbody>
-              {filteredStudents.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan="9"
+                    className="px-6 py-8 text-center text-gray-500"
+                  >
+                    Loading students...
+                  </td>
+                </tr>
+              ) : filteredStudents.length > 0 ? (
                 filteredStudents.map((student, index) => (
                   <tr
-                    key={student.id}
+                    key={student._id}
                     className={`transition ${
                       index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-green-50`}
                   >
                     {/* Avatar + Name */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
-                      <img
-                        src={student.avatar}
-                        alt={student.name}
-                        className="w-10 h-10 rounded-full object-cover border border-gray-300"
-                      />
+                      <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-300">
+                        {student.profileImage ? (
+                          <img
+                            src={student.profileImage}
+                            alt={student.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">
+                            {student.name.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
                       {student.name}
                     </td>
 
@@ -165,6 +182,10 @@ export default function StudentTable() {
                         className={`px-3 py-1 text-xs font-semibold rounded-full ${
                           student.status === "Active"
                             ? "bg-green-100 text-green-700"
+                            : student.status === "Pending"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : student.status === "Graduated"
+                            ? "bg-blue-100 text-blue-700"
                             : "bg-red-100 text-red-700"
                         }`}
                       >
@@ -177,7 +198,7 @@ export default function StudentTable() {
                     </td>
                     <td className="px-6 py-4 text-gray-700">{student.age}</td>
                     <td className="px-6 py-4 text-gray-500">
-                      {student.joined}
+                      {new Date(student.createdAt).toLocaleDateString()}
                     </td>
                     {/* Actions */}
                     <td className="px-6 py-4 text-center">
@@ -207,7 +228,7 @@ export default function StudentTable() {
               ) : (
                 <tr>
                   <td
-                    colSpan="8"
+                    colSpan="9"
                     className="px-6 py-6 text-center text-gray-500 italic"
                   >
                     No students found
@@ -228,12 +249,14 @@ export default function StudentTable() {
             <EditStudentModal
               user={editStudent}
               onClose={() => setEditStudent(null)}
+              onStudentUpdated={handleStudentUpdated}
             />
           )}
           {deleteStudent && (
             <DeleteStudentModal
               user={deleteStudent}
               onClose={() => setDeleteStudent(null)}
+              onStudentDeleted={handleStudentDeleted}
             />
           )}
         </div>

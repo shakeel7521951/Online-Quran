@@ -1,31 +1,69 @@
-import { X } from "lucide-react";
+import { X, Upload } from "lucide-react";
 import { useState } from "react";
+import { studentsAPI } from "../../../features/studentsAPI";
 
-export default function StudentFormModal({ onClose }) {
+export default function StudentFormModal({ onClose, onStudentAdded }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    password: "",
     phone: "",
-    gender: "",
-    dob: "",
-    address: "",
-    guardianName: "",
-    guardianPhone: "",
-    enrollmentDate: "",
-    course: "",
-    status: "Active",
-    profileImage: "",
+    class: "Beginner",
+    gender: "Male",
+    age: "",
   });
+  const [profileImage, setProfileImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("New Student Data:", formData);
-    onClose(); // close modal after submit
+    setLoading(true);
+    setError("");
+
+    try {
+      // Create FormData for file upload
+      const submitData = new FormData();
+
+      // Add all form fields
+      Object.keys(formData).forEach((key) => {
+        submitData.append(key, formData[key]);
+      });
+
+      // Add profile image if selected
+      if (profileImage) {
+        submitData.append("profileImage", profileImage);
+      }
+
+      const response = await studentsAPI.createStudent(submitData);
+
+      if (response.success) {
+        onStudentAdded && onStudentAdded(response.data);
+        onClose();
+      } else {
+        setError(response.message || "Failed to create student");
+      }
+    } catch (error) {
+      setError(error.message || "Failed to create student");
+      console.error("Error creating student:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,6 +82,39 @@ export default function StudentFormModal({ onClose }) {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
+          {/* Profile Image Upload */}
+          <div className="flex flex-col items-center mb-6">
+            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200 mb-3">
+              {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                  <Upload className="text-gray-400" size={24} />
+                </div>
+              )}
+            </div>
+            <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              <span className="text-sm text-gray-700">Upload Photo</span>
+            </label>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="text"
@@ -64,85 +135,56 @@ export default function StudentFormModal({ onClose }) {
               required
             />
             <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+              required
+              minLength={6}
+            />
+            <input
               type="tel"
               name="phone"
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+              required
             />
+            <select
+              name="class"
+              value={formData.class}
+              onChange={handleChange}
+              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+            >
+              <option value="Beginner">Beginner</option>
+              <option value="Nazra">Nazra</option>
+              <option value="Hifz">Hifz</option>
+              <option value="Tajweed">Tajweed</option>
+              <option value="Advanced">Advanced</option>
+            </select>
             <select
               name="gender"
               value={formData.gender}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+              required
             >
-              <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
             <input
-              type="date"
-              name="dob"
-              value={formData.dob}
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={formData.age}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="text"
-              name="guardianName"
-              placeholder="Guardian Name"
-              value={formData.guardianName}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="tel"
-              name="guardianPhone"
-              placeholder="Guardian Phone"
-              value={formData.guardianPhone}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="date"
-              name="enrollmentDate"
-              value={formData.enrollmentDate}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="text"
-              name="course"
-              placeholder="Enrolled Course"
-              value={formData.course}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-            <input
-              type="url"
-              name="profileImage"
-              placeholder="Profile Image URL"
-              value={formData.profileImage}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none col-span-1 sm:col-span-2"
+              required
+              min="5"
+              max="100"
             />
           </div>
 
@@ -152,14 +194,16 @@ export default function StudentFormModal({ onClose }) {
               type="button"
               onClick={onClose}
               className="px-5 py-2 rounded-lg border text-gray-700 hover:bg-gray-100 transition"
+              disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2 rounded-lg bg-[#967B5A] hover:bg-[#776147] text-white shadow-md transition"
+              className="px-6 py-2 rounded-lg bg-[#967B5A] hover:bg-[#776147] text-white shadow-md transition disabled:opacity-50"
+              disabled={loading}
             >
-              Save Student
+              {loading ? "Creating..." : "Save Student"}
             </button>
           </div>
         </form>

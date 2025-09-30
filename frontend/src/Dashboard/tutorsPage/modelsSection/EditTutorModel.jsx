@@ -1,37 +1,40 @@
-import { X, Upload } from "lucide-react";
+import { X } from "lucide-react";
 import { useState } from "react";
 
-export default function EditTutorModal({ user, onClose }) {
+export default function EditTutorModal({ user, onClose, onSave }) {
   const [formData, setFormData] = useState({
-    image: user.avatar || "", // profile picture
-    name: user.name || "",
+    username: user.username || "",
     email: user.email || "",
-    role: user.role || "Qari",
-    status: user.status || "Active",
+    role: user.role || "Teacher",
     gender: user.gender || "Male",
     experience: user.experience || "",
     studentsAssigned: user.studentsAssigned || 0,
     reviews: user.reviews || 0,
-    joined: user.joined || "",
+    phone: user.phone || "",
+    bio: user.bio || "",
+    address: user.address || "",
+    qualifications: user.qualifications || [],
+    certifications: user.certifications || [],
+    teachingSubjects: user.teachingSubjects || [],
+    availableHours: user.availableHours || "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setFormData({ ...formData, image: imageUrl });
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated Tutor:", formData);
-    onClose();
+    setLoading(true);
+    try {
+      await onSave({ ...user, ...formData });
+    } catch (error) {
+      console.error("Error updating tutor:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,33 +69,28 @@ export default function EditTutorModal({ user, onClose }) {
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#0E7C5A]/30 shadow-md mb-4">
                 <img
-                  src={formData.image || "https://i.pravatar.cc/40?u=jentle"}
+                  src={
+                    user.profileImage ||
+                    `https://i.pravatar.cc/40?u=${user.username}`
+                  }
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <label className="flex items-center gap-2 cursor-pointer text-[#0E7C5A] hover:text-[#0C6A4D] transition font-medium">
-                <Upload size={18} />
-                <span>Change Photo</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
+              <p className="text-gray-600 text-sm">Profile Picture</p>
             </div>
 
             {/* Right: Form Fields */}
             <div className="space-y-4">
-              {/* Name */}
+              {/* Username */}
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Full Name"
+                placeholder="Username"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+                required
               />
 
               {/* Email */}
@@ -103,6 +101,17 @@ export default function EditTutorModal({ user, onClose }) {
                 onChange={handleChange}
                 placeholder="Email Address"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+                required
+              />
+
+              {/* Phone */}
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
               />
 
               {/* Role */}
@@ -112,20 +121,10 @@ export default function EditTutorModal({ user, onClose }) {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
               >
-                <option>Qari</option>
-                <option>Hafiz</option>
-                <option>Teacher</option>
-              </select>
-
-              {/* Status */}
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
-              >
-                <option>Active</option>
-                <option>Inactive</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Qari">Qari</option>
+                <option value="Hafiz">Hafiz</option>
+                <option value="Imam">Imam</option>
               </select>
 
               {/* Gender */}
@@ -135,8 +134,8 @@ export default function EditTutorModal({ user, onClose }) {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
               >
-                <option>Male</option>
-                <option>Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
 
               {/* Experience */}
@@ -149,42 +148,23 @@ export default function EditTutorModal({ user, onClose }) {
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
               />
 
-              {/* Students Assigned */}
-              <input
-                type="number"
-                name="studentsAssigned"
-                value={formData.studentsAssigned}
+              {/* Bio */}
+              <textarea
+                name="bio"
+                value={formData.bio}
                 onChange={handleChange}
-                placeholder="Students Assigned"
+                placeholder="Bio"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
-              />
-
-              {/* Reviews */}
-              <input
-                type="number"
-                step="0.1"
-                name="reviews"
-                value={formData.reviews}
-                onChange={handleChange}
-                placeholder="Reviews (e.g., 4.8)"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
-              />
-
-              {/* Joined Date */}
-              <input
-                type="date"
-                name="joined"
-                value={formData.joined}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+                rows={3}
               />
 
               {/* Save Button */}
               <button
                 type="submit"
-                className="w-full bg-[#0E7C5A] text-white py-2 rounded-lg hover:bg-[#0C6A4D] transition font-semibold shadow-md"
+                disabled={loading}
+                className="w-full bg-[#0E7C5A] text-white py-2 rounded-lg hover:bg-[#0C6A4D] transition font-semibold shadow-md disabled:opacity-50"
               >
-                Save Changes
+                {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>

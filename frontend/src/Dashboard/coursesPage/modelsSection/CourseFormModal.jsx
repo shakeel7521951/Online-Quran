@@ -1,30 +1,94 @@
-import { X } from "lucide-react";
-import { useState } from "react";
+import { X, Upload } from "lucide-react";
+import { useState, useEffect } from "react";
+import { coursesAPI } from "../../../features/coursesAPI";
+import { tutorsAPI } from "../../../features/tutorsAPI";
 
-export default function CourseFormModal({ onClose }) {
+export default function CourseFormModal({ onClose, onCourseAdded }) {
   const [formData, setFormData] = useState({
     title: "",
-    category: "",
-    level: "",
-    status: "Active",
-    instructor: "",
-    studentsEnrolled: 0,
-    startDate: "",
+    category: "Beginner",
+    level: "Beginner",
+    instructorId: "",
     duration: "",
     sessions: "",
     price: "",
-    thumbnail: "",
+    description: "",
   });
+  const [thumbnail, setThumbnail] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [tutors, setTutors] = useState([]);
+  const [loadingTutors, setLoadingTutors] = useState(true);
+
+  // Load tutors on component mount
+  useEffect(() => {
+    loadTutors();
+  }, []);
+
+  const loadTutors = async () => {
+    try {
+      setLoadingTutors(true);
+      const response = await tutorsAPI.getAllTutors();
+      if (response.success) {
+        // Filter only active tutors
+        const activeTutors = response.data.filter((tutor) => tutor.isActive);
+        setTutors(activeTutors);
+      }
+    } catch (error) {
+      console.error("Error loading tutors:", error);
+    } finally {
+      setLoadingTutors(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setThumbnail(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("New Course Data:", formData);
-    onClose(); // close after submit
+    setLoading(true);
+    setError("");
+
+    try {
+      // Create FormData for file upload
+      const submitData = new FormData();
+
+      // Add all form fields
+      Object.keys(formData).forEach((key) => {
+        submitData.append(key, formData[key]);
+      });
+
+      // Add thumbnail if selected
+      if (thumbnail) {
+        submitData.append("thumbnail", thumbnail);
+      }
+
+      const response = await coursesAPI.createCourse(submitData);
+
+      if (response.success) {
+        onCourseAdded && onCourseAdded(response.data);
+        onClose();
+      } else {
+        setError(response.message || "Failed to create course");
+      }
+    } catch (error) {
+      setError(error.message || "Failed to create course");
+      console.error("Error creating course:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,6 +107,39 @@ export default function CourseFormModal({ onClose }) {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
+          {/* Thumbnail Upload */}
+          <div className="flex flex-col items-center mb-6">
+            <div className="w-24 h-24 rounded-lg overflow-hidden border-4 border-gray-200 mb-3">
+              {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                  <Upload className="text-gray-400" size={24} />
+                </div>
+              )}
+            </div>
+            <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg transition">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              <span className="text-sm text-gray-700">Upload Thumbnail</span>
+            </label>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
               type="text"
@@ -53,38 +150,46 @@ export default function CourseFormModal({ onClose }) {
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
               required
             />
-            <input
-              type="text"
+            <select
               name="category"
-              placeholder="Category"
               value={formData.category}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
               required
-            />
-            <input
-              type="text"
+            >
+              <option value="Beginner">Beginner</option>
+              <option value="Nazra">Nazra</option>
+              <option value="Hifz">Hifz</option>
+              <option value="Tajweed">Tajweed</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+            <select
               name="level"
-              placeholder="Level (Beginner, Intermediate, Advanced)"
               value={formData.level}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="text"
-              name="instructor"
-              placeholder="Instructor"
-              value={formData.instructor}
+            >
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+            <select
+              name="instructorId"
+              value={formData.instructorId}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-              className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
-            />
+              required
+              disabled={loadingTutors}
+            >
+              <option value="">
+                {loadingTutors ? "Loading instructors..." : "Select Instructor"}
+              </option>
+              {tutors.map((tutor) => (
+                <option key={tutor._id} value={tutor._id}>
+                  {tutor.username} - {tutor.role} ({tutor.experience})
+                </option>
+              ))}
+            </select>
             <input
               type="text"
               name="duration"
@@ -92,14 +197,17 @@ export default function CourseFormModal({ onClose }) {
               value={formData.duration}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+              required
             />
             <input
               type="number"
               name="sessions"
-              placeholder="Sessions"
+              placeholder="Number of Sessions"
               value={formData.sessions}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+              required
+              min="1"
             />
             <input
               type="text"
@@ -108,14 +216,15 @@ export default function CourseFormModal({ onClose }) {
               value={formData.price}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none"
+              required
             />
-            <input
-              type="url"
-              name="thumbnail"
-              placeholder="Thumbnail URL"
-              value={formData.thumbnail}
+            <textarea
+              name="description"
+              placeholder="Course Description"
+              value={formData.description}
               onChange={handleChange}
               className="border rounded-lg p-3 w-full focus:ring-2 focus:ring-[#01855d] outline-none col-span-1 sm:col-span-2"
+              rows={3}
             />
           </div>
 
@@ -125,14 +234,16 @@ export default function CourseFormModal({ onClose }) {
               type="button"
               onClick={onClose}
               className="px-5 py-2 rounded-lg border text-gray-700 hover:bg-gray-100 transition"
+              disabled={loading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2 rounded-lg bg-[#967B5A] hover:bg-[#776147] text-white shadow-md transition"
+              className="px-6 py-2 rounded-lg bg-[#967B5A] hover:bg-[#776147] text-white shadow-md transition disabled:opacity-50"
+              disabled={loading}
             >
-              Save Course
+              {loading ? "Creating..." : "Save Course"}
             </button>
           </div>
         </form>

@@ -33,12 +33,15 @@ export default function ViewTutorModal({ user, onClose }) {
           {/* Profile Image */}
           <div className="flex flex-col items-center mt-8">
             <img
-              src={user.avatar || "https://i.pravatar.cc/40?u=jentle"}
-              alt={user.name}
+              src={
+                user.profileImage ||
+                `https://i.pravatar.cc/40?u=${user.username}`
+              }
+              alt={user.username}
               className="w-28 h-28 rounded-full border-4 border-[#D4AF37] object-cover shadow-lg"
             />
             <h2 className="text-2xl font-bold mt-4 text-[#0B1324] tracking-wide">
-              {user.name}
+              {user.username}
             </h2>
             <p className="text-sm text-gray-500 flex items-center gap-1">
               <UserCircle size={16} /> {user.role}
@@ -149,7 +152,9 @@ function DetailCard({ icon, label, value, badgeColor }) {
       <div>
         <p className="text-xs text-gray-400">{label}</p>
         {badgeColor ? (
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${badgeColor}`}>
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-semibold ${badgeColor}`}
+          >
             {value}
           </span>
         ) : (

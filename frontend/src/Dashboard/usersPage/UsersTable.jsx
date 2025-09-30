@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Eye, Edit, Trash2, MoreVertical } from "lucide-react";
 import TableDrops from "./dropdowns/TableDrops";
 import ViewUserModal from "./modelsSection/ViewUserModal";
 import EditUserModal from "./modelsSection/EditUserModal";
 import DeleteUserModal from "./modelsSection/DeleteUserModal";
+import { usersAPI } from "../../features/usersAPI";
 
 export default function UsersTable() {
   const [search, setSearch] = useState("");
@@ -11,62 +12,122 @@ export default function UsersTable() {
   const [viewUser, setViewUser] = useState(null);
   const [editUser, setEditUser] = useState(null);
   const [deleteUser, setDeleteUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Dummy users data (replace with API later)
-  const users = [
-    {
-      id: 1,
-      name: "Abdul Rehman",
-      email: "abdul@example.com",
-      role: "Student",
-      status: "Active",
-      date: "2025-09-01",
-      avatar: "https://i.pravatar.cc/40?u=jentle",
-    },
-    {
-      id: 2,
-      name: "Usman",
-      email: "usman@example.com",
-      role: "Tutor",
-      status: "Inactive",
-      date: "2025-09-05",
-      avatar: "https://i.pravatar.cc/40?u=javed",
-    },
-    {
-      id: 3,
-      name: "Noman",
-      email: "noman@example.com",
-      role: "Student",
-      status: "Active",
-      date: "2025-09-10",
-      avatar: "https://i.pravatar.cc/40?u=noman",
-    },
-    {
-      id: 4,
-      name: "kashif",
-      email: "kashig@example.com",
-      role: "Tutor",
-      status: "InActive",
-      date: "2025-09-10",
-      avatar: "https://i.pravatar.cc/40?u=kasd",
-    },
-  ];
+  // Fetch users from API
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await usersAPI.getAllUsers();
+      if (response.success) {
+        setUsers(response.data);
+      } else {
+        setError("Failed to load users");
+      }
+    } catch (error) {
+      setError(error.message || "Failed to load users");
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditUser = async (userData) => {
+    try {
+      const response = await usersAPI.updateUser(userData._id, userData);
+      if (response.success) {
+        // Update users list
+        setUsers(
+          users.map((user) =>
+            user._id === userData._id ? response.data : user
+          )
+        );
+        setEditUser(null);
+        alert("User updated successfully!");
+      }
+    } catch (error) {
+      alert(error.message || "Failed to update user");
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      const response = await usersAPI.deleteUser(userId);
+      if (response.success) {
+        // Remove user from list
+        setUsers(users.filter((user) => user._id !== userId));
+        setDeleteUser(null);
+        alert("User deleted successfully!");
+      }
+    } catch (error) {
+      alert(error.message || "Failed to delete user");
+    }
+  };
+
+  const handleToggleStatus = async (userId) => {
+    try {
+      const response = await usersAPI.toggleUserStatus(userId);
+      if (response.success) {
+        // Update user status in list
+        setUsers(
+          users.map((user) => (user._id === userId ? response.data : user))
+        );
+        alert(
+          `User ${
+            response.data.isVerified ? "activated" : "deactivated"
+          } successfully!`
+        );
+      }
+    } catch (error) {
+      alert(error.message || "Failed to toggle user status");
+    }
+  };
 
   // Filtered users by search and dropdown
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
-      user.name.toLowerCase().includes(search.toLowerCase()) ||
-      user.email.toLowerCase().includes(search.toLowerCase());
+      user.username?.toLowerCase().includes(search.toLowerCase()) ||
+      user.email?.toLowerCase().includes(search.toLowerCase());
 
     const matchesFilter =
       filter === "All" ||
-      (filter === "Students" && user.role === "Student") ||
-      (filter === "Tutors" && user.role === "Tutor") ||
-      (filter === "Active" && user.status === "Active") ||
-      (filter === "Inactive" && user.status === "Inactive");
+      (filter === "Students" && user.role === "user") ||
+      (filter === "Tutors" && user.role === "admin") ||
+      (filter === "Active" && user.isVerified === true) ||
+      (filter === "Inactive" && user.isVerified === false);
 
     return matchesSearch && matchesFilter;
   });
+
+  // Show loading or error states
+  if (loading) {
+    return (
+      <div className="bg-gray-100 rounded-xl p-8 text-center">
+        <div className="text-lg text-gray-600">Loading users...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-gray-100 rounded-xl p-8 text-center">
+        <div className="text-lg text-red-600 mb-4">{error}</div>
+        <button
+          onClick={fetchUsers}
+          className="px-4 py-2 bg-[#0E7C5A] text-white rounded-lg hover:bg-[#0a6147]"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 rounded-xl">
@@ -115,7 +176,7 @@ export default function UsersTable() {
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user, index) => (
                   <tr
-                    key={user.id}
+                    key={user._id}
                     className={`transition ${
                       index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-green-50`}
@@ -123,56 +184,79 @@ export default function UsersTable() {
                     {/* Avatar + Name */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
                       <img
-                        src={user.avatar}
-                        alt={user.name}
+                        src={
+                          user.profileImage ||
+                          `https://i.pravatar.cc/40?u=${user.username}`
+                        }
+                        alt={user.username}
                         className="w-10 h-10 rounded-full object-cover border border-gray-300"
                       />
-                      {user.name}
+                      {user.username}
                     </td>
 
                     <td className="px-6 py-4 text-gray-600">{user.email}</td>
                     <td className="px-6 py-4">
                       <span
                         className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                          user.role === "Tutor"
+                          user.role === "admin"
                             ? "bg-blue-100 text-blue-700"
                             : "bg-purple-100 text-purple-700"
                         }`}
                       >
-                        {user.role}
+                        {user.role === "admin" ? "Admin" : "User"}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <span
                         className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                          user.status === "Active"
+                          user.isVerified
                             ? "bg-green-100 text-green-700"
                             : "bg-red-100 text-red-700"
                         }`}
                       >
-                        {user.status}
+                        {user.isVerified ? "Active" : "Inactive"}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-500">{user.date}</td>
+                    <td className="px-6 py-4 text-gray-500">
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </td>
                     <td className="px-6 py-4 text-center">
                       <div className="flex justify-center space-x-2">
                         <button
                           onClick={() => setViewUser(user)}
                           className="p-2 rounded-lg hover:bg-green-100 text-green-600 transition"
+                          title="View User"
                         >
                           <Eye size={18} />
                         </button>
                         <button
                           onClick={() => setEditUser(user)}
                           className="p-2 rounded-lg hover:bg-yellow-100 text-yellow-600 transition"
+                          title="Edit User"
                         >
                           <Edit size={18} />
                         </button>
                         <button
                           onClick={() => setDeleteUser(user)}
                           className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition"
+                          title="Delete User"
                         >
                           <Trash2 size={18} />
+                        </button>
+                        <button
+                          onClick={() => handleToggleStatus(user._id)}
+                          className={`p-2 rounded-lg transition ${
+                            user.isVerified
+                              ? "hover:bg-red-100 text-red-600"
+                              : "hover:bg-green-100 text-green-600"
+                          }`}
+                          title={
+                            user.isVerified
+                              ? "Deactivate User"
+                              : "Activate User"
+                          }
+                        >
+                          <MoreVertical size={18} />
                         </button>
                       </div>
                     </td>
@@ -195,12 +279,17 @@ export default function UsersTable() {
             <ViewUserModal user={viewUser} onClose={() => setViewUser(null)} />
           )}
           {editUser && (
-            <EditUserModal user={editUser} onClose={() => setEditUser(null)} />
+            <EditUserModal
+              user={editUser}
+              onClose={() => setEditUser(null)}
+              onSave={handleEditUser}
+            />
           )}
           {deleteUser && (
             <DeleteUserModal
               user={deleteUser}
               onClose={() => setDeleteUser(null)}
+              onDelete={handleDeleteUser}
             />
           )}
         </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, RefreshCcw, Download } from "lucide-react";
 import StudentFormModal from "./modelsSection/StudentFormModal";
 
-export default function StudentsHeader() {
+export default function StudentsHeader({ onStudentAdded }) {
   const [openForm, setOpenForm] = useState(false);
 
   return (
@@ -35,7 +35,12 @@ export default function StudentsHeader() {
       </div>
 
       {/* Student Form Modal */}
-      {openForm && <StudentFormModal onClose={() => setOpenForm(false)} />}
+      {openForm && (
+        <StudentFormModal
+          onClose={() => setOpenForm(false)}
+          onStudentAdded={onStudentAdded}
+        />
+      )}
     </div>
   );
 }

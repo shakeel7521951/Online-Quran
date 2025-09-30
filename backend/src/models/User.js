@@ -47,6 +47,7 @@ const userSchema = new mongoose.Schema(
     bio: { type: String, trim: true },
     address: { type: String, trim: true },
     profileImage: { type: String, default: "" }, // URL to cloud or uploads
+    cloudinaryPublicId: { type: String }, // Cloudinary public ID for image management
   },
   { timestamps: true }
 );

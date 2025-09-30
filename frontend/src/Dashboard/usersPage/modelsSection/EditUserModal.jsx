@@ -1,31 +1,31 @@
-import { X, Upload } from "lucide-react";
+import { X } from "lucide-react";
 import { useState } from "react";
 
-export default function EditUserModal({ user, onClose }) {
+export default function EditUserModal({ user, onClose, onSave }) {
   const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    status: user.status,
-    image: user.image || "", // user profile image if available
+    username: user.username || "",
+    email: user.email || "",
+    role: user.role || "user",
+    phone: user.phone || "",
+    bio: user.bio || "",
+    address: user.address || "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setFormData({ ...formData, image: imageUrl });
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated User:", formData);
-    onClose();
+    setLoading(true);
+    try {
+      await onSave({ ...user, ...formData });
+    } catch (error) {
+      console.error("Error updating user:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,34 +61,26 @@ export default function EditUserModal({ user, onClose }) {
               <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-[#0E7C5A]/30 shadow-md mb-4">
                 <img
                   src={
-                    formData.image ||
-                    "https://i.pravatar.cc/40?u=jentle"
+                    user.profileImage ||
+                    `https://i.pravatar.cc/40?u=${user.username}`
                   }
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <label className="flex items-center gap-2 cursor-pointer text-[#0E7C5A] hover:text-[#0C6A4D] transition font-medium">
-                <Upload size={18} />
-                <span>Change Photo</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
+              <p className="text-gray-600 text-sm">Profile Picture</p>
             </div>
 
             {/* Right: Form Fields */}
             <div className="space-y-4">
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="username"
+                value={formData.username}
                 onChange={handleChange}
-                placeholder="Full Name"
+                placeholder="Username"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+                required
               />
               <input
                 type="email"
@@ -97,6 +89,31 @@ export default function EditUserModal({ user, onClose }) {
                 onChange={handleChange}
                 placeholder="Email Address"
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+              />
+              <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                placeholder="Bio"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
+                rows={3}
+              />
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Address"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
               />
               <select
                 name="role"
@@ -104,23 +121,15 @@ export default function EditUserModal({ user, onClose }) {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
               >
-                <option>Student</option>
-                <option>Tutor</option>
-              </select>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#0E7C5A] outline-none"
-              >
-                <option>Active</option>
-                <option>Inactive</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
               </select>
               <button
                 type="submit"
-                className="w-full bg-[#0E7C5A] text-white py-2 rounded-lg hover:bg-[#0C6A4D] transition font-semibold shadow-md"
+                disabled={loading}
+                className="w-full bg-[#0E7C5A] text-white py-2 rounded-lg hover:bg-[#0C6A4D] transition font-semibold shadow-md disabled:opacity-50"
               >
-                Save Changes
+                {loading ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>

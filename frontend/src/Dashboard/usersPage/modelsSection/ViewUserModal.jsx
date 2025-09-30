@@ -22,15 +22,17 @@ export default function ViewUserModal({ user, onClose }) {
         {/* Profile Image */}
         <div className="flex flex-col items-center mt-8">
           <img
-            src={user.image || "https://i.pravatar.cc/40?u=jentle"}
-            alt={user.name}
+            src={
+              user.profileImage || `https://i.pravatar.cc/40?u=${user.username}`
+            }
+            alt={user.username}
             className="w-28 h-28 rounded-full border-4 border-[#D4AF37] object-cover shadow-lg"
           />
           <h2 className="text-2xl font-bold mt-4 text-[#0B1324] tracking-wide">
-            {user.name}
+            {user.username}
           </h2>
           <p className="text-sm text-gray-500 flex items-center gap-1">
-            <UserCircle size={16} /> {user.role}
+            <UserCircle size={16} /> {user.role === "admin" ? "Admin" : "User"}
           </p>
         </div>
 
@@ -52,12 +54,12 @@ export default function ViewUserModal({ user, onClose }) {
               <p className="text-xs text-gray-400">Role</p>
               <span
                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  user.role === "Tutor"
+                  user.role === "admin"
                     ? "bg-blue-100 text-blue-700"
                     : "bg-purple-100 text-purple-700"
                 }`}
               >
-                {user.role}
+                {user.role === "admin" ? "Admin" : "User"}
               </span>
             </div>
           </div>
@@ -65,29 +67,68 @@ export default function ViewUserModal({ user, onClose }) {
           {/* Status */}
           <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow border hover:shadow-md transition">
             <ShieldCheck
-              className={user.status === "Active" ? "text-green-600" : "text-red-600"}
+              className={user.isVerified ? "text-green-600" : "text-red-600"}
               size={20}
             />
             <div>
               <p className="text-xs text-gray-400">Status</p>
               <span
                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  user.status === "Active"
+                  user.isVerified
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700"
                 }`}
               >
-                {user.status}
+                {user.isVerified ? "Active" : "Inactive"}
               </span>
             </div>
           </div>
+
+          {/* Phone */}
+          {user.phone && (
+            <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow border hover:shadow-md transition">
+              <UserCircle className="text-[#0C6A4D]" size={20} />
+              <div>
+                <p className="text-xs text-gray-400">Phone</p>
+                <p className="text-sm font-medium text-gray-800">
+                  {user.phone}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Bio */}
+          {user.bio && (
+            <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow border hover:shadow-md transition">
+              <UserCircle className="text-[#0C6A4D]" size={20} />
+              <div>
+                <p className="text-xs text-gray-400">Bio</p>
+                <p className="text-sm font-medium text-gray-800">{user.bio}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Address */}
+          {user.address && (
+            <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow border hover:shadow-md transition">
+              <UserCircle className="text-[#0C6A4D]" size={20} />
+              <div>
+                <p className="text-xs text-gray-400">Address</p>
+                <p className="text-sm font-medium text-gray-800">
+                  {user.address}
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Joined */}
           <div className="flex items-center gap-3 bg-white rounded-xl p-4 shadow border hover:shadow-md transition">
             <Calendar className="text-[#0C6A4D]" size={20} />
             <div>
               <p className="text-xs text-gray-400">Joined</p>
-              <p className="text-sm font-medium text-gray-800">{user.date}</p>
+              <p className="text-sm font-medium text-gray-800">
+                {new Date(user.createdAt).toLocaleDateString()}
+              </p>
             </div>
           </div>
         </div>

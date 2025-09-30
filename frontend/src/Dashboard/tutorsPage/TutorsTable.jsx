@@ -1,70 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import TutorDrops from "./tutorDrops/TutorDrops";
 import ViewTutorModal from "./modelsSection/ViewTutorModel";
 import EditTutorModal from "./modelsSection/EditTutorModel";
 import DeleteTutorModal from "./modelsSection/DeleteTutorModel";
-
-const sampleTutors = [
-  {
-    id: 1,
-    name: "Abdul Rehman",
-    email: "abdul@example.com",
-    role: "Qari",
-    status: "Active",
-    gender: "Male",
-    joined: "2025-09-01",
-    avatar: "https://i.pravatar.cc/40?u=abdul",
-    experience: "5 Years",
-    studentsAssigned: 12,
-    reviews: 5.0,
-  },
-  {
-    id: 2,
-    name: "Ayesha Khan",
-    email: "ayesha@example.com",
-    role: "Hafiz",
-    status: "Inactive",
-    gender: "Female",
-    joined: "2025-09-05",
-    avatar: "https://i.pravatar.cc/40?u=ayesha",
-    experience: "3 Years",
-    studentsAssigned: 8,
-    reviews: 4.1,
-  },
-  {
-    id: 3,
-    name: "Ali Raza",
-    email: "ali@example.com",
-    role: "Teacher",
-    status: "Active",
-    gender: "Male",
-    joined: "2025-09-10",
-    avatar: "https://i.pravatar.cc/40?u=ali",
-    experience: "7 Years",
-    studentsAssigned: 20,
-    reviews: 3.9,
-  },
-  {
-    id: 3,
-    name: "shabnam",
-    email: "shabnam@example.com",
-    role: "Teacher",
-    status: "Active",
-    gender: "Female",
-    joined: "2024-09-10",
-    avatar: "https://i.pravatar.cc/40?u=ali",
-    experience: "4 Years",
-    studentsAssigned: 26,
-    reviews: 2.9,
-  },
-];
+import { tutorsAPI } from "../../features/tutorsAPI";
 
 export default function TutorTable() {
   const [search, setSearch] = useState("");
   const [viewTutor, setViewTutor] = useState(null);
   const [editTutor, setEditTutor] = useState(null);
   const [deleteTutor, setDeleteTutor] = useState(null);
+  const [tutors, setTutors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filter, setFilter] = useState({
     role: "All",
     status: "All",
@@ -72,14 +21,91 @@ export default function TutorTable() {
     reviews: "All",
   });
 
+  // Fetch tutors from API
+  useEffect(() => {
+    fetchTutors();
+  }, []);
+
+  const fetchTutors = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await tutorsAPI.getAllTutors();
+      if (response.success) {
+        setTutors(response.data);
+      } else {
+        setError("Failed to load tutors");
+      }
+    } catch (error) {
+      setError(error.message || "Failed to load tutors");
+      console.error("Error fetching tutors:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditTutor = async (tutorData) => {
+    try {
+      const response = await tutorsAPI.updateTutor(tutorData._id, tutorData);
+      if (response.success) {
+        // Update tutors list
+        setTutors(
+          tutors.map((tutor) =>
+            tutor._id === tutorData._id ? response.data : tutor
+          )
+        );
+        setEditTutor(null);
+        alert("Tutor updated successfully!");
+      }
+    } catch (error) {
+      alert(error.message || "Failed to update tutor");
+    }
+  };
+
+  const handleDeleteTutor = async (tutorId) => {
+    try {
+      const response = await tutorsAPI.deleteTutor(tutorId);
+      if (response.success) {
+        // Remove tutor from list
+        setTutors(tutors.filter((tutor) => tutor._id !== tutorId));
+        setDeleteTutor(null);
+        alert("Tutor deleted successfully!");
+      }
+    } catch (error) {
+      alert(error.message || "Failed to delete tutor");
+    }
+  };
+
+  const handleToggleStatus = async (tutorId) => {
+    try {
+      const response = await tutorsAPI.toggleTutorStatus(tutorId);
+      if (response.success) {
+        // Update tutor status in list
+        setTutors(
+          tutors.map((tutor) => (tutor._id === tutorId ? response.data : tutor))
+        );
+        alert(
+          `Tutor ${
+            response.data.isActive ? "activated" : "deactivated"
+          } successfully!`
+        );
+      }
+    } catch (error) {
+      alert(error.message || "Failed to toggle tutor status");
+    }
+  };
+
   // Filter tutors by search + dropdowns
-  const filteredTutors = sampleTutors.filter((t) => {
+  const filteredTutors = tutors.filter((t) => {
     const matchesSearch =
-      t.name.toLowerCase().includes(search.toLowerCase()) ||
-      t.email.toLowerCase().includes(search.toLowerCase());
+      t.username?.toLowerCase().includes(search.toLowerCase()) ||
+      t.email?.toLowerCase().includes(search.toLowerCase());
 
     const matchesRole = filter.role === "All" || t.role === filter.role;
-    const matchesStatus = filter.status === "All" || t.status === filter.status;
+    const matchesStatus =
+      filter.status === "All" ||
+      (filter.status === "Active" && t.isActive) ||
+      (filter.status === "Inactive" && !t.isActive);
     const matchesGender = filter.gender === "All" || t.gender === filter.gender;
     const matchesReviews =
       filter.reviews === "All" ||
@@ -95,6 +121,29 @@ export default function TutorTable() {
       matchesReviews
     );
   });
+
+  // Show loading or error states
+  if (loading) {
+    return (
+      <div className="bg-gray-100 rounded-xl p-8 text-center">
+        <div className="text-lg text-gray-600">Loading tutors...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-gray-100 rounded-xl p-8 text-center">
+        <div className="text-lg text-red-600 mb-4">{error}</div>
+        <button
+          onClick={fetchTutors}
+          className="px-4 py-2 bg-[#0E7C5A] text-white rounded-lg hover:bg-[#0a6147]"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100 rounded-xl">
@@ -141,7 +190,7 @@ export default function TutorTable() {
               {filteredTutors.length > 0 ? (
                 filteredTutors.map((tutor, index) => (
                   <tr
-                    key={tutor.id}
+                    key={tutor._id}
                     className={`transition ${
                       index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-green-50`}
@@ -149,11 +198,14 @@ export default function TutorTable() {
                     {/* Avatar + Name */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
                       <img
-                        src={tutor.avatar}
-                        alt={tutor.name}
+                        src={
+                          tutor.profileImage ||
+                          `https://i.pravatar.cc/40?u=${tutor.username}`
+                        }
+                        alt={tutor.username}
                         className="w-10 h-10 rounded-full object-cover border border-gray-300"
                       />
-                      {tutor.name}
+                      {tutor.username}
                     </td>
 
                     <td className="px-6 py-4 text-gray-600">{tutor.email}</td>
@@ -167,12 +219,12 @@ export default function TutorTable() {
                     <td className="px-6 py-4">
                       <span
                         className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                          tutor.status === "Active"
+                          tutor.isActive
                             ? "bg-green-100 text-green-700"
                             : "bg-red-100 text-red-700"
                         }`}
                       >
-                        {tutor.status}
+                        {tutor.isActive ? "Active" : "Inactive"}
                       </span>
                     </td>
 
@@ -181,12 +233,20 @@ export default function TutorTable() {
                       {tutor.experience}
                     </td>
                     <td className="px-6 py-4 text-gray-700">
-                      {tutor.studentsAssigned}
+                      <button
+                        onClick={() => handleToggleStatus(tutor._id)}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                        title="Click to toggle status"
+                      >
+                        {tutor.studentsAssigned}
+                      </button>
                     </td>
                     <td className="px-6 py-4 text-yellow-600 font-semibold">
-                      ⭐ {tutor.reviews}
+                      ⭐ {tutor.reviews.toFixed(1)}
                     </td>
-                    <td className="px-6 py-4 text-gray-500">{tutor.joined}</td>
+                    <td className="px-6 py-4 text-gray-500">
+                      {new Date(tutor.createdAt).toLocaleDateString()}
+                    </td>
 
                     {/* Actions */}
                     <td className="px-6 py-4 text-center">
@@ -194,18 +254,21 @@ export default function TutorTable() {
                         <button
                           onClick={() => setViewTutor(tutor)}
                           className="p-2 rounded-lg hover:bg-green-100 text-green-600 transition"
+                          title="View Tutor"
                         >
                           <Eye size={18} />
                         </button>
                         <button
                           onClick={() => setEditTutor(tutor)}
                           className="p-2 rounded-lg hover:bg-yellow-100 text-yellow-600 transition"
+                          title="Edit Tutor"
                         >
                           <Edit size={18} />
                         </button>
                         <button
                           onClick={() => setDeleteTutor(tutor)}
                           className="p-2 rounded-lg hover:bg-red-100 text-red-600 transition"
+                          title="Delete Tutor"
                         >
                           <Trash2 size={18} />
                         </button>
@@ -237,12 +300,14 @@ export default function TutorTable() {
             <EditTutorModal
               user={editTutor}
               onClose={() => setEditTutor(null)}
+              onSave={handleEditTutor}
             />
           )}
           {deleteTutor && (
             <DeleteTutorModal
               user={deleteTutor}
               onClose={() => setDeleteTutor(null)}
+              onDelete={handleDeleteTutor}
             />
           )}
         </div>

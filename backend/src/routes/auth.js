@@ -6,9 +6,14 @@ import Admin from "../models/Admin.js";
 import RefreshToken from "../models/refreshToken.js";
 import authenticate from "../middleware/authenticate.js";
 import { sendEmail } from "../utils/sendEmail.js";
+import {
+  uploadProfileImage,
+  deleteFromCloudinary,
+  extractPublicId,
+  testCloudinaryConnection,
+} from "../utils/cloudinary.js";
 import multer from "multer";
-import path from "path";
-import PendingUser from "../models/PendingUser.js"; 
+import PendingUser from "../models/PendingUser.js";
 import PendingAdmin from "../models/PendingAdmin.js";
 
 const router = express.Router();
@@ -93,7 +98,7 @@ router.post("/verify-otp", async (req, res) => {
   }
 });
 
-// resend for the both admin and user 
+// resend for the both admin and user
 router.post("/resend-otp", async (req, res) => {
   try {
     const { email } = req.body;
@@ -126,19 +131,24 @@ router.post("/resend-otp", async (req, res) => {
         $or: [{ email }, { pendingEmail: email }],
       });
       if (targetUser) userType = "admin";
-      console.log(targetUser)
+      console.log(targetUser);
     }
 
     // 5. Still not found
     if (!targetUser) {
-      return res.status(404).json({ message: "No account found with this email" });
+      return res
+        .status(404)
+        .json({ message: "No account found with this email" });
     }
 
     // 6. Generate new OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     // 7. Decide where to send & update fields
-    if ((userType === "user" || userType === "admin") && targetUser.pendingEmail) {
+    if (
+      (userType === "user" || userType === "admin") &&
+      targetUser.pendingEmail
+    ) {
       // Email change request → send to original email
       emailToSend = targetUser.email;
 
@@ -173,7 +183,6 @@ router.post("/resend-otp", async (req, res) => {
     res.status(500).json({ message: "Server error while resending OTP" });
   }
 });
-
 
 // Login for both admin and user
 router.post("/login", async (req, res) => {
@@ -254,7 +263,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
 // // Get My Profile (works for both User and Admin)
 // router.get("/profile", authenticate, async (req, res) => {
 //   try {
@@ -281,23 +289,23 @@ router.post("/login", async (req, res) => {
 //   }
 // });
 
+// ✅ Configure multer for memory storage (Cloudinary integration)
+const storage = multer.memoryStorage();
 
-
-// ✅ Configure multer storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // create "uploads" folder if not exists
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
   },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      Date.now() + "-" + file.fieldname + path.extname(file.originalname)
-    );
+  fileFilter: (req, file, cb) => {
+    // Check file type
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed!"), false);
+    }
   },
 });
-
-const upload = multer({ storage });
-
 
 // Edit Profile (update username, phone, bio, or request email change)
 router.put(
@@ -314,13 +322,48 @@ router.put(
         account = await User.findById(req.user.id);
       }
 
-      if (!account) return res.status(404).json({ message: "Account not found" });
+      if (!account)
+        return res.status(404).json({ message: "Account not found" });
 
-      // ✅ Profile image update
+      // ✅ Cloudinary profile image update
       if (req.file) {
-        account.profileImage = `${req.protocol}://${req.get("host")}/uploads/${
-          req.file.filename
-        }`;
+        try {
+          console.log("📤 Processing profile image upload...");
+          console.log("   File size:", req.file.size, "bytes");
+          console.log("   File type:", req.file.mimetype);
+
+          // Delete old profile image from Cloudinary if exists
+          if (account.profileImage && account.cloudinaryPublicId) {
+            console.log("🗑️ Deleting old profile image...");
+            try {
+              await deleteFromCloudinary(account.cloudinaryPublicId);
+            } catch (deleteError) {
+              console.warn(
+                "⚠️ Could not delete old image:",
+                deleteError.message
+              );
+            }
+          }
+
+          // Upload new image to Cloudinary
+          const uploadResult = await uploadProfileImage(
+            req.file.buffer,
+            req.user.id
+          );
+
+          account.profileImage = uploadResult.url;
+          account.cloudinaryPublicId = uploadResult.public_id;
+
+          console.log("✅ Profile image uploaded successfully");
+          console.log("   URL:", uploadResult.url);
+          console.log("   Public ID:", uploadResult.public_id);
+        } catch (uploadError) {
+          console.error("❌ Profile image upload failed:", uploadError.message);
+          return res.status(500).json({
+            message: "Failed to upload profile image",
+            error: uploadError.message,
+          });
+        }
       }
 
       const { username, email, phone, bio, address } = req.body;
@@ -377,8 +420,6 @@ router.put(
   }
 );
 
-
-
 // ✅ Verify email change OTP (User + Admin)
 router.post("/verify-email-change", authenticate, async (req, res) => {
   try {
@@ -415,7 +456,9 @@ router.post("/verify-email-change", authenticate, async (req, res) => {
     });
   } catch (error) {
     console.error("Verify Email Change Error:", error);
-    res.status(500).json({ message: "Server error while verifying email change" });
+    res
+      .status(500)
+      .json({ message: "Server error while verifying email change" });
   }
 });
 
@@ -429,7 +472,9 @@ router.post("/logout", async (req, res) => {
 
     const deletedToken = await RefreshToken.findOneAndDelete({ token });
     if (!deletedToken) {
-      return res.status(400).json({ message: "Invalid or already logged out token" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or already logged out token" });
     }
 
     res.status(200).json({ message: "Logged out successfully" });
@@ -486,7 +531,6 @@ router.post("/change-password", authenticate, async (req, res) => {
   }
 });
 
-
 // Forgot Password → send reset email
 
 router.post("/forgot-password", async (req, res) => {
@@ -539,6 +583,48 @@ router.post("/reset-password", async (req, res) => {
     res.json({ message: "Password updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Test Cloudinary connection (for debugging)
+router.get("/test-cloudinary", async (req, res) => {
+  try {
+    const result = await testCloudinaryConnection();
+    res.json({
+      message: "Cloudinary test completed",
+      result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Cloudinary test failed",
+      error: error.message,
+    });
+  }
+});
+
+// ✅ Get My Profile (works for both User and Admin)
+router.get("/profile", authenticate, async (req, res) => {
+  try {
+    let account;
+
+    // First try User collection
+    account = await User.findById(req.user.id).select(
+      "-password -otp -otpExpires -resetPasswordToken -resetPasswordExpires -emailChangeOtp -emailChangeOtpExpiry"
+    );
+
+    // If not found, try Admin collection
+    if (!account) {
+      account = await Admin.findById(req.user.id).select("-password");
+    }
+
+    if (!account) {
+      return res.status(404).json({ message: "Account not found" });
+    }
+
+    res.json({ user: account });
+  } catch (error) {
+    console.error("Profile fetch error:", error);
+    res.status(500).json({ message: "Server error while fetching profile" });
   }
 });
 

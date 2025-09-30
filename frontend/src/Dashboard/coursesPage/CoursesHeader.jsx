@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Plus, RefreshCcw } from "lucide-react";
 import CourseFormModal from "./modelsSection/CourseFormModal";
 
-export default function CourseHeader() {
+export default function CourseHeader({ onCourseAdded, onRefresh }) {
   const [openForm, setOpenForm] = useState(false);
 
   return (
@@ -26,7 +26,10 @@ export default function CourseHeader() {
           </button>
 
           {/* Refresh */}
-          <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-md transition">
+          <button
+            onClick={onRefresh}
+            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow-md transition"
+          >
             <RefreshCcw size={18} />
             <span>Refresh</span>
           </button>
@@ -34,7 +37,12 @@ export default function CourseHeader() {
       </div>
 
       {/* Add Course Modal */}
-      {openForm && <CourseFormModal onClose={() => setOpenForm(false)} />}
+      {openForm && (
+        <CourseFormModal
+          onClose={() => setOpenForm(false)}
+          onCourseAdded={onCourseAdded}
+        />
+      )}
     </>
   );
 }

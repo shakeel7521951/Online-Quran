@@ -4,12 +4,12 @@ import {
   FaUsers,
   FaBookOpen,
   FaChalkboardTeacher,
-  FaCog,
   FaHome,
   FaStar,
   FaChevronLeft,
   FaChevronRight,
   FaUsersCog,
+  FaClipboardList,
 } from "react-icons/fa";
 
 const MENU = [
@@ -18,8 +18,12 @@ const MENU = [
   { name: "Tutors", path: "/dashboard/tutors", icon: <FaChalkboardTeacher /> },
   { name: "Students", path: "/dashboard/students", icon: <FaUsersCog /> },
   { name: "Courses", path: "/dashboard/courses", icon: <FaBookOpen /> },
+  {
+    name: "Enrollments",
+    path: "/dashboard/enrollments",
+    icon: <FaClipboardList />,
+  },
   { name: "Reviews", path: "/dashboard/reviews", icon: <FaStar /> },
-  { name: "Settings", path: "/dashboard/settings", icon: <FaCog /> },
 ];
 
 const baseLink =

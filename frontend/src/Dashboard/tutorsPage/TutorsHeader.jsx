@@ -2,8 +2,13 @@ import { useState } from "react";
 import { Plus, RefreshCcw, Download } from "lucide-react";
 import TutorFormModal from "./modelsSection/TutorFormModal";
 
-export default function TutorsHeader() {
+export default function TutorsHeader({ onTutorAdded, onRefresh }) {
   const [openForm, setOpenForm] = useState(false);
+
+  const handleTutorAdded = (newTutor) => {
+    onTutorAdded?.(newTutor);
+    setOpenForm(false);
+  };
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -23,7 +28,10 @@ export default function TutorsHeader() {
           <span className="hidden sm:inline">Add Tutor</span>
         </button>
 
-        <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow transition">
+        <button
+          onClick={onRefresh}
+          className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg shadow transition"
+        >
           <RefreshCcw size={18} />
           <span className="hidden sm:inline">Refresh</span>
         </button>
@@ -35,7 +43,12 @@ export default function TutorsHeader() {
       </div>
 
       {/* Tutor Form Modal */}
-      {openForm && <TutorFormModal onClose={() => setOpenForm(false)} />}
+      {openForm && (
+        <TutorFormModal
+          onClose={() => setOpenForm(false)}
+          onTutorAdded={handleTutorAdded}
+        />
+      )}
     </div>
   );
 }
