@@ -183,14 +183,26 @@ export default function UsersTable() {
                   >
                     {/* Avatar + Name */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
-                      <img
-                        src={
-                          user.profileImage ||
-                          `https://i.pravatar.cc/40?u=${user.username}`
-                        }
-                        alt={user.username}
-                        className="w-10 h-10 rounded-full object-cover border border-gray-300"
-                      />
+                      <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-300">
+                        {user.profileImage ? (
+                          <img
+                            src={user.profileImage}
+                            alt={user.username}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.nextSibling.style.display = "flex";
+                            }}
+                          />
+                        ) : null}
+                        <div
+                          className={`w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-medium text-sm ${
+                            user.profileImage ? "hidden" : "flex"
+                          }`}
+                        >
+                          {user.username.charAt(0).toUpperCase()}
+                        </div>
+                      </div>
                       {user.username}
                     </td>
 

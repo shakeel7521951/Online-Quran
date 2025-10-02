@@ -6,7 +6,7 @@ import StudentTable from "./studentsPage/StudentsTable";
 function StudentsPage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
-  const handleStudentAdded = (newStudent) => {
+  const handleStudentAdded = () => {
     // Trigger a refresh of the table
     setRefreshTrigger((prev) => prev + 1);
   };
@@ -15,7 +15,7 @@ function StudentsPage() {
     <div>
       <StudentsHeader onStudentAdded={handleStudentAdded} />
       <StudentSummaryCards />
-      <StudentTable key={refreshTrigger} onStudentAdded={handleStudentAdded} />
+      <StudentTable key={refreshTrigger} />
     </div>
   );
 }

@@ -41,6 +41,7 @@ import CoursesPage from "./Dashboard/CoursesPage";
 import ReviewsPage from "./Dashboard/ReviewsPage";
 import SettingsPage from "./Dashboard/SettingsPage";
 import EnrollmentsPage from "./Dashboard/EnrollmentsPage";
+import ContactsPage from "./Dashboard/ContactsPage";
 import { useState } from "react";
 import StudentsPage from "./Dashboard/StudentsPage";
 // ===== Layouts =====
@@ -143,6 +144,7 @@ const router = createBrowserRouter([
       { path: "students", element: <StudentsPage /> },
       { path: "courses", element: <CoursesPage /> },
       { path: "enrollments", element: <EnrollmentsPage /> },
+      { path: "contacts", element: <ContactsPage /> },
       { path: "reviews", element: <ReviewsPage /> },
       { path: "settings", element: <SettingsPage /> },
       { path: "adminSignup", element: <AdminSignup /> },

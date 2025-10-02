@@ -15,6 +15,8 @@ import tutorsRoutes from "./routes/tutors.js";
 import studentsRoutes from "./routes/students.js";
 import coursesRoutes from "./routes/courses.js";
 import enrollmentsRoutes from "./routes/enrollments.js";
+import contactRoutes from "./routes/contact.js";
+import statisticsRoutes from "./routes/statistics.js";
 
 const PORT = process.env.PORT || 5000;
 
@@ -40,6 +42,8 @@ app.use("/api/tutors", tutorsRoutes);
 app.use("/api/students", studentsRoutes);
 app.use("/api/courses", coursesRoutes);
 app.use("/api/enrollments", enrollmentsRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/statistics", statisticsRoutes);
 
 // MongoDB Connection
 mongoose

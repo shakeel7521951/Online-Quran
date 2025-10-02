@@ -197,14 +197,26 @@ export default function TutorTable() {
                   >
                     {/* Avatar + Name */}
                     <td className="px-6 py-4 font-medium text-gray-800 flex items-center gap-3">
-                      <img
-                        src={
-                          tutor.profileImage ||
-                          `https://i.pravatar.cc/40?u=${tutor.username}`
-                        }
-                        alt={tutor.username}
-                        className="w-10 h-10 rounded-full object-cover border border-gray-300"
-                      />
+                      <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-300">
+                        {tutor.profileImage ? (
+                          <img
+                            src={tutor.profileImage}
+                            alt={tutor.username}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.nextSibling.style.display = "flex";
+                            }}
+                          />
+                        ) : null}
+                        <div
+                          className={`w-full h-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-medium text-sm ${
+                            tutor.profileImage ? "hidden" : "flex"
+                          }`}
+                        >
+                          {tutor.username.charAt(0).toUpperCase()}
+                        </div>
+                      </div>
                       {tutor.username}
                     </td>
 

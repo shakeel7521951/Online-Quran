@@ -10,6 +10,7 @@ import {
   FaChevronRight,
   FaUsersCog,
   FaClipboardList,
+  FaEnvelope,
 } from "react-icons/fa";
 
 const MENU = [
@@ -23,7 +24,8 @@ const MENU = [
     path: "/dashboard/enrollments",
     icon: <FaClipboardList />,
   },
-  { name: "Reviews", path: "/dashboard/reviews", icon: <FaStar /> },
+  { name: "Contacts", path: "/dashboard/contacts", icon: <FaEnvelope /> },
+  // { name: "Reviews", path: "/dashboard/reviews", icon: <FaStar /> }, // Commented out for now
 ];
 
 const baseLink =

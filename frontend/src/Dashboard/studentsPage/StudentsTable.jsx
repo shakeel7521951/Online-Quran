@@ -6,7 +6,7 @@ import EditStudentModal from "./modelsSection/EditStudentModel";
 import DeleteStudentModal from "./modelsSection/DeleteStudentModel";
 import { studentsAPI } from "../../features/studentsAPI";
 
-export default function StudentTable({ onStudentAdded }) {
+export default function StudentTable() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -39,10 +39,6 @@ export default function StudentTable({ onStudentAdded }) {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleStudentAdded = (newStudent) => {
-    setStudents((prev) => [newStudent, ...prev]);
   };
 
   const handleStudentUpdated = (updatedStudent) => {
@@ -158,12 +154,19 @@ export default function StudentTable({ onStudentAdded }) {
                             src={student.profileImage}
                             alt={student.name}
                             className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              e.target.nextSibling.style.display = "flex";
+                            }}
                           />
-                        ) : (
-                          <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs">
-                            {student.name.charAt(0).toUpperCase()}
-                          </div>
-                        )}
+                        ) : null}
+                        <div
+                          className={`w-full h-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-medium text-sm ${
+                            student.profileImage ? "hidden" : "flex"
+                          }`}
+                        >
+                          {student.name.charAt(0).toUpperCase()}
+                        </div>
                       </div>
                       {student.name}
                     </td>
