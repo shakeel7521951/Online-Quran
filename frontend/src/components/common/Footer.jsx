@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
+import hafix1 from '../../components/Images/Al-hafix-logo.jpeg'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { 
@@ -26,16 +27,19 @@ const Footer = () => {
           
           {/* Logo and Description */}
           <div className="col-span-1 lg:col-span-1" data-aos="">
-            <Link to="/" data-aos="">
+         <Link to="/" data-aos="">
               <h1 className="flex items-center gap-2 mb-4">
                 <img 
                   className="w-16 rounded-sm" 
-                  src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UXVyYW58ZW58MHx8MHx8fDA%3D" 
+                  src={hafix1} 
                   alt="Quran Academy" 
                 />
-                <span className="text-xl font-bold" data-aos="fade-right">آنلان قرآن</span>
+                <span className="text-xl font-bold" data-aos="fade-right">    القرآن أونلاين</span>
               </h1>
             </Link>
+
+  <h1 className="text-2xl lg:text-3xl font-semibold text-amber-50 tracking-wide drop-shadow-md">
+  </h1>
             <p className="text-sm mb-4 text-white/90" data-aos="fade-left">
               Learn Quran online with qualified teachers. Study Tajweed, Memorization, and Islamic studies from the comfort of your home.
             </p>

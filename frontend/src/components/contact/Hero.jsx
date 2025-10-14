@@ -13,6 +13,7 @@ import {
   FaShieldAlt,
   FaStar,
   FaGraduationCap,
+  FaGlobe,
   FaQuran,
   FaUserTie,
   FaMobileAlt,
@@ -419,6 +420,30 @@ const ContactHero = () => {
                   </p>
                 )}
               </div>
+ <div className="relative">
+        <FaGlobe className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-500 text-lg" />
+        <input
+          type="text"
+          name="country"
+          placeholder="Enter your country"
+          className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 
+          focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent 
+          transition-all duration-300 hover:shadow-md hover:bg-amber-50"
+        />
+      </div>
+
+      {/* ===== Time Input ===== */}
+      <div className="relative">
+        <FaClock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-500 text-lg" />
+        <input
+          type="time"
+          name="preferredTime"
+          placeholder="Enter your time"
+          className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 
+          focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent 
+          transition-all duration-300 hover:shadow-md hover:bg-amber-50"
+        />
+      </div>
 
               <div className="relative">
                 <textarea

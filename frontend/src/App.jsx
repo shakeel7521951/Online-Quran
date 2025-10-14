@@ -18,8 +18,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FreeTrialClass from "./components/ServicesComp/FreeTrialClass";
 
-// Dashboard
-
+// Dashboard (old)
 import { Dashboard } from "./DashboardTest/Dashboard";
 import { Users } from "./DashboardTest/Users";
 import { Tutors } from "./DashboardTest/Tutors";
@@ -29,7 +28,7 @@ import { Settings } from "./DashboardTest/Settings";
 import Sidebar from "./DashboardTest/common/sidebar";
 import NavbarTest from "./DashboardTest/common/navbar";
 
-// new dashboard imports
+// New Dashboard
 import DashSidebar from "./Dashboard/common/DashSidebar";
 import DashNavbar from "./Dashboard/common/DashNavbar";
 import AdminSignup from "./Dashboard/common/AdminSignup";
@@ -42,11 +41,19 @@ import ReviewsPage from "./Dashboard/ReviewsPage";
 import SettingsPage from "./Dashboard/SettingsPage";
 import EnrollmentsPage from "./Dashboard/EnrollmentsPage";
 import ContactsPage from "./Dashboard/ContactsPage";
-import { useState } from "react";
 import StudentsPage from "./Dashboard/StudentsPage";
+import FeePlan from "./pages/FeePlan";
+
+import { useState } from "react";
+import Teacher from "./pages/Teacher";
+import NoraaniQaida from "./components/CoursesLine/NoraniQaida";
+import Course from "./pages/Course";
+import MadaniQaida from "./components/CoursesLine/MadaniQaida";
+import NazraQuran from "./components/CoursesLine/NazraQuran";
+
 // ===== Layouts =====
 const MainLayout = () => (
-  <div>
+  <div className="overflow-hidden">
     <Navbar />
     <Outlet />
     <Footer />
@@ -54,7 +61,7 @@ const MainLayout = () => (
 );
 
 const AdminLayout = () => (
-  <div className="flex min-h-screen">
+  <div className="overflow-hidden flex min-h-screen">
     <Sidebar />
     <div className="flex-1 w-full flex flex-col">
       <NavbarTest />
@@ -65,12 +72,13 @@ const AdminLayout = () => (
   </div>
 );
 
-// dashboard layout new
+// ===== New Dashboard Layout =====
 const DashboardLayout = () => {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false); // desktop collapse
+
   return (
-    <div>
+    <div className="overflow-hidden">
       <DashSidebar
         open={open}
         setOpen={setOpen}
@@ -99,6 +107,12 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/services", element: <Services /> },
       { path: "/about", element: <About /> },
+      { path: "/course", element: <Course /> },
+      { path: "/courses/norani-qaida", element: <NoraaniQaida /> },
+      { path: "/courses/madni-qaida", element: <MadaniQaida /> },
+      { path: "/courses/nazra-quran", element: <NazraQuran /> },
+      { path: "/feeplan", element: <FeePlan/> },
+      { path: "/teachers", element: <Teacher/> },
       { path: "/contact", element: <Contact /> },
     ],
   },
@@ -130,7 +144,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    // new dashboard layout
     path: "/dashboard",
     element: (
       <AdminRoute>
@@ -155,7 +168,11 @@ const router = createBrowserRouter([
 
 // ===== App =====
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <div className="overflow-hidden">
+      <RouterProvider router={router} />
+    </div>
+  );
 }
 
 export default App;
