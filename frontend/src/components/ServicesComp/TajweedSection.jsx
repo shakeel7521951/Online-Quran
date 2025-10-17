@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { 
-  FaBook, 
-  FaRoute, 
-  FaMicrophone, 
+import {
+  FaBook,
+  FaRoute,
+  FaMicrophone,
   FaClipboardCheck,
   FaStar,
   FaPlayCircle,
@@ -53,14 +53,14 @@ export default function TajweedSection() {
 
   return (
     <section id="TajweedSection" className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800 relative">
-      
+
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.4'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
       }}></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -82,7 +82,7 @@ export default function TajweedSection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          
+
           {/* Left Side - Image with Enhanced Design */}
           <motion.div
             initial={{ opacity: 0, x: -60 }}
@@ -92,26 +92,26 @@ export default function TajweedSection() {
             className="relative order-2 lg:order-1"
           >
             <div className="relative rounded-2xl overflow-hidden group">
-  {/* Image */}
-  <img
-    src="https://images.pexels.com/photos/33562907/pexels-photo-33562907.jpeg"
-    alt="Tajweed Lessons"
-    className="w-full h-[400px] lg:h-[500px] object-cover transform group-hover:scale-105 transition duration-700"
-  />
+              {/* Image */}
+              <img
+                src="https://images.pexels.com/photos/33562907/pexels-photo-33562907.jpeg"
+                alt="Tajweed Lessons"
+                className="w-full h-[400px] lg:h-[500px] object-cover transform group-hover:scale-105 transition duration-700"
+              />
 
-  {/* Overlay Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
-  {/* Decorative Border */}
-  {/* <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-2xl transform rotate-1 scale-95 opacity-60"></div> */}
+              {/* Decorative Border */}
+              {/* <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-2xl transform rotate-1 scale-95 opacity-60"></div> */}
 
-  {/* Shine Effect */}
-  <div className="absolute inset-0 overflow-hidden rounded-2xl">
-    <div className="shine"></div>
-  </div>
+              {/* Shine Effect */}
+              <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                <div className="shine"></div>
+              </div>
 
-  {/* Shine Animation CSS */}
-  <style jsx>{`
+              {/* Shine Animation CSS */}
+              <style jsx>{`
     .shine {
       position: absolute;
       top: -100%;
@@ -138,7 +138,7 @@ export default function TajweedSection() {
       }
     }
   `}</style>
-</div>
+            </div>
 
 
             {/* Stats Cards */}
@@ -187,12 +187,12 @@ export default function TajweedSection() {
                 >
                   {/* Main Card */}
                   <div className="relative bg-gradient-to-r from-black/40 to-gray-900/40 rounded-xl p-6 border border-[#D4AF37]/30 backdrop-blur-sm hover:border-[#D4AF37]/60 hover:shadow-xl transition-all duration-300 overflow-hidden">
-                    
+
                     {/* Animated Background Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
+
                     <div className="relative z-10 flex items-start gap-4">
-                      
+
                       {/* Icon Container */}
                       <div className="flex-shrink-0">
                         <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
