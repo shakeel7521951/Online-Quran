@@ -50,6 +50,7 @@ import NoraaniQaida from "./components/CoursesLine/NoraniQaida";
 import Course from "./pages/Course";
 import MadaniQaida from "./components/CoursesLine/MadaniQaida";
 import NazraQuran from "./components/CoursesLine/NazraQuran";
+import TajweedSection from "./components/ServicesComp/TajweedSection";
 
 // ===== Layouts =====
 const MainLayout = () => (
@@ -72,7 +73,6 @@ const AdminLayout = () => (
   </div>
 );
 
-// ===== New Dashboard Layout =====
 const DashboardLayout = () => {
   const [open, setOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false); // desktop collapse
@@ -114,6 +114,7 @@ const router = createBrowserRouter([
       { path: "/feeplan", element: <FeePlan/> },
       { path: "/teachers", element: <Teacher/> },
       { path: "/contact", element: <Contact /> },
+      { path: "/tajweed", element: <TajweedSection /> },
     ],
   },
   { path: "/login", element: <Login /> },

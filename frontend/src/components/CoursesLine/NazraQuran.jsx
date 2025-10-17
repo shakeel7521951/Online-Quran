@@ -1,9 +1,12 @@
 import React from 'react'
+import NazraHeader from './NazraQuran/NazraHeader'
+import DetailSection from './NazraQuran/DetailSection'
 
 const NazraQuran = () => {
   return (
-    <div>
-      <h1>hello</h1>
+    <div >
+      <NazraHeader/>
+      <DetailSection/>
     </div>
   )
 }

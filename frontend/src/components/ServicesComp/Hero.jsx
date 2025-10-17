@@ -36,7 +36,7 @@ export default function Hero() {
       desc: "Master the art of Tajweed with guided lessons and practice.",
       img: "https://i.ytimg.com/vi/kcUB97nEFKA/hq720.jpg",
       action: "TajweedSection",
-      icon: FaMicrophone
+      icon: FaMicrophone, link: '/tajweed'
     },
     {
       title: "Quran Memorization (Hifz)",
@@ -254,7 +254,7 @@ export default function Hero() {
                     data-aos-delay={index * 100}
                   >
                     {/* Icon Badge */}
-                    <div className="absolute -top-4 left-6 z-10">
+                    <div className="absolute top-1 right-2 z-10">
                       <div className="flex items-center justify-center w-12 h-12 bg-[#D4AF37] rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <IconComponent className="text-white text-xl" />
                       </div>
@@ -321,12 +321,12 @@ export default function Hero() {
                         {service.desc}
                       </p>
 
-                      <Link to="/contact">
+                      <Link to={service.link ? service.link : "/contact"}>
                         <button
                           onClick={() => handleAction(service.action)}
                           className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-white font-semibold rounded-lg hover:from-[#B8941F] hover:to-[#D4AF37] transition-all duration-300 group/btn"
                         >
-                          Explore Service
+                          Explore more
                           <FaArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                         </button>
                       </Link>
