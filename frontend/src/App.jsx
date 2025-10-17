@@ -50,7 +50,10 @@ import NoraaniQaida from "./components/CoursesLine/NoraniQaida";
 import Course from "./pages/Course";
 import MadaniQaida from "./components/CoursesLine/MadaniQaida";
 import NazraQuran from "./components/CoursesLine/NazraQuran";
+import NamazDua from "./components/CoursesLine/NamazDua";
+import BasicIslamic from "./components/CoursesLine/BasicIslamic";
 import TajweedSection from "./components/ServicesComp/TajweedSection";
+import ScienceObligatory from "./components/CoursesLine/ScienceObligatory";
 
 // ===== Layouts =====
 const MainLayout = () => (
@@ -111,6 +114,9 @@ const router = createBrowserRouter([
       { path: "/courses/norani-qaida", element: <NoraaniQaida /> },
       { path: "/courses/madni-qaida", element: <MadaniQaida /> },
       { path: "/courses/nazra-quran", element: <NazraQuran /> },
+      { path: "/courses/namaz", element: <NamazDua /> },
+      { path: "/courses/basic-islamic-knowledge", element: <BasicIslamic/> },
+      { path: "/courses/obligatory-science", element: <ScienceObligatory/> },
       { path: "/feeplan", element: <FeePlan/> },
       { path: "/teachers", element: <Teacher/> },
       { path: "/contact", element: <Contact /> },
