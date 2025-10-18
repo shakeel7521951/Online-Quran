@@ -54,6 +54,7 @@ import NamazDua from "./components/CoursesLine/NamazDua";
 import BasicIslamic from "./components/CoursesLine/BasicIslamic";
 import TajweedSection from "./components/ServicesComp/TajweedSection";
 import ScienceObligatory from "./components/CoursesLine/ScienceObligatory";
+import QuranMemorization from "./components/ServicesComp/QuranMemorization";
 
 // ===== Layouts =====
 const MainLayout = () => (
@@ -121,6 +122,7 @@ const router = createBrowserRouter([
       { path: "/teachers", element: <Teacher/> },
       { path: "/contact", element: <Contact /> },
       { path: "/tajweed", element: <TajweedSection /> },
+      { path: "/courses/quran-memorization", element: <QuranMemorization /> },
     ],
   },
   { path: "/login", element: <Login /> },
