@@ -57,13 +57,9 @@ const Navbar = () => {
     setMenu(false);
   };
 
-  // Close dropdown if click outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
         setNestedDropdownOpen(false);
       }
@@ -75,23 +71,24 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 left-0 w-full z-50 bg-gradient-to-r font-serif from-[#ebc693] via-[#B49762] to-[#A97635] shadow-md">
       <div className="flex justify-between items-center max-w-7xl mx-auto py-3 px-4 sm:px-8">
-        {/* Logo */}
-        <div className="flex items-center gap-2 lg:gap-3">
+
+        {/* Logo and Title */}
+        <div className="flex items-center gap-2 sm:gap-3">
           <Link to="/" className="flex items-center">
             <img
-              className="h-14 w-auto rounded-lg shadow-md border border-white/70 object-contain flex-shrink-0"
+              className="h-12 sm:h-14 w-auto rounded-lg shadow-md border border-white/70 object-contain flex-shrink-0"
               src={hafix1}
               alt="logo"
             />
           </Link>
-          <h1 className="text-2xl lg:text-3xl font-semibold text-amber-50 tracking-wide drop-shadow-md">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-amber-50 tracking-wide drop-shadow-md whitespace-nowrap">
             القرآن أونلاين
           </h1>
         </div>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:block relative">
-          <ul className="flex gap-6 text-sm font-medium text-white relative">
+        {/* Desktop Navigation (visible for large screens) */}
+        <div className="hidden lg:block relative">
+          <ul className="flex gap-5 text-[15px] font-medium text-white relative">
             {navItems.map((item) => (
               <li
                 key={item.id}
@@ -102,7 +99,7 @@ const Navbar = () => {
               >
                 <Link
                   to={item.path}
-                  className="px-3 py-2 rounded-lg text-xl transition-colors duration-200 hover:bg-white/15 hover:backdrop-blur-sm"
+                  className="px-3 py-2 rounded-lg text-lg transition-all duration-300 hover:bg-white/20 hover:backdrop-blur-sm hover:scale-105"
                 >
                   {item.name}
                 </Link>
@@ -110,7 +107,7 @@ const Navbar = () => {
                 {/* Dropdown for Courses */}
                 {item.name === "Courses" && dropdownOpen && (
                   <div
-                    className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 transition-all duration-300"
+                    className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50"
                     onMouseEnter={() => setDropdownOpen(true)}
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
@@ -159,7 +156,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/dashboard"
-                  className="px-3 py-2 rounded-lg transition-colors duration-200 hover:bg-white/15 hover:backdrop-blur-sm"
+                  className="px-3 py-2 rounded-lg text-lg hover:bg-white/20 hover:backdrop-blur-sm hover:scale-105 transition-all"
                 >
                   Dashboard
                 </Link>
@@ -168,15 +165,15 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Profile Circle (Desktop) */}
-        <div className="hidden md:block">
+        {/* Profile (visible on lg and above) */}
+        <div className="hidden lg:block">
           <ProfileCircle user={user} setUser={setUser} />
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button (visible below lg) */}
         <button
           onClick={() => setMenu(!menu)}
-          className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition"
+          className="lg:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-all"
         >
           {menu ? <RxCross1 size={22}/> : <AiOutlineMenuFold size={22} />}
         </button>
@@ -184,14 +181,14 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {menu && (
-        <div className="md:hidden bg-gradient-to-b from-[#8B6914]/95 to-[#5C4510]/95 backdrop-blur-md shadow-lg">
+        <div className="lg:hidden bg-gradient-to-b from-[#8B6914]/95 to-[#5C4510]/95 backdrop-blur-md shadow-lg">
           <div className="flex flex-col items-center py-6 px-6 gap-4">
             <ul className="flex flex-col gap-2 w-full text-center text-white font-semibold">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <Link
                     to={item.path}
-                    className="block px-3 py-2 rounded-lg hover:bg-white/15 transition"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/15 transition-all"
                     onClick={() => setMenu(false)}
                   >
                     {item.name}
@@ -202,7 +199,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/dashboard"
-                    className="block px-3 py-2 rounded-lg hover:bg-white/15 transition"
+                    className="block px-3 py-2 rounded-lg hover:bg-white/15 transition-all"
                     onClick={() => setMenu(false)}
                   >
                     Dashboard
@@ -217,14 +214,14 @@ const Navbar = () => {
                   setMenu(false);
                   navigate("/login");
                 }}
-                className="mt-6 w-full py-2 bg-white text-[#5C4510] rounded-lg font-bold shadow-md hover:bg-gray-100 transition"
+                className="mt-6 w-full py-2 bg-white text-[#5C4510] rounded-lg font-bold shadow-md hover:bg-gray-100 transition-all"
               >
                 Sign In
               </button>
             ) : (
               <button
                 onClick={handleSignOut}
-                className="mt-6 w-full py-2 bg-red-600 text-white rounded-lg font-bold shadow-md hover:bg-red-700 transition"
+                className="mt-6 w-full py-2 bg-red-600 text-white rounded-lg font-bold shadow-md hover:bg-red-700 transition-all"
               >
                 Sign Out
               </button>
@@ -235,4 +232,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;

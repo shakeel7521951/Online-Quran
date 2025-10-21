@@ -155,18 +155,11 @@ const NamazDua = () => {
             >
               Enroll Now
             </button>
-            <a
-              href={first}
-              download="Islamic_Notes.pdf"
-              className="px-6 py-3 rounded-full text-white font-semibold shadow-md transition-transform duration-300 bg-[#AF864C] hover:scale-105"
-            >
-              Download Notes
-            </a>
           </div>
         </div>
       </section>
 
-      {/* 🙏 NAMAZ SECTION */}
+      {/* NAMAZ SECTION */}
       <section className="py-12 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_auto_1fr] gap-12 items-center">
           <div data-aos="fade-right">
@@ -240,7 +233,7 @@ const NamazDua = () => {
         </div>
       </section>
 
-      {/* 🤲 DUA SECTION */}
+      {/* DUA SECTION */}
       <section className="py-12 px-6 relative overflow-hidden">
         <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_auto_1fr] gap-12 items-center">
           <div data-aos="fade-right" className="space-y-6">
@@ -274,7 +267,7 @@ const NamazDua = () => {
         </div>
       </section>
 
-      {/* 🪶 KALMA MODAL */}
+      {/* KALMA MODAL */}
       {selectedKalma && (
         <div
           className={`fixed inset-0 flex items-center justify-center z-50 p-4 transition-all duration-700 ${
