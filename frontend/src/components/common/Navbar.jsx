@@ -2,34 +2,32 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
-import hafix1 from "../../components/Images/Al-hafix-logo.jpeg";
+import hafix1 from "../../Images/Al-hafix-logo.jpeg";
 import ProfileCircle from "./ProfileCircle";
 
 const navItems = [
   { id: 1, name: "Home", path: "/" },
   { id: 2, name: "About", path: "/about" },
   { id: 3, name: "Services", path: "/services" },
-  { id: 4, name: "Courses", path:'/'},
+  { id: 4, name: "Courses", path: "/" },
   { id: 5, name: "Fee", path: "/feeplan" },
   { id: 6, name: "To Be Teacher", path: "/teachers" },
   { id: 7, name: "Contact", path: "/contact" },
 ];
 
-// Subcourses for the dropdown
 const quranCourses = [
   { name: "Norani Qaida Course", path: "/courses/norani-qaida" },
-  { name: "Madni Qaida", path: "/courses/madni-qaida"},
-  { name: "Nazra Quran", path: "/courses/nazra-quran"},
-  { name: "Hafiz e Quran", path: "/courses/hafiz-e-quran"},
+  { name: "Madni Qaida", path: "/courses/madni-qaida" },
+  { name: "Nazra Quran", path: "/courses/nazra-quran" },
+  { name: "Hafiz e Quran", path: "/courses/hafiz-e-quran" },
   { name: "Quran Memorization", path: "/courses/quran-memorization" },
   { name: "Quran Interpretation & Translation", path: "/courses/quran-translation" },
 ];
 
 const otherCourses = [
-  { name: "Namaz-Dua-Kalma", path: "/courses/namaz"},
+  { name: "Namaz-Dua-Kalma", path: "/courses/namaz" },
   { name: "Basic Islamic Knowledge", path: "/courses/basic-islamic-knowledge" },
   { name: "Obligatory Science Course", path: "/courses/obligatory-science" },
-  
 ];
 
 const Navbar = () => {
@@ -38,8 +36,8 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [nestedDropdownOpen, setNestedDropdownOpen] = useState(false);
 
-  const dropdownTimeout = useRef(null);
-  const nestedDropdownTimeout = useRef(null);
+  const dropdownRef = useRef(null);
+  const nestedDropdownRef = useRef(null);
 
   const navigate = useNavigate();
   const isAdmin = user?.role === "admin";
@@ -59,28 +57,20 @@ const Navbar = () => {
     setMenu(false);
   };
 
-  // Handle dropdown hover with delay
-  const handleDropdownEnter = () => {
-    clearTimeout(dropdownTimeout.current);
-    setDropdownOpen(true);
-  };
-
-  const handleDropdownLeave = () => {
-    dropdownTimeout.current = setTimeout(() => {
-      setDropdownOpen(false);
-    }, 500); // 4 seconds delay
-  };
-
-  const handleNestedEnter = () => {
-    clearTimeout(nestedDropdownTimeout.current);
-    setNestedDropdownOpen(true);
-  };
-
-  const handleNestedLeave = () => {
-    nestedDropdownTimeout.current = setTimeout(() => {
-      setNestedDropdownOpen(false);
-    }, 500); 
-  };
+  // Close dropdown if click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setDropdownOpen(false);
+        setNestedDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <nav className="sticky top-0 left-0 w-full z-50 bg-gradient-to-r font-serif from-[#ebc693] via-[#B49762] to-[#A97635] shadow-md">
@@ -100,14 +90,15 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:block">
+        <div className="hidden md:block relative">
           <ul className="flex gap-6 text-sm font-medium text-white relative">
             {navItems.map((item) => (
               <li
                 key={item.id}
                 className="relative group"
-                onMouseEnter={() => item.name === "Courses" && handleDropdownEnter()}
-                onMouseLeave={() => item.name === "Courses" && handleDropdownLeave()}
+                onMouseEnter={() => item.name === "Courses" && setDropdownOpen(true)}
+                onMouseLeave={() => item.name === "Courses" && setDropdownOpen(false)}
+                ref={item.name === "Courses" ? dropdownRef : null}
               >
                 <Link
                   to={item.path}
@@ -118,14 +109,19 @@ const Navbar = () => {
 
                 {/* Dropdown for Courses */}
                 {item.name === "Courses" && dropdownOpen && (
-                  <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 transition-all duration-300">
+                  <div
+                    className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50 transition-all duration-300"
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseLeave={() => setDropdownOpen(false)}
+                  >
                     {/* Quran Courses (Nested Dropdown) */}
                     <div
                       className="relative"
-                      onMouseEnter={handleNestedEnter}
-                      onMouseLeave={handleNestedLeave}
+                      onMouseEnter={() => setNestedDropdownOpen(true)}
+                      onMouseLeave={() => setNestedDropdownOpen(false)}
+                      ref={nestedDropdownRef}
                     >
-                      <button className="w-full text-left px-4 py-2 text-[16px] font-medium hover:bg-gray-100 text-[#0C6A4D]">
+                      <button className="w-full text-left px-4 py-2 text-[16px] font-medium hover:bg-gray-100 text-[#0C6A4D] flex justify-between items-center">
                         Quran Courses ▸
                       </button>
 
@@ -135,7 +131,7 @@ const Navbar = () => {
                             <Link
                               key={i}
                               to={course.path}
-                              className="block px-4 py-2 hover:bg-gray-100 text-[#0C6A4D]"
+                              className="block px-4 mt-1 py-2 hover:bg-gray-100 text-[#0C6A4D]"
                             >
                               {course.name}
                             </Link>
@@ -182,7 +178,7 @@ const Navbar = () => {
           onClick={() => setMenu(!menu)}
           className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition"
         >
-          {menu ? <RxCross1 size={22} /> : <AiOutlineMenuFold size={22} />}
+          {menu ? <RxCross1 size={22}/> : <AiOutlineMenuFold size={22} />}
         </button>
       </div>
 
@@ -239,5 +235,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;

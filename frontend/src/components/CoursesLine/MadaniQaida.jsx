@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import madani from "../../components/Images/madani.jpg";
+import madani from '../../Images/madani.jpg'
+import pad from '../../Images/noraniQaida.pdf'
 import { BookOpen, Globe2, MonitorCheck } from "lucide-react";
-
 const MadaniQaida = () => {
   useEffect(() => {
     AOS.init({ duration: 1200, once: true });
@@ -75,15 +75,41 @@ const MadaniQaida = () => {
 
         {/* Right Image Section */}
         <div
-          className="relative w-full md:w-1/2 lg:mt-48 overflow-hidden rounded-3xl shadow-lg group"
+          className="relative w-full md:w-1/2 flex flex-col items-center"
           data-aos="zoom-in"
         >
-          <img
-            src={madani}
-            alt="Madani Qaida Learning"
-            className="w-full h-[550px] object-cover  rounded-3xl transform transition-transform duration-700 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-40 transition-all duration-700"></div>
+          {/* Buttons Above Image */}
+          <div
+            className="flex flex-col sm:flex-row gap-6 justify-center mb-8"
+            data-aos="fade-up"
+          >
+            <button
+              className="bg-[#B08B53] text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md 
+                         hover:bg-[#09573E] hover:scale-105 transition-all duration-300 cursor-pointer"
+            >
+              Start Learning Now
+            </button>
+
+            <a
+              href={pad}
+              download
+              className="bg-[#09573E] text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md 
+                         hover:bg-[#B08B53] hover:scale-105 transition-all duration-300 cursor-pointer 
+                         flex items-center justify-center"
+            >
+              Download Qaida
+            </a>
+          </div>
+
+          {/* Quran Image */}
+          <div className="relative w-full overflow-hidden rounded-3xl shadow-lg group">
+            <img
+              src={madani}
+              alt="Madani Qaida Learning"
+              className="w-full h-[550px] object-cover rounded-3xl transform transition-transform duration-700 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-40 transition-all duration-700 rounded-3xl"></div>
+          </div>
         </div>
       </div>
 
@@ -121,7 +147,7 @@ const MadaniQaida = () => {
             <div className="flex justify-center mb-4 transition-transform duration-700 group-hover:scale-110">
               {card.icon}
             </div>
-            <h3 className="text-2xl font-semibold text-[#B08B53]  mb-3">
+            <h3 className="text-2xl font-semibold text-[#B08B53] mb-3">
               {card.title}
             </h3>
             <p className="text-gray-700 text-base leading-relaxed">
@@ -133,5 +159,4 @@ const MadaniQaida = () => {
     </section>
   );
 };
-
 export default MadaniQaida;

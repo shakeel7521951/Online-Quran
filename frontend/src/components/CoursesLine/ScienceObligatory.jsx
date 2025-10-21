@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const ScienceObligatory = () => {
   const scienceData = {
@@ -32,34 +33,68 @@ const ScienceObligatory = () => {
           "Understand the Quranic stages of human creation through modern embryology and genetic studies.",
       },
     ],
-    metrics: [
-      { value: "100+", label: "Quranic Verses", description: "Linked to science" },
-      { value: "95%", label: "Faith Enrichment", description: "Boosts conviction" },
-      { value: "80+", label: "Research Topics", description: "Faith-integrated" },
-      { value: "24/7", label: "Scholar Access", description: "Expert guidance" },
-    ],
   };
 
+  const courses = [
+    {
+      id: 1,
+      title: "1️⃣ Quranic Cosmology & Modern Physics",
+      highlight: "Understanding the Universe Through Revelation",
+      description:
+        "Dive deep into the Quranic verses that describe the cosmos — from the Big Bang to the expansion of the universe. Learn how revelation predates discovery, aligning divine guidance with astrophysical laws.",
+      duration: "8 Weeks",
+      level: "Intermediate – Advanced",
+    },
+    {
+      id: 2,
+      title: "2️⃣ The Science of Human Creation",
+      highlight: "Embryology, Genetics & the Quranic Process",
+      description:
+        "Uncover the divine precision in the stages of human creation mentioned in the Quran. This course bridges Quranic descriptions with modern embryology and molecular genetics for a holistic understanding of life.",
+      duration: "6 Weeks",
+      level: "Beginner – Intermediate",
+    },
+    {
+      id: 3,
+      title: "3️⃣ Environmental Harmony in Islam",
+      highlight: "Divine Balance Between Nature & Humanity",
+      description:
+        "Explore the Quran’s ecological wisdom — from sustainable living to the preservation of Earth’s balance. Learn how environmental science aligns with the Islamic responsibility of stewardship (Khilafah).",
+      duration: "5 Weeks",
+      level: "All Levels",
+    },
+  ];
+
   return (
-    <section className="min-h-screen py-24 relative overflow-hidden">
-      {/* Soft Glows */}
-      <div className="absolute top-20 right-40 w-96 h-96 bg-[#007A55]/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-10 left-40 w-[28rem] h-[28rem] bg-[#AF864C]/10 rounded-full blur-3xl"></div>
+    <section className="min-h-screen py-24 relative overflow-hidden bg-[#011C16]">
+      {/* Ambient Glows */}
+      <div className="absolute top-20 right-40 w-96 h-96 bg-[#0E7C5A]/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-10 left-40 w-[30rem] h-[30rem] bg-[#B18E56]/20 rounded-full blur-3xl animate-pulse"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center px-5 py-2 rounded-full border border-[#AF864C]/30 bg-[#007A55]/10 backdrop-blur-sm mb-6">
-            <span className="w-2 h-2 bg-[#AF864C] rounded-full mr-2 animate-pulse"></span>
-            <span className="text-sm font-semibold text-[#AF864C] uppercase tracking-wider">
+          <motion.div
+            className="inline-flex items-center px-5 py-2 rounded-full border border-[#B18E56]/40 bg-[#0E7C5A]/10 backdrop-blur-sm mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="w-2 h-2 bg-[#B18E56] rounded-full mr-2 animate-pulse"></span>
+            <span className="text-sm font-semibold text-[#B18E56] uppercase tracking-wider">
               Divine Knowledge Program
             </span>
-          </div>
+          </motion.div>
 
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#AF864C]">
+          <motion.h1
+            className="text-5xl md:text-6xl font-extrabold mb-6 text-[#B18E56]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
             {scienceData.title}
-          </h1>
-          <p className="text-xl text-[#C7E6D5] font-light mb-6 max-w-3xl mx-auto leading-relaxed">
+          </motion.h1>
+          <p className="text-xl text-[#CDE9D7] font-light mb-6 max-w-3xl mx-auto leading-relaxed">
             {scienceData.subtitle}
           </p>
           <p className="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed">
@@ -68,64 +103,80 @@ const ScienceObligatory = () => {
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-32">
           {scienceData.features.map((feature, i) => (
-            <div
+            <motion.div
               key={i}
-              className="group bg-[#03271E] border border-[#007A55]/30 rounded-2xl p-8 hover:shadow-[0_0_25px_rgba(0,122,85,0.2)] transition-all duration-500 hover:-translate-y-2"
+              className="group bg-[#052921] border border-[#0E7C5A]/40 rounded-2xl p-8 hover:shadow-[0_0_25px_rgba(14,124,90,0.3)] transition-all duration-500 hover:-translate-y-2"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 200 }}
             >
               <div className="text-5xl mb-4">{feature.icon}</div>
-              <h3 className="text-2xl font-semibold text-[#AF864C] mb-3">
+              <h3 className="text-2xl font-semibold text-[#B18E56] mb-3">
                 {feature.title}
               </h3>
               <p className="text-gray-300 text-sm leading-relaxed">
                 {feature.description}
               </p>
-              <div className="w-0 h-1 mt-6 bg-[#007A55] group-hover:w-full transition-all duration-500 rounded-full"></div>
-            </div>
+              <div className="w-0 h-1 mt-6 bg-[#0E7C5A] group-hover:w-full transition-all duration-500 rounded-full"></div>
+            </motion.div>
           ))}
         </div>
 
-        {/* Quranic Quote */}
-        <div className="bg-[#03271E] border border-[#AF864C]/20 rounded-2xl p-10 text-center mb-20 max-w-5xl mx-auto shadow-lg shadow-[#007A55]/10">
-          <p className="text-lg md:text-xl text-gray-200 italic leading-relaxed">
-            “Indeed, in the creation of the heavens and the earth and the alternation of the
-            night and the day are signs for those of understanding.”
-            <br />
-            <span className="text-[#AF864C] font-semibold">
-              — Surah Aal-e-Imran (3:190)
-            </span>
+        {/* --- New Section: Featured Courses --- */}
+        <motion.div
+          className="text-center max-w-6xl mx-auto mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-[#B18E56] mb-10">
+            Featured Courses in Quranic Science
+          </h2>
+          <p className="text-gray-300 text-lg max-w-3xl mx-auto leading-relaxed mb-16">
+            Unlock the depth of divine wisdom through science — where revelation
+            inspires exploration, and knowledge strengthens faith. Each course
+            is carefully designed for thinkers, seekers, and believers who wish
+            to merge faith with factual understanding.
           </p>
-        </div>
 
-        {/* Metrics */}
-        <div className="bg-[#03271E] border border-[#007A55]/30 rounded-2xl p-10 mb-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-            {scienceData.metrics.map((metric, index) => (
-              <div key={index}>
-                <h3 className="text-4xl md:text-5xl font-extrabold text-[#AF864C] mb-2">
-                  {metric.value}
+          <div className="space-y-14 text-left">
+            {courses.map((course) => (
+              <motion.div
+                key={course.id}
+                className="border-l-4 border-[#B18E56] pl-6 hover:pl-8 transition-all duration-500"
+                whileHover={{ scale: 1.02 }}
+              >
+                <h3 className="text-2xl font-bold text-[#B18E56] mb-2">
+                  {course.title}
                 </h3>
-                <h4 className="text-lg font-semibold text-white">
-                  {metric.label}
+                <h4 className="text-lg text-[#CDE9D7] italic mb-3">
+                  {course.highlight}
                 </h4>
-                <p className="text-sm text-gray-400">{metric.description}</p>
-              </div>
+                <p className="text-gray-300 text-base leading-relaxed mb-3">
+                  {course.description}
+                </p>
+                <div className="flex flex-wrap gap-6 text-sm text-gray-400">
+                  <span className="bg-[#0E7C5A]/10 px-4 py-1 rounded-full border border-[#0E7C5A]/40">
+                    Duration: {course.duration}
+                  </span>
+                  <span className="bg-[#B18E56]/10 px-4 py-1 rounded-full border border-[#B18E56]/40">
+                    Level: {course.level}
+                  </span>
+                </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* CTA Buttons */}
-        <div className="text-center">
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <button className="bg-[#007A55] text-white font-semibold py-4 px-10 rounded-full transition-all duration-300 hover:bg-[#006247] hover:scale-105 shadow-md hover:shadow-[#007A55]/30">
-              Join the Course
-            </button>
-
-            <button className="border border-[#AF864C]/40 text-[#AF864C] font-semibold py-4 px-10 rounded-full hover:bg-[#AF864C]/10 hover:border-[#AF864C]/70 transition-all duration-300 hover:scale-105">
-              Learn More
-            </button>
-          </div>
+        {/* Enroll Button */}
+        <div className="text-center mt-20">
+          <motion.button
+            className="bg-[#0E7C5A] cursor-pointer text-white font-semibold py-4 px-12 rounded-full shadow-md hover:shadow-[#B18E56]/30 transition-all duration-300 hover:scale-105"
+            whileTap={{ scale: 0.95 }}
+          >
+            Enroll Now & Begin Your Journey 
+          </motion.button>
         </div>
       </div>
     </section>

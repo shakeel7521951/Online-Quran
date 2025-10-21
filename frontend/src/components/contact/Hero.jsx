@@ -19,6 +19,8 @@ import {
   FaMobileAlt,
   FaCheckCircle,
   FaSpinner,
+  FaBookOpen,
+  FaBook,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -30,6 +32,7 @@ const ContactHero = () => {
     email: "",
     message: "",
   });
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
   const [formErrors, setFormErrors] = useState({});
@@ -114,6 +117,7 @@ const ContactHero = () => {
           message: "",
         });
         setFormErrors({});
+        setSelectedCourse("");
       }
     } catch (error) {
       console.error("Contact form submission error:", error);
@@ -152,19 +156,19 @@ const ContactHero = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-amber-100 relative overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Background Decorative Elements */}
-      <div className="absolute top-0 left-0 w-80 h-80 bg-amber-200/20 rounded-full -translate-x-40 -translate-y-40"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-300/20 rounded-full translate-x-48 translate-y-48"></div>
+      <div className="absolute top-0 left-0 w-80 h-80 bg-emerald-200/20 rounded-full -translate-x-40 -translate-y-40"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-200/20 rounded-full translate-x-48 translate-y-48"></div>
 
       {/* Islamic Pattern */}
-      <div
+      {/* <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C50 8.954 59.954-1 71-1S92 8.954 92 20S82.046 41 71 41 50 31.046 50 20zm0 60c0-11.046 9.954-21 21-21s21 9.954 21 21-9.954 21-21 21-21-9.954-21-21z' fill='%23D4AF37' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20C50 8.954 59.954-1 71-1S92 8.954 92 20S82.046 41 71 41 50 31.046 50 20zm0 60c0-11.046 9.954-21 21-21s21 9.954 21 21-9.954 21-21 21-21-9.954-21-21z' fill='%23007A55' fill-rule='evenodd'/%3E%3C/svg%3E")`,
           backgroundSize: "120px",
         }}
-      ></div>
+      ></div> */}
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header Section */}
@@ -178,14 +182,14 @@ const ContactHero = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full shadow-lg mb-6"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-full shadow-lg mb-6"
           >
             <FaQuran className="text-xl" />
             <span className="font-semibold">Start Your Quran Journey</span>
           </motion.div>
 
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-            Contact <span className="text-amber-600">Our Academy</span>
+            Contact <span className="text-emerald-600">Our Academy</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Get in touch with our certified Quran teachers and start your
@@ -205,15 +209,15 @@ const ContactHero = () => {
             <div className="grid gap-6">
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-amber-500"
+                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-emerald-500"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
                     <FaPhone className="text-white text-xl" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">Call Us</h3>
-                    <p className="text-amber-600 font-semibold text-lg">
+                    <p className="text-emerald-600 font-semibold text-lg">
                       +997 979 797
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -228,7 +232,7 @@ const ContactHero = () => {
                 className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-green-500"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
                     <FaWhatsapp className="text-white text-xl" />
                   </div>
                   <div>
@@ -250,7 +254,7 @@ const ContactHero = () => {
                 className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-blue-500"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
                     <FaEnvelope className="text-white text-xl" />
                   </div>
                   <div>
@@ -302,7 +306,7 @@ const ContactHero = () => {
           >
             {/* Form Header */}
             <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="w-20 h-20 bg-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaGraduationCap className="text-white text-3xl" />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
@@ -343,7 +347,7 @@ const ContactHero = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 ${
+                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
                       formErrors.name
                         ? "border-red-300 bg-red-50"
                         : "border-gray-200"
@@ -364,7 +368,7 @@ const ContactHero = () => {
                     name="fatherName"
                     value={formData.fatherName}
                     onChange={handleInputChange}
-                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 ${
+                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
                       formErrors.fatherName
                         ? "border-red-300 bg-red-50"
                         : "border-gray-200"
@@ -386,7 +390,7 @@ const ContactHero = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 ${
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
                     formErrors.phone
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
@@ -407,7 +411,7 @@ const ContactHero = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 ${
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
                     formErrors.email
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
@@ -420,37 +424,73 @@ const ContactHero = () => {
                   </p>
                 )}
               </div>
- <div className="relative">
-        <FaGlobe className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-500 text-lg" />
-        <input
-          type="text"
-          name="country"
-          placeholder="Enter your country"
-          className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 
-          focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent 
-          transition-all duration-300 hover:shadow-md hover:bg-amber-50"
-        />
-      </div>
+              <div>
+                {/* ===== Country Input ===== */}
+<div className="relative">
+  <FaGlobe className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+  <input
+    type="text"
+    name="country"
+    placeholder="Enter your country"
+    className="w-full pl-12 pr-4 px-4 py-3 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 h-16" // ✅ Half height
+  />
+</div>
 
-      {/* ===== Time Input ===== */}
-      <div className="relative">
-        <FaClock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-amber-500 text-lg" />
-        <input
-          type="time"
-          name="preferredTime"
-          placeholder="Enter your time"
-          className="w-full pl-12 pr-4 py-4 bg-white border border-gray-200 rounded-xl text-gray-700 placeholder:text-gray-400 
-          focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent 
-          transition-all duration-300 hover:shadow-md hover:bg-amber-50"
-        />
-      </div>
+{/* ===== Time Input ===== */}
+<div className="relative mt-6">
+  <FaClock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+  <input
+    type="time"
+    name="preferredTime"
+    placeholder="Enter your time"
+    className="w-full pl-12 pr-4 px-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 h-32 resize-none"
+  />
+</div>
+
+              </div>
+
+              {/* Course Selection */}
+              <div className="relative">
+                <FaBookOpen className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+                <select
+                  name="course"
+                  value={selectedCourse}
+                  onChange={(e) => setSelectedCourse(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
+                >
+                  <option value="">Select your course</option>
+                  <option value="quran"> Quran Courses</option>
+                  <option value="namaz">Namaz – Dua – Kalma</option>
+                  <option value="islamic"> Basic Islamic Knowledge</option>
+                  <option value="science"> Obligatory Science Course</option>
+                </select>
+              </div>
+
+              {/* Show Quran subcourses only when Quran selected */}
+              {selectedCourse === "quran" && (
+                <div className="relative">
+                  <FaBook className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+                  <select
+                    name="quranSubCourse"
+                    className="w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
+                  >
+                    <option value="">Select a Quran course</option>
+                    <option value="noorani">Noorani Qaida</option>
+                    <option value="madni">Madni Qaida</option>
+                    <option value="nazra">Nazra Quran</option>
+                    <option value="hafiz">Hafiz-e-Quran</option>
+                    <option value="memorization">Quran Memorization</option>
+                    <option value="translation">Quran Interpretation & Translation</option>
+                  </select>
+                </div>
+              )}
 
               <div className="relative">
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300 h-32 resize-none ${
+                  className={`w-full px-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 h-32 resize-none ${
                     formErrors.message
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
@@ -470,7 +510,7 @@ const ContactHero = () => {
                 className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 text-lg ${
                   isSubmitting
                     ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-xl text-white"
+                    : "bg-emerald-600 hover:bg-emerald-700 hover:shadow-xl text-white"
                 }`}
               >
                 {isSubmitting ? (
@@ -490,33 +530,12 @@ const ContactHero = () => {
             {/* Trust Badge */}
             <div className="text-center mt-6">
               <div className="inline-flex items-center gap-2 text-sm text-gray-600">
-                <FaShieldAlt className="text-green-500" />
+                <FaShieldAlt className="text-emerald-500" />
                 <span>Your information is 100% secure and confidential</span>
               </div>
             </div>
           </motion.div>
         </div>
-
-        {/* Bottom CTA */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-16"
-        >
-          <div className="bg-gradient-to-r from-amber-500 to-amber-600 rounded-2xl p-8 text-white shadow-2xl">
-            <h3 className="text-2xl font-bold mb-2">Ready to Start Your Quran Journey?</h3>
-            <p className="text-amber-100 mb-4">Join thousands of satisfied students learning Quran online</p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <button className="px-8 py-3 bg-white text-amber-600 font-bold rounded-xl hover:bg-gray-100 transition-colors duration-300">
-                Free Trial Class
-              </button>
-              <button className="px-8 py-3 border-2 border-white text-white font-bold rounded-xl hover:bg-white hover:text-amber-600 transition-colors duration-300">
-                View Courses
-              </button>
-            </div>
-          </div>
-        </motion.div> */}
       </div>
     </div>
   );
