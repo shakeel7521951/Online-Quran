@@ -159,11 +159,7 @@ const BasicIslamic = () => {
                     </div>
                 </div>
 
-                {/* Divider Line */}
-                <div
-                    className="w-[3px] h-28 mx-auto bg-[#007A55] rounded-full shadow-[0_0_10px_rgba(0,122,85,0.5)]"
-                    data-aos="zoom-in"
-                ></div>
+               
 
                 {/* Understanding Islam Section */}
                 <div

@@ -16,42 +16,64 @@ const Fee = () => {
   const [planType, setPlanType] = useState("Weekly");
   const [selfPlan, setSelfPlan] = useState(null);
 
+  // Base plans in PKR
   const plans = [
     { name: "Basic", classesPerWeek: 3, totalClasses: 12, fee: 6000 },
     { name: "Premium", classesPerWeek: 5, totalClasses: 20, fee: 9000 },
   ];
 
-  const conversionRates = { PKR: 1, USD: 0.0036, GBP: 0.0028 };
+  // Conversion rates: how many PKR equals 1 unit of currency
+  const conversionRates = { PKR: 1, USD: 280, GBP: 350 };
   const symbols = { PKR: "PKR", USD: "$", GBP: "£" };
-  const convertFee = (fee) => (fee * conversionRates[currency]).toFixed(2);
 
-  // 🧩 Handle Submit Self Plan
+  const convertFee = (feeInPKR) => {
+    const rate = conversionRates[currency] || 1;
+    return (Number(feeInPKR) / rate).toFixed(2);
+  };
+
   const handleSubmitPlan = () => {
-    if (!country || !customFee) {
-      toast.error("⚠️ Please fill all fields before submitting!");
+    const enteredValue = parseFloat(customFee);
+
+    if (!country.trim() || isNaN(enteredValue)) {
+      toast.error("Please enter a valid country and fee amount.");
       return;
     }
 
-    if (currency === "USD" && customFee < 35) {
-      toast.warning("❌ Minimum fee must be $35 or more!");
+    if (enteredValue <= 0) {
+      toast.error("Fee must be greater than 0.");
       return;
     }
 
-    // Calculate weekly fee if planType is Monthly
-    let calculatedFee = Number(customFee);
+    // Convert user-entered value (in current currency) → PKR
+    const feeInPKR = enteredValue * (conversionRates[currency] || 1);
+
+    // Convert PKR → USD equivalent
+    const feeInUSD = feeInPKR / conversionRates["USD"];
+
+    if (feeInUSD < 35) {
+      toast.warning("Minimum fee must be at least $35 (USD equivalent).");
+      return;
+    }
+
+    // Adjust if monthly plan
+    let weeklyFeePKR = feeInPKR;
     if (planType === "Monthly") {
-      calculatedFee = (customFee / 4).toFixed(2); // divide by 4 weeks
+      weeklyFeePKR = feeInPKR / 4;
     }
+
+    const finalFee = Number(weeklyFeePKR.toFixed(2));
 
     setSelfPlan({
       name: "Self Plan",
       country,
       planType,
-      fee: Number(calculatedFee),
+      baseFeePKR: finalFee,
+      originalEntered: enteredValue,
+      originalCurrency: currency,
     });
 
     toast.success(
-      `✅ You have successfully selected a ${planType} Self Plan with a fee of ${symbols[currency]}${calculatedFee}`
+      `✅ Self plan added successfully! (USD equivalent: $${feeInUSD.toFixed(2)})`
     );
 
     setShowModal(false);
@@ -61,27 +83,44 @@ const Fee = () => {
   };
 
   const handleEnroll = (planName) => {
-    toast.success(`🎉 You selected the ${planName} plan!`);
+    toast.success(`You selected the ${planName} plan.`);
+  };
+
+  const getSelfPlanFee = () => {
+    if (!selfPlan) return null;
+    return (selfPlan.baseFeePKR / (conversionRates[currency] || 1)).toFixed(2);
   };
 
   return (
-    <div className="min-h-screen bg-[#F9F9F6] py-12 px-6">
-      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
+    <div className="min-h-screen py-14 px-6">
+      <ToastContainer
+        position="top-center"
+        autoClose={2200}
+        hideProgressBar
+        closeOnClick
+        theme="colored"
+        toastStyle={{
+          width: "340px",
+          fontSize: "15px",
+          fontWeight: 500,
+          borderRadius: "10px",
+        }}
+      />
 
-      {/* Header */}
+      {/* Header Section */}
       <div className="text-center mb-12" data-aos="fade-down">
-        <h1 className="text-5xl font-extrabold text-[#0E7C5A] mb-4">
+        <h1 className="text-5xl font-extrabold text-[#0E7C5A] mb-3 tracking-wide">
           Quran Learning Fee Structure
         </h1>
-        <p className="text-gray-700 text-lg max-w-3xl mx-auto leading-relaxed">
-          Learn Quran with certified tutors at affordable rates. Our fee plan
-          ensures quality Islamic education from the comfort of your home.
+        <p className="text-gray-700 text-lg max-w-2xl mx-auto leading-relaxed">
+          Learn Quran with certified tutors at affordable rates. Flexible plans
+          designed for every student across the world.
         </p>
       </div>
 
-      {/* Fee Card */}
+      {/* Hero Section */}
       <div
-        className="max-w-5xl mx-auto bg-white border border-[#AF864C]/30 rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row items-center p-8 gap-8 mb-12"
+        className="max-w-6xl mx-auto bg-white border border-[#AF864C]/30 rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row items-center p-8 gap-8 mb-12"
         data-aos="zoom-in"
       >
         <div className="flex-1 space-y-5" data-aos="fade-right">
@@ -89,18 +128,15 @@ const Fee = () => {
             Affordable Plans for Every Family
           </h2>
           <p className="text-gray-700 leading-relaxed text-lg">
-            Choose between flexible learning schedules — 3 or 5 days per week —
-            with live 1-on-1 Quran classes. Families enrolling multiple children
-            receive a{" "}
-            <span className="font-semibold text-[#0E7C5A]">
-              20% sibling discount
-            </span>
-            .
+            Choose between flexible schedules — 3 or 5 days per week — with live
+            1-on-1 Quran classes. Families enrolling multiple children receive a{" "}
+            <span className="font-semibold text-[#0E7C5A]">20% sibling discount</span>.
           </p>
+
           <ul className="list-disc pl-6 space-y-1 text-gray-700 text-base">
-            <li>Live 1-on-1 sessions with qualified Quran tutors</li>
-            <li>Flexible timing — learn from anywhere in the world</li>
-            <li>Secure payments via Debit Card, Credit Card, or PayPal</li>
+            <li>Live one-on-one Quran sessions</li>
+            <li>Flexible timings — learn from anywhere</li>
+            <li>Secure payments via Debit, Credit, or PayPal</li>
           </ul>
 
           <div className="pt-4 flex gap-4">
@@ -111,7 +147,9 @@ const Fee = () => {
               Enroll Now
             </button>
             <button
-              onClick={() => toast.info("📞 Contact us for a free trial session!")}
+              onClick={() =>
+                toast.info("Contact us to schedule a free trial session.")
+              }
               className="border border-[#AF864C] text-[#AF864C] hover:bg-[#AF864C] hover:text-white font-semibold px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg"
             >
               Contact Us
@@ -123,27 +161,23 @@ const Fee = () => {
           <img
             src="https://images.pexels.com/photos/7621144/pexels-photo-7621144.jpeg"
             alt="Online Quran Class"
-            className="rounded-2xl shadow-lg w-full h-[300px] object-cover scale-[1.05]"
+            className="rounded-2xl shadow-lg w-full h-[320px] object-cover"
           />
         </div>
       </div>
 
-      {/* Currency Selector */}
+      {/* Currency Buttons */}
       <div
-        className="max-w-5xl mx-auto flex justify-center gap-4 mb-6"
+        className="max-w-6xl mx-auto flex flex-wrap justify-center gap-4 mb-6"
         data-aos="fade-up"
       >
         {["PKR", "USD", "GBP"].map((cur) => (
           <button
             key={cur}
             onClick={() => setCurrency(cur)}
-            className={`px-6 py-2 cursor-pointer rounded-lg font-semibold border transition-all ${
+            className={`px-6 py-2 rounded-lg font-semibold border transition-all ${
               currency === cur
-                ? cur === "USD"
-                  ? "bg-[#AF864C] text-white border-[#AF864C]"
-                  : cur === "GBP"
-                  ? "bg-[#6B705C] text-white border-[#6B705C]"
-                  : "bg-[#0E7C5A] text-white border-[#0E7C5A]"
+                ? "bg-[#0E7C5A] text-white border-[#0E7C5A]"
                 : "border-[#0E7C5A] text-[#0E7C5A] hover:bg-[#0E7C5A] hover:text-white"
             }`}
           >
@@ -151,20 +185,17 @@ const Fee = () => {
           </button>
         ))}
 
-        {/* Blinking Button */}
         <button
           onClick={() => setShowModal(true)}
-          className="relative px-6 py-2 rounded-lg font-semibold cursor-pointer border border-[#0E7C5A] 
-            bg-[#0E7C5A] text-white shadow-md hover:bg-[#0b6549] hover:shadow-lg 
-            transition-all duration-300 [animation:blink_1s_infinite]"
+          className="px-6 py-2 rounded-lg font-semibold border border-[#AF864C] bg-[#AF864C] text-white shadow-md hover:bg-[#946D3A] hover:shadow-lg transition-all duration-300"
         >
-          Choose your Final Fee
+          + Create Your Plan
         </button>
       </div>
 
       {/* Fee Table */}
       <div
-        className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg border border-[#AF864C]/30 overflow-hidden"
+        className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg border border-[#AF864C]/30 overflow-hidden"
         data-aos="fade-up"
       >
         <div className="w-full overflow-x-auto">
@@ -180,7 +211,6 @@ const Fee = () => {
               </tr>
             </thead>
             <tbody>
-              {/* If no custom plan, show default plans */}
               {!selfPlan &&
                 plans.map((plan, index) => (
                   <tr
@@ -190,9 +220,7 @@ const Fee = () => {
                     <td className="py-4 font-semibold text-gray-800">
                       {plan.name}
                     </td>
-                    <td className="py-4 text-gray-600">
-                      {plan.classesPerWeek}
-                    </td>
+                    <td className="py-4 text-gray-600">{plan.classesPerWeek}</td>
                     <td className="py-4 text-gray-600">{plan.totalClasses}</td>
                     <td className="py-4 font-semibold text-[#0E7C5A]">
                       {convertFee(plan.fee)} {symbols[currency]}
@@ -200,7 +228,6 @@ const Fee = () => {
                   </tr>
                 ))}
 
-              {/* Self Plan Row */}
               {selfPlan && (
                 <tr className="border-b border-gray-200 bg-[#E8F5E9] transition">
                   <td className="py-4 font-semibold text-[#0E7C5A]">
@@ -209,7 +236,7 @@ const Fee = () => {
                   <td className="py-4 text-gray-600">Custom</td>
                   <td className="py-4 text-gray-600">{selfPlan.planType}</td>
                   <td className="py-4 font-semibold text-[#0E7C5A]">
-                    {selfPlan.fee} {symbols[currency]}
+                    {getSelfPlanFee()} {symbols[currency]}
                   </td>
                 </tr>
               )}
@@ -222,10 +249,10 @@ const Fee = () => {
         </div>
       </div>
 
-      {/* MODAL */}
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-2xl">
+          <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-2xl animate-fadeIn">
             <h2 className="text-2xl font-bold text-[#0E7C5A] mb-4">
               Create Your Self Plan
             </h2>
@@ -250,8 +277,8 @@ const Fee = () => {
                 </label>
                 <input
                   type="number"
-                  min="35"
-                  placeholder="Enter your fee"
+                  min="0"
+                  placeholder={`Enter amount in ${currency}`}
                   value={customFee}
                   onChange={(e) => setCustomFee(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#AF864C]"

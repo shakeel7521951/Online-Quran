@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ChevronDown } from "lucide-react";
-import faq from "../../components/Images/faq.png";
+import faq from "../../Images/faq.png";
 
 const FeeFaq = () => {
   const [openIndex, setOpenIndex] = useState(null);

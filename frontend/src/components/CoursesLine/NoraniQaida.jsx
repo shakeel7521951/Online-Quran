@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import pad1 from '../../Images/noraniQaida.pdf'
+
 import { UserRound, Clock, Baby } from "lucide-react"; // icons
 
 const NoraaniQaida = () => {
@@ -29,15 +31,21 @@ const NoraaniQaida = () => {
           data-aos="zoom-in"
         >
           <div className="relative overflow-hidden rounded-2xl w-full group">
-            <img
-              src="https://www.knowledgequran.com/wp-content/uploads/2024/02/32febf4b-01cf-4b4e-b025-927d27add271.jpg"
-              alt="Norani Qaida"
-              className="w-full h-[550px] object-cover rounded-2xl transition-all duration-700 transform group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-25 transition-all duration-700 rounded-2xl"></div>
+            <div className="flex flex-col">
+              <img
+                src="https://www.knowledgequran.com/wp-content/uploads/2024/02/32febf4b-01cf-4b4e-b025-927d27add271.jpg"
+                alt="Norani Qaida"
+                className="w-full h-[550px] object-cover rounded-2xl transition-all duration-700 transform group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-25 transition-all duration-700 rounded-2xl"></div>
+
+            </div>
+
+
+            {/* Enroll Button Below Image */}
+
           </div>
 
-          {/* Enroll Button Below Image */}
          
         </div>
 
@@ -85,14 +93,27 @@ const NoraaniQaida = () => {
           </div>
 
           {/* CTA Button */}
-          <div className="pt-4">
-            <button
-              className="bg-[#B08B53] text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md hover:bg-[#09573E] transition-all duration-300 cursor-pointer"
-              data-aos="zoom-in-up"
-            >
-              Start Learning Now
-            </button>
-          </div>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+  <button
+    className="bg-[#B08B53] text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md 
+               hover:bg-[#09573E] hover:scale-105 transition-all duration-300 cursor-pointer"
+    data-aos="zoom-in-up"
+  >
+    Start Learning Now
+  </button>
+
+  <a
+    href={pad1}
+    download
+    className="bg-[#09573E] text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md 
+               hover:bg-[#B08B53] hover:scale-105 transition-all duration-300 cursor-pointer 
+               flex items-center justify-center"
+    data-aos="zoom-in-up"
+  >
+    Download Qaida
+  </a>
+</div>
+
         </div>
       </div>
 
@@ -138,7 +159,7 @@ const NoraaniQaida = () => {
             </div>
             <div className="p-7 space-y-3 relative">
               <h2 className="text-2xl font-semibold text-emerald-700 flex items-center gap-2">
-            
+
                 How Long Are Classes?
               </h2>
               <p className="text-[#B08B53] text-base leading-relaxed">
@@ -165,7 +186,7 @@ const NoraaniQaida = () => {
             </div>
             <div className="p-7 space-y-3 relative">
               <h2 className="text-2xl font-semibold text-emerald-700 flex items-center gap-2">
-           
+
                 What Age Can I Start?
               </h2>
               <p className="text-[#B08B53] text-base leading-relaxed">
