@@ -14,21 +14,21 @@ const swiperAry = [
     bgimg: "https://plus.unsplash.com/premium_photo-1677587536653-0d02efbb70ee?w=1200&auto=format&fit=crop&q=60",
     heading: "Learn Quran Online",
     desc: "Start your journey with professional Quran tutors from the comfort of your home.",
-    icon: <FaQuran className="text-amber-300" />
+    icon: <FaQuran className="text-white" />
   },
   {
     id: 2,
     bgimg: "https://images.unsplash.com/photo-1616422840391-fa670d4b2ae7?w=1200&auto=format&fit=crop&q=60",
     heading: "One-on-One Classes",
     desc: "Personalized teaching method tailored to each student's learning pace.",
-    icon: <FaChalkboardTeacher className="text-amber-300" />
+    icon: <FaChalkboardTeacher className="text-white" />
   },
   {
     id: 3,
     bgimg: "https://images.unsplash.com/photo-1542816417-0983c9c9ad53?w=1200&auto=format&fit=crop&q=60",
     heading: "Worldwide Access",
     desc: "Learn from anywhere, anytime with flexible scheduling options.",
-    icon: <FaGlobeAmericas className="text-amber-300" />
+    icon: <FaGlobeAmericas className="text-white" />
   },
 ];
 
@@ -61,12 +61,12 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-7xl mx-auto pt-20 sm:pt-28 px-4">
+    <div className="w-full max-w-7xl mx-auto pt-20 sm:pt-8 px-4">
       {/* Enhanced Title Section */}
       <div className="text-center mb-16 relative">
         
         <h1
-          className="text-4xl md:text-5xl pt-3 sm:pt-0 font-bold text-gray-800 font-serif max-w-3xl mx-auto leading-tight"
+          className="text-4xl md:text-5xl pt-3 sm:pt-0 font-bold text-[#0E7C5A] font-serif max-w-3xl mx-auto leading-tight"
           data-aos="fade-down"
         >
           Discover the Beauty of Quranic Learning
@@ -93,7 +93,7 @@ const Hero = () => {
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                 style={{ backgroundImage: `url(${item.bgimg})` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-900/85 to-amber-800/70"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0E7C5A] to-[#AC7D40]/70"></div>
               </div>
 
               {/* Enhanced Content */}
@@ -129,7 +129,7 @@ const Hero = () => {
                   data-aos-delay="600"
                 >
                   <Link to="/contact">
-                    <button className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2 text-nowrap">
+                    <button className="bg-[#AC7D40] border border-[#AC7D40] hover:border-[#AC7D40] hover:bg-transparent text-white font-semibold py-3 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center gap-2 text-nowrap">
                       Start Learning <FaArrowRight className="text-sm" />
                     </button>
                   </Link>

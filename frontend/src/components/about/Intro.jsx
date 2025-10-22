@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { 
-  FaUserGraduate, 
-  FaCalendarAlt, 
-  FaGlobeAmericas, 
+import {
+  FaUserGraduate,
+  FaCalendarAlt,
+  FaGlobeAmericas,
   FaChalkboardTeacher,
   FaQuran,
   FaHeart,
@@ -85,30 +85,30 @@ const Intro = () => {
     {
       title: "Authenticity",
       description: "We maintain the authentic teachings of Quran with proper Tajweed and Tafsir",
-      icon: <FaQuran className="text-amber-500" />
+      icon: <FaQuran className="text-[#AC7D40]" />
     },
     {
       title: "Compassion",
       description: "We teach with patience and understanding, creating a supportive environment",
-      icon: <FaHeart className="text-amber-500" />
+      icon: <FaHeart className="text-[#AC7D40]" />
     },
     {
       title: "Excellence",
       description: "We strive for excellence in Quranic education through continuous improvement",
-      icon: <FaAward className="text-amber-500" />
+      icon: <FaAward className="text-[#AC7D40]" />
     },
     {
       title: "Community",
       description: "We build a global community of Quran learners supporting each other",
-      icon: <FaUsers className="text-amber-500" />
+      icon: <FaUsers className="text-[#AC7D40]" />
     },
   ];
 
   const stats = [
-    { number: "5,000+", label: "Students Taught", icon: <FaUserGraduate className="text-amber-500" /> },
-    { number: "20+", label: "Years Experience", icon: <FaCalendarAlt className="text-amber-500" /> },
-    { number: "15+", label: "Countries Served", icon: <FaGlobeAmericas className="text-amber-500" /> },
-    { number: "50+", label: "Qualified Teachers", icon: <FaChalkboardTeacher className="text-amber-500" /> },
+    { number: "5,000+", label: "Students Taught", icon: <FaUserGraduate className="text-[#AC7D40]" /> },
+    { number: "20+", label: "Years Experience", icon: <FaCalendarAlt className="text-[#AC7D40]" /> },
+    { number: "15+", label: "Countries Served", icon: <FaGlobeAmericas className="text-[#AC7D40]" /> },
+    { number: "50+", label: "Qualified Teachers", icon: <FaChalkboardTeacher className="text-[#AC7D40]" /> },
   ];
 
   useEffect(() => {
@@ -121,8 +121,8 @@ const Intro = () => {
 
         {/* Enhanced Header Section */}
         <div className="text-center mb-20 relative" data-aos="fade-down">
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-full"></div>
-          <h1 className="font-serif text-5xl md:text-6xl text-amber-700 mb-4 font-bold tracking-tight">
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-[#AC7D40] to-[#0E7C5A] rounded-full"></div>
+          <h1 className="font-serif text-5xl md:text-6xl text-[#0E7C5A] mb-4 font-bold tracking-tight">
             Who We Are
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
@@ -146,7 +146,7 @@ const Intro = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-3xl md:text-4xl font-bold text-amber-700 mb-2">
+              <div className="text-3xl md:text-4xl font-bold text-[#0E7C5A] mb-2">
                 {stat.number}
               </div>
               <div className="text-gray-600 font-medium">{stat.label}</div>
@@ -160,9 +160,9 @@ const Intro = () => {
             <div className="p-10 md:p-12 flex flex-col justify-center">
               <div className="flex items-center mb-6">
                 <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mr-4">
-                  <FaStar className="text-amber-600" />
+                  <FaStar className="text-[#AC7D40]" />
                 </div>
-                <h2 className="text-3xl md:text-4xl text-amber-700 font-serif font-bold">Our Story</h2>
+                <h2 className="text-3xl md:text-4xl text-[#0E7C5A] font-serif font-bold">Our Story</h2>
               </div>
               <div data-aos="fade-right" data-aos-delay="200">
                 <p className="text-gray-600 mb-4 leading-relaxed text-lg">
@@ -177,23 +177,23 @@ const Intro = () => {
               </div>
             </div>
             <div className="relative min-h-96 group overflow-hidden rounded-2xl shadow-xl" data-aos="zoom-in" data-aos-delay="400">
-  {/* Background Image */}
-  <img
-    src="https://plus.unsplash.com/premium_photo-1678490286446-71e04ddce2dd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D"
-    alt="Quran Teaching"
-    className="absolute inset-0 w-full h-full object-cover"
-  />
+              {/* Background Image */}
+              <img
+                src="https://plus.unsplash.com/premium_photo-1678490286446-71e04ddce2dd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D"
+                alt="Quran Teaching"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
 
-  {/* Dark overlay */}
-  <div className="absolute inset-0 bg-gradient-to-l from-amber-900/10 to-amber-700/20"></div>
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-gradient-to-l from-amber-900/10 to-amber-700/20"></div>
 
-  {/* ✨ Shine Effect */}
-  <div className="absolute inset-0 overflow-hidden">
-    <div className="shine"></div>
-  </div>
+              {/* ✨ Shine Effect */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="shine"></div>
+              </div>
 
-  {/* Shine CSS */}
-  <style jsx>{`
+              {/* Shine CSS */}
+              <style jsx>{`
     .shine {
       position: absolute;
       top: -100%;
@@ -220,7 +220,7 @@ const Intro = () => {
       }
     }
   `}</style>
-</div>
+            </div>
 
           </div>
         </div>
@@ -228,7 +228,7 @@ const Intro = () => {
         {/* Enhanced Our Values */}
         <div className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl text-amber-700 font-serif font-bold mb-4" data-aos="fade-down">
+            <h2 className="text-4xl md:text-5xl text-[#0E7C5A] font-serif font-bold mb-4" data-aos="fade-down">
               Our Values
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
@@ -260,7 +260,7 @@ const Intro = () => {
         {/* Enhanced Team Members */}
         <div>
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl text-amber-700 font-serif font-bold mb-4" data-aos="fade-down">
+            <h2 className="text-4xl md:text-5xl text-[#0E7C5A] font-serif font-bold mb-4" data-aos="fade-down">
               Meet Our Team
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
@@ -275,29 +275,29 @@ const Intro = () => {
                 data-aos="flip-left"
                 data-aos-delay={index * 150}
               >
-             <div className="relative overflow-hidden group rounded-xl">
-  {/* Image */}
-  <img
-    src={member.image}
-    alt={member.name}
-    className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500"
-  />
+                <div className="relative overflow-hidden group rounded-xl">
+                  {/* Image */}
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
 
-  {/* Top-right badge */}
-  <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
-    <FaCalendarAlt className="mr-1" /> {member.experience}
-  </div>
+                  {/* Top-right badge */}
+                  <div className="absolute top-4 right-4 bg-[#AC7D40] text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                    <FaCalendarAlt className="mr-1" /> {member.experience}
+                  </div>
 
-  {/* Bottom gradient */}
-  <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  {/* Bottom gradient */}
+                  <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/40 to-transparent"></div>
 
-  {/* ✨ Shine Effect */}
-  <div className="absolute inset-0 overflow-hidden">
-    <div className="shine"></div>
-  </div>
+                  {/* ✨ Shine Effect */}
+                  <div className="absolute inset-0 overflow-hidden">
+                    <div className="shine"></div>
+                  </div>
 
-  {/* Shine CSS */}
-  <style jsx>{`
+                  {/* Shine CSS */}
+                  <style jsx>{`
     .shine {
       position: absolute;
       top: -100%;
@@ -324,7 +324,7 @@ const Intro = () => {
       }
     }
   `}</style>
-</div>
+                </div>
 
                 <div className="p-6">
                   <div className="flex items-start mb-4">
@@ -335,11 +335,11 @@ const Intro = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-800 mb-1">{member.name}</h3>
-                      <p className="text-amber-600 font-medium">{member.role}</p>
+                      <p className="text-[#0E7C5A] font-medium">{member.role}</p>
                     </div>
                   </div>
                   <div className="mb-4">
-                    <span className="inline-block bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="inline-block bg-amber-50 text-[#AC7D40] px-3 py-1 rounded-full text-sm font-medium">
                       {member.specialization}
                     </span>
                   </div>

@@ -32,7 +32,7 @@ const MoveTo = () => {
             data-aos="zoom-in"
             data-aos-delay="100"
           >
-            <FaBook className="text-yellow-500 text-2xl md:text-4xl" />
+            <FaBook className="text-[#c8a87f] text-2xl md:text-4xl" />
           </div>
           <div className="flex-1 max-w-full">
             <h2

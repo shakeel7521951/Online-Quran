@@ -83,13 +83,13 @@ const Testomonial = () => {
         </h1>
 
         <div
-          className="flex items-center justify-center gap-4 text-lg font-semibold text-yellow-200"
+          className="flex items-center justify-center gap-4 text-lg font-semibold text-white"
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <hr className="w-20 border-t-2 border-yellow-200" />
+          <hr className="w-20 border-t-2 border-[#AC7D40]" />
           <span className="tracking-wider">STUDENT TESTIMONIALS</span>
-          <hr className="w-20 border-t-2 border-yellow-200" />
+          <hr className="w-20 border-t-2 border-[#AC7D40]" />
         </div>
       </div>
 
@@ -118,7 +118,7 @@ const Testomonial = () => {
                 {/* Image Container */}
                 <div className="flex flex-col items-center mt-6 md:mt-0">
                   <div
-                    className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-green-400 hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg relative"
+                    className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#AC7D40] hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg relative"
                     data-aos="flip-left"
                     data-aos-delay="300"
                   >
@@ -144,7 +144,7 @@ const Testomonial = () => {
                 <div className="flex-1 text-center md:text-left mt-4 md:mt-0">
                   {/* Star Rating */}
                   <div
-                    className="flex justify-center md:justify-start text-yellow-400 text-xl mb-4"
+                    className="flex justify-center md:justify-start text-[#AC7D40] text-xl mb-4"
                     data-aos="fade-right"
                     data-aos-delay="400"
                   >
@@ -195,8 +195,8 @@ const Testomonial = () => {
               <GoDot
                 className={`text-xl transition-all duration-300 ${
                   current === index 
-                    ? "text-yellow-600 scale-110" 
-                    : "text-yellow-400 group-hover:text-yellow-500"
+                    ? "text-white scale-110" 
+                    : "text-white group-hover:text-yellow-500"
                 }`}
               />
             </div>

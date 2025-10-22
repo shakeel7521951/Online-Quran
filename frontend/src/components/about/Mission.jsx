@@ -12,7 +12,7 @@ const Mission = () => {
       features: ["Authentic Tajweed", "Original Arabic", "Traditional Methods"],
       aos: "fade-right",
       icon: FaQuran,
-      iconColor: "text-green-600"
+      iconColor: "text-[#AC7D40]"
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ const Mission = () => {
       features: ["Affordable Pricing", "All Age Groups", "Flexible Scheduling"],
       aos: "fade-up",
       icon: FaGraduationCap,
-      iconColor: "text-amber-600"
+      iconColor: "text-[#AC7D40]"
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ const Mission = () => {
       features: ["Worldwide Access", "Cultural Diversity", "24/7 Availability"],
       aos: "fade-left",
       icon: FaGlobe,
-      iconColor: "text-blue-600"
+      iconColor: "text-[#AC7D40]"
     },
     {
       id: 4,
@@ -39,7 +39,7 @@ const Mission = () => {
       features: ["Character Building", "Islamic Values", "Spiritual Guidance"],
       aos: "zoom-in-up",
       icon: FaHeart,
-      iconColor: "text-purple-600"
+      iconColor: "text-[#AC7D40]"
     },
     {
       id: 5,
@@ -48,7 +48,7 @@ const Mission = () => {
       features: ["Group Sessions", "Community Events", "Peer Support"],
       aos: "flip-up",
       icon: FaUsers,
-      iconColor: "text-green-500"
+      iconColor: "text-[#AC7D40]"
     },
     {
       id: 6,
@@ -57,15 +57,15 @@ const Mission = () => {
       features: ["Certified Teachers", "Regular Training", "Quality Control"],
       aos: "zoom-in",
       icon: FaAward,
-      iconColor: "text-amber-500"
+      iconColor: "text-[#AC7D40]"
     },
   ];
 
   const statistics = [
-    { number: "5,000+", label: "Students Enrolled", icon: FaUserGraduate, color: "text-green-600" },
-    { number: "50+", label: "Certified Teachers", icon: FaChalkboardTeacher, color: "text-amber-600" },
-    { number: "15+", label: "Countries Served", icon: FaMapMarkerAlt, color: "text-blue-600" },
-    { number: "99%", label: "Satisfaction Rate", icon: FaSmile, color: "text-purple-600" },
+    { number: "5,000+", label: "Students Enrolled", icon: FaUserGraduate, color: "text-[#AC7D40]" },
+    { number: "50+", label: "Certified Teachers", icon: FaChalkboardTeacher, color: "text-[#AC7D40]" },
+    { number: "15+", label: "Countries Served", icon: FaMapMarkerAlt, color: "text-[#AC7D40]" },
+    { number: "99%", label: "Satisfaction Rate", icon: FaSmile, color: "text-[#AC7D40]" },
   ];
 
   useEffect(() => {
@@ -82,13 +82,13 @@ const Mission = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16" data-aos="zoom-in">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-[#e09e41] to-[#EBC693] rounded-full mb-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-[#0E7C5A] to-[#AC7D40] rounded-full mb-6">
             <FaQuran className="text-3xl text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-800 mb-4">
-            Our <span className="text-[#e09e41]">Mission</span>
+            Our <span className="text-[#AC7D40]">Mission</span>
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#EBC693] to-[#e09e41] mx-auto mb-6"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-[#EBC693] to-[#AC7D40] mx-auto mb-6"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Dedicated to spreading the light of Quranic knowledge through
             innovative online education that respects tradition while embracing technology.
@@ -115,7 +115,7 @@ const Mission = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold text-gray-800 mb-4 group-hover:text-green-700 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-800 mb-4 group-hover:text-[#AC7D40] transition-colors duration-300">
                   {card.title}
                 </h3>
 
@@ -134,8 +134,8 @@ const Mission = () => {
                       data-aos-delay={i * 100 + index * 50}
                       data-aos-anchor-placement="top-bottom" // Added anchor placement
                     >
-                      <div className="flex items-center justify-center w-6 h-6 bg-green-100 rounded-full mr-3 group-hover:bg-green-200 transition-colors duration-300">
-                        <FaCheck className="text-green-600 text-xs" />
+                      <div className="flex items-center justify-center w-6 h-6 bg-[#AC7D40] rounded-full mr-3 transition-colors duration-300">
+                        <FaCheck className="text-white text-xs" />
                       </div>
                       <span className="text-sm font-medium">{feature}</span>
                     </li>
@@ -161,7 +161,7 @@ const Mission = () => {
                 data-aos-delay={index * 150}
               >
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-green-50 to-amber-50 mb-4 group-hover:scale-105 transition-transform duration-300"> {/* Reduced scale from 110 to 105 */}
-                  <IconComponent className={`text-2xl ${stat.color}`} />
+                  <IconComponent className={`text-2xl text-[#0E7C5A] `} />
                 </div>
                 <div className={`text-3xl font-bold mb-2 ${stat.color}`}>{stat.number}</div>
                 <div className="text-gray-600 font-medium">{stat.label}</div>
@@ -170,18 +170,7 @@ const Mission = () => {
           })}
         </div>
 
-        {/* Bottom Decorative Element */}
-        <div className="text-center mt-12" data-aos="fade-up">
-          <div className="inline-flex items-center space-x-2 text-amber-600 flex-wrap justify-center"> {/* Added flex-wrap and justify-center */}
-            <FaStar className="text-xl hidden md:flex" />
-            <FaStar className="text-xl hidden md:flex" />
-            <FaStar className="text-xl hidden md:flex" />
-            <span className="text-gray-600 font-medium mx-2">Spreading Knowledge Since 2010</span> {/* Added mx-2 for spacing */}
-            <FaStar className="text-xl hidden md:flex" />
-            <FaStar className="text-xl hidden md:flex" />
-            <FaStar className="text-xl hidden md:flex" />
-          </div>
-        </div>
+      
       </div>
     </div>
   );
