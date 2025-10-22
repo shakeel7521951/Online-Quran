@@ -92,7 +92,7 @@ const Navbar = () => {
             {navItems.map((item) => (
               <li
                 key={item.id}
-                className="relative group"
+                className="relative group top-0"
                 onMouseEnter={() => item.name === "Courses" && setDropdownOpen(true)}
                 onMouseLeave={() => item.name === "Courses" && setDropdownOpen(false)}
                 ref={item.name === "Courses" ? dropdownRef : null}
@@ -107,13 +107,13 @@ const Navbar = () => {
                 {/* Dropdown for Courses */}
                 {item.name === "Courses" && dropdownOpen && (
                   <div
-                    className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50"
+                    className="absolute left-0 top-5 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 z-50"
                     onMouseEnter={() => setDropdownOpen(true)}
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
                     {/* Quran Courses (Nested Dropdown) */}
                     <div
-                      className="relative"
+                      className="relative "
                       onMouseEnter={() => setNestedDropdownOpen(true)}
                       onMouseLeave={() => setNestedDropdownOpen(false)}
                       ref={nestedDropdownRef}
@@ -123,7 +123,7 @@ const Navbar = () => {
                       </button>
 
                       {nestedDropdownOpen && (
-                        <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-lg shadow-lg py-2 transition-all duration-300">
+                        <div className="absolute left-full top-0 ml-[0.9px] w-64 bg-white rounded-lg shadow-lg py-2 transition-all duration-300">
                           {quranCourses.map((course, i) => (
                             <Link
                               key={i}
