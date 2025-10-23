@@ -103,7 +103,7 @@ export default function Hero() {
   return (
     <div className="">
       {/* ===== Enhanced Hero Banner ===== */}
-      <div className="relative min-h-[95vh] w-full bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center">
+      <div className="relative min-h-[100vh] w-full bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-0" />
         <img
           src="https://riyadalquran.com/wp-content/uploads/2019/07/readquranbook.jpg"
@@ -128,9 +128,9 @@ export default function Hero() {
           <h1
             data-aos="fade-down"
             data-aos-delay="100"
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight mb-6"
+            className="text-4xl sm:text-5xl md:text-5xl mb-2 font-bold text-white leading-tight "
           >
-            Discover The Beauty Of{" "}
+            Discover The Beauty Of&nbsp;
             <span className="text-[#D4AF37] bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] bg-clip-text text-transparent">
               Quran Learning
             </span>

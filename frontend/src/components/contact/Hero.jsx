@@ -170,7 +170,7 @@ const ContactHero = () => {
         }}
       ></div> */}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -209,15 +209,15 @@ const ContactHero = () => {
             <div className="grid gap-6">
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-emerald-500"
+                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-[#AC7D40]"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[#AC7D40] rounded-xl flex items-center justify-center">
                     <FaPhone className="text-white text-xl" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">Call Us</h3>
-                    <p className="text-emerald-600 font-semibold text-lg">
+                    <p className="text-[#0E7C5A] font-semibold text-lg">
                       +997 979 797
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -229,17 +229,17 @@ const ContactHero = () => {
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-green-500"
+                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-[#AC7D40]"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[#AC7D40] rounded-xl flex items-center justify-center">
                     <FaWhatsapp className="text-white text-xl" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">
                       WhatsApp
                     </h3>
-                    <p className="text-green-600 font-semibold text-lg">
+                    <p className="text-[#0E7C5A] font-semibold text-lg">
                       +997 979 797
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -251,17 +251,17 @@ const ContactHero = () => {
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-blue-500"
+                className="bg-white rounded-2xl p-6 shadow-xl border-l-4 border-[#AC7D40]"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[#AC7D40] rounded-xl flex items-center justify-center">
                     <FaEnvelope className="text-white text-xl" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-900 text-lg">
                       Email Us
                     </h3>
-                    <p className="text-blue-600 font-semibold text-lg">
+                    <p className="text-[#0E7C5A] font-semibold text-lg">
                       onlinequran234@gmail.com
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -285,7 +285,7 @@ const ContactHero = () => {
                     className="bg-white/80 backdrop-blur-sm rounded-xl p-4 text-center shadow-lg"
                   >
                     <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                      <IconComponent className="text-amber-600 text-lg" />
+                      <IconComponent className="text-[#AC7D40] text-lg" />
                     </div>
                     <h4 className="font-semibold text-gray-900 text-sm mb-1">
                       {feature.title}
@@ -306,10 +306,10 @@ const ContactHero = () => {
           >
             {/* Form Header */}
             <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="w-20 h-20 bg-[#AC7D40] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaGraduationCap className="text-white text-3xl" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-3xl font-bold text-[#0E7C5A] mb-2">
                 Get Free Trial
               </h2>
               <p className="text-gray-600">
@@ -320,11 +320,10 @@ const ContactHero = () => {
             {/* Success/Error Message */}
             {submitMessage.text && (
               <div
-                className={`mb-6 p-4 rounded-lg text-center ${
-                  submitMessage.type === "success"
+                className={`mb-6 p-4 rounded-lg text-center ${submitMessage.type === "success"
                     ? "bg-green-100 text-green-700 border border-green-200"
                     : "bg-red-100 text-red-700 border border-red-200"
-                }`}
+                  }`}
               >
                 <div className="flex items-center justify-center gap-2">
                   {submitMessage.type === "success" ? (
@@ -347,11 +346,10 @@ const ContactHero = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
-                      formErrors.name
+                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${formErrors.name
                         ? "border-red-300 bg-red-50"
                         : "border-gray-200"
-                    }`}
+                      }`}
                     placeholder="Your Name"
                   />
                   {formErrors.name && (
@@ -368,11 +366,10 @@ const ContactHero = () => {
                     name="fatherName"
                     value={formData.fatherName}
                     onChange={handleInputChange}
-                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
-                      formErrors.fatherName
+                    className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${formErrors.fatherName
                         ? "border-red-300 bg-red-50"
                         : "border-gray-200"
-                    }`}
+                      }`}
                     placeholder="Father's Name"
                   />
                   {formErrors.fatherName && (
@@ -390,11 +387,10 @@ const ContactHero = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
-                    formErrors.phone
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${formErrors.phone
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
-                  }`}
+                    }`}
                   placeholder="Phone Number"
                 />
                 {formErrors.phone && (
@@ -411,11 +407,10 @@ const ContactHero = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${
-                    formErrors.email
+                  className={`w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 ${formErrors.email
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
-                  }`}
+                    }`}
                   placeholder="Email Address"
                 />
                 {formErrors.email && (
@@ -426,26 +421,26 @@ const ContactHero = () => {
               </div>
               <div>
                 {/* ===== Country Input ===== */}
-<div className="relative">
-  <FaGlobe className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
-  <input
-    type="text"
-    name="country"
-    placeholder="Enter your country"
-    className="w-full pl-12 pr-4 px-4 py-3 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 h-16" // ✅ Half height
-  />
-</div>
+                <div className="relative">
+                  <FaGlobe className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="text"
+                    name="country"
+                    placeholder="Enter your country"
+                    className="w-full pl-12 pr-4 px-4 py-3 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 " // ✅ Half height
+                  />
+                </div>
 
-{/* ===== Time Input ===== */}
-<div className="relative mt-6">
-  <FaClock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
-  <input
-    type="time"
-    name="preferredTime"
-    placeholder="Enter your time"
-    className="w-full pl-12 pr-4 px-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 h-32 resize-none"
-  />
-</div>
+                {/* ===== Time Input ===== */}
+                <div className="relative mt-6">
+                  <FaClock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="time"
+                    name="preferredTime"
+                    placeholder="Enter your time"
+                    className="w-full pl-12 pr-4 px-4 py-3 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300  resize-none"
+                  />
+                </div>
 
               </div>
 
@@ -456,7 +451,7 @@ const ContactHero = () => {
                   name="course"
                   value={selectedCourse}
                   onChange={(e) => setSelectedCourse(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
+                  className="w-full pl-12 pr-4 py-3 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 appearance-none cursor-pointer"
                 >
                   <option value="">Select your course</option>
                   <option value="quran"> Quran Courses</option>
@@ -490,11 +485,10 @@ const ContactHero = () => {
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300 h-32 resize-none ${
-                    formErrors.message
+                  className={`w-full px-4 py-4 bg-gray-50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500   transition-all duration-300 h-32 resize-none ${formErrors.message
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
-                  }`}
+                    }`}
                   placeholder="Tell us about your Quran learning goals..."
                 ></textarea>
                 {formErrors.message && (
@@ -507,11 +501,10 @@ const ContactHero = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 text-lg ${
-                  isSubmitting
+                className={`w-full font-bold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 text-lg ${isSubmitting
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-emerald-600 hover:bg-emerald-700 hover:shadow-xl text-white"
-                }`}
+                  }`}
               >
                 {isSubmitting ? (
                   <>

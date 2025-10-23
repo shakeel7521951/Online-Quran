@@ -19,7 +19,6 @@ const quranCourses = [
   { name: "Norani Qaida Course", path: "/courses/norani-qaida" },
   { name: "Madni Qaida", path: "/courses/madni-qaida" },
   { name: "Nazra Quran", path: "/courses/nazra-quran" },
-  { name: "Hafiz e Quran", path: "/courses/hafiz-e-quran" },
   { name: "Quran Memorization", path: "/courses/quran-memorization" },
   { name: "Quran Interpretation & Translation", path: "/courses/quran-translation" },
 ];
@@ -128,7 +127,7 @@ const Navbar = () => {
                             <Link
                               key={i}
                               to={course.path}
-                              className="block px-4 mt-1 py-2 hover:bg-gray-100 text-[#0C6A4D]"
+                              className="block px-4 mt-1 py-1 hover:bg-gray-100 text-[#0C6A4D]"
                             >
                               {course.name}
                             </Link>
