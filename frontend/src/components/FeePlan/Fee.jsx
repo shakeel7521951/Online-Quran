@@ -175,11 +175,10 @@ const Fee = () => {
           <button
             key={cur}
             onClick={() => setCurrency(cur)}
-            className={`px-6 py-2 rounded-lg font-semibold border transition-all ${
-              currency === cur
+            className={`px-6 py-2 rounded-lg font-semibold border transition-all ${currency === cur
                 ? "bg-[#0E7C5A] text-white border-[#0E7C5A]"
                 : "border-[#0E7C5A] text-[#0E7C5A] hover:bg-[#0E7C5A] hover:text-white"
-            }`}
+              }`}
           >
             {cur}
           </button>
