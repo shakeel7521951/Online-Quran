@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { ChevronDown } from "lucide-react";
-import faq from "../../Images/faq.png";
+
 
 const FeeFaq = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -44,7 +44,7 @@ const FeeFaq = () => {
         {/* Left Side - Image */}
         <div data-aos="fade-right" className="flex justify-center order-1 md:order-none">
           <img
-            src={faq}
+            src='/src/Images/Faq.png'
             alt="FAQ Illustration"
             className="rounded-2xl shadow-xl w-full max-w-[450px] sm:max-w-[500px] md:max-w-[570px] h-auto object-cover"
           />
