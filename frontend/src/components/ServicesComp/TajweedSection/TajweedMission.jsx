@@ -92,7 +92,7 @@ const TAJWEED_CARDS = [
       </>
     ),
     icon: <FaBookReader className="text-3xl text-[#AC7D40]" />,
-    link: "src/assets/tajweedcheatsheet.pdf",
+    link: "/tajweedcheatsheet.pdf",
   },
   {
     id: 2,
@@ -111,7 +111,7 @@ const TAJWEED_CARDS = [
       </>
     ),
     icon: <FaListAlt className="text-3xl text-[#AC7D40]" />,
-    link: "src/assets/AsanTajweed.pdf",
+    link: "/AsanTajweed.pdf",
   },
   {
     id: 3,
@@ -130,7 +130,7 @@ const TAJWEED_CARDS = [
       </>
     ),
     icon: <FaChalkboardTeacher className="text-3xl text-[#AC7D40]" />,
-    link: "src/assets/rulesoftajweed.pdf",
+    link: "/rulesoftajweed.pdf",
   },
 ];
 
