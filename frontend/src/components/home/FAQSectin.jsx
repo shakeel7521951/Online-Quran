@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { 
-  FaBook, 
-  FaLaptop, 
-  FaBrain, 
-  FaMusic, 
-  FaChild, 
+import {
+  FaBook,
+  FaLaptop,
+  FaBrain,
+  FaMusic,
+  FaChild,
   FaSearch,
   FaChevronDown,
   FaChevronUp,
   FaArrowRight
 } from "react-icons/fa";
 import image4 from "../../assets/pexels-a-darmel-8164434.jpg";
+import { Link } from "react-router-dom";
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -82,7 +83,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="w-full bg-gradient-to-br from-emerald-50 to-amber-50 py-20 px-4 md:px-8 relative overflow-hidden">
+    <section className="w-full bg-gradient-to-br from-emerald-50 to-amber-50  px-4 md:px-8 relative overflow-hidden">
       {/* Enhanced decorative background */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-40 h-40 bg-emerald-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-bounce"></div>
@@ -123,9 +124,8 @@ const FAQSection = () => {
                 data-aos-delay={index * 100}
               >
                 <button
-                  className={`w-full text-left p-6 bg-white/90 hover:bg-white transition-all duration-300 flex justify-between items-center group ${
-                    activeIndex === index ? "rounded-t-2xl bg-white" : "rounded-2xl"
-                  }`}
+                  className={`w-full text-left p-6 bg-white/90 hover:bg-white transition-all duration-300 flex justify-between items-center group ${activeIndex === index ? "rounded-t-2xl bg-white" : "rounded-2xl"
+                    }`}
                   onClick={() => toggleFAQ(index)}
                   data-aos=""
                 >
@@ -151,13 +151,12 @@ const FAQSection = () => {
                   </div>
                 </button>
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    activeIndex === index
+                  className={`overflow-hidden transition-all duration-300 ${activeIndex === index
                       ? "max-h-screen opacity-100"
                       : closingIndex === index
-                      ? "max-h-0 opacity-0"
-                      : "max-h-0 opacity-0"
-                  }`}
+                        ? "max-h-0 opacity-0"
+                        : "max-h-0 opacity-0"
+                    }`}
                   style={{
                     transition:
                       activeIndex === index
@@ -181,26 +180,26 @@ const FAQSection = () => {
           {/* Enhanced Right Column (Image + Support) */}
           <div className="lg:w-1/2 w-full" data-aos="fade-left">
             <div className="relative group" data-aos="zoom-in-up">
-             <div className="shine-wrapper rounded-2xl overflow-hidden shadow-2xl group">
-  <div className="relative overflow-hidden rounded-2xl">
-    <img
-      alt="Quran learning illustration"
-      className="w-full h-auto rounded-2xl transform transition-transform duration-700 "
-      src={image4}
-      data-aos="flip-left"
-    />
+              <div className="shine-wrapper rounded-2xl overflow-hidden shadow-2xl group">
+                <div className="relative overflow-hidden rounded-2xl">
+                  <img
+                    alt="Quran learning illustration"
+                    className="w-full h-auto rounded-2xl transform transition-transform duration-700 "
+                    src={image4}
+                    data-aos="flip-left"
+                  />
 
-    {/* Dark gradient overlay */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-    {/* ✨ Shine effect */}
-    <div className="absolute inset-0 overflow-hidden">
-      <div className="shine"></div>
-    </div>
-  </div>
+                  {/* ✨ Shine effect */}
+                  <div className="absolute inset-0 overflow-hidden">
+                    <div className="shine"></div>
+                  </div>
+                </div>
 
-  {/* Shine CSS */}
-  <style jsx>{`
+                {/* Shine CSS */}
+                <style jsx>{`
     .shine {
       position: absolute;
       top: -100%;
@@ -227,9 +226,9 @@ const FAQSection = () => {
       }
     }
   `}</style>
-</div>
+              </div>
 
-              
+
               {/* Enhanced hover element */}
               <div
                 className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition duration-500 transform translate-y-4 group-hover:translate-y-0"
@@ -239,7 +238,7 @@ const FAQSection = () => {
                   <FaArrowRight className="w-5 h-5 text-white" />
                 </div>
               </div>
-              
+
               {/* Additional info card */}
               <div className="absolute -bottom-6 left-6 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl p-6 max-w-xs transform transition-transform duration-500 group-hover:-translate-y-2">
                 <h4 className="font-bold text-[#0C7655] text-lg mb-2">Need More Help?</h4>
@@ -249,18 +248,20 @@ const FAQSection = () => {
                 </button>
               </div>
             </div>
-            
+
             {/* Additional info section */}
             <div className="mt-12 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/50">
               <h3 className="font-bold text-xl text-[#0C7655] mb-3">Still Have Questions?</h3>
               <p className="text-gray-600 mb-4">We understand that every learner's journey is unique. If you have specific questions not covered here, don't hesitate to reach out.</p>
               <div className="flex flex-wrap gap-3">
-                <button className="px-4 py-2 bg-[#0C7655] text-white rounded-lg text-sm font-medium hover:bg-[#0a5e44] transition-colors duration-300">
-                  Contact Us
-                </button>
-                <button className="px-4 py-2 bg-gradient-to-r from-[#0C7655] to-[#D4AF37] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity duration-300">
+                <Link to='/contact'>
+                  <button className="px-4 py-2 bg-[#0C7655] text-white rounded-lg text-sm font-medium hover:bg-[#0a5e44] transition-colors duration-300">
+                    Contact Us
+                  </button>
+                </Link>
+                {/* <button className="px-4 py-2 bg-gradient-to-r from-[#0C7655] to-[#D4AF37] text-white rounded-lg text-sm font-medium hover:opacity-90 transition-opacity duration-300">
                   Schedule a Call
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

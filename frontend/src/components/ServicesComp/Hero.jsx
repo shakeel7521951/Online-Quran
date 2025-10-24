@@ -43,14 +43,14 @@ export default function Hero() {
       desc: "Structured Hifz programs for kids and adults at any level.",
       img: "https://quranhost.com/wp-content/uploads/2022/06/dl.beatsnoop.com-1654254712.jpg",
       action: "HifzSection",
-      icon: FaBrain
+      icon: FaBrain,link:'/courses/quran-memorization'
     },
     {
       title: "Translation & Tafseer Sessions",
       desc: "Word-by-word translation, detailed Tafseer explained by certified scholars.",
       img: "https://itqanelquran.com/wp-content/uploads/2021/09/8-3.jpg",
       action: "TafseerSection",
-      icon: FaBook
+      icon: FaBook,link:'/courses/quran-translation'
     },
     {
       title: "Kids Quran Classes",

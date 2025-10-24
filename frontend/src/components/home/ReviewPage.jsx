@@ -79,7 +79,7 @@ const ReviewPage = () => {
       <svg
         key={i}
         xmlns="http://www.w3.org/2000/svg"
-        className={`h-5 w-5 ${i < rating ? "text-amber-400" : "text-gray-300"}`}
+        className={`h-5 w-5 ${i < rating ? "text-[#AC7D40]" : "text-gray-300"}`}
         viewBox="0 0 20 20"
         fill="currentColor"
         data-aos="zoom-in"
@@ -142,7 +142,7 @@ const ReviewPage = () => {
               <img
                 src={reviews[activeReview].image}
                 alt={reviews[activeReview].name}
-                className="w-16 h-16 rounded-full object-cover mr-6 border-4 border-amber-200 shadow-md"
+                className="w-16 h-16 rounded-full object-cover mr-6 border-4 border-[#AC7D40] shadow-md"
                 data-aos="zoom-in"
               />
               <div>
@@ -193,7 +193,7 @@ const ReviewPage = () => {
                 </span>
                 <button
                   onClick={() => setOpenModal(true)}
-                  className="px-3 py-1 sm:px-4 sm:py-2 bg-green-600 hover:bg-green-700 text-white text-sm sm:text-base rounded-lg transition"
+                  className="px-3 py-1 sm:px-4 sm:py-2 bg-[#AC7D40] hover:bg-[#0E7C5A] text-white text-sm sm:text-base rounded-lg transition"
                 >
                   Review
                 </button>

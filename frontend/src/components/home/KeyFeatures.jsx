@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { 
-  FaBook, 
-  FaChalkboardTeacher, 
-  FaGlobeAmericas, 
-  FaLaptop, 
-  FaHeadphones, 
-  FaStar 
+import {
+  FaBook,
+  FaChalkboardTeacher,
+  FaGlobeAmericas,
+  FaLaptop,
+  FaHeadphones,
+  FaStar
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const KeyFeatures = () => {
   useEffect(() => {
@@ -66,23 +67,23 @@ const KeyFeatures = () => {
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
       {/* Background with improved overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('https://www.shutterstock.com/image-photo/group-children-reading-holy-book-260nw-2134069425.jpg')",
         }}
       ></div>
-      
+
       {/* Enhanced gradient overlay */}
-      <div 
+      <div
         className="absolute inset-0"
         style={{
           background: `linear-gradient(135deg, ${SECONDARY}CC 0%, ${PRIMARY}99 50%, ${SECONDARY}CC 100%)`
         }}
       ></div>
-      
+
       {/* Subtle pattern overlay */}
-      <div 
+      <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23${LIGHT.substring(1)}' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E")`,
@@ -92,19 +93,19 @@ const KeyFeatures = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <div 
+          <div
             className="inline-block px-4 py-2 rounded-full mb-4 border-2"
             style={{ borderColor: ACCENT }}
             data-aos="fade-up"
           >
-            <span 
+            <span
               className="text-sm font-semibold tracking-wider uppercase"
               style={{ color: ACCENT }}
             >
               Why Choose Us
             </span>
           </div>
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
             style={{ color: LIGHT }}
             data-aos="fade-up"
@@ -112,7 +113,7 @@ const KeyFeatures = () => {
           >
             Our Key Features
           </h2>
-          <div 
+          <div
             className="w-20 h-1 rounded-full mx-auto"
             style={{ backgroundColor: ACCENT }}
             data-aos="fade-up"
@@ -122,12 +123,12 @@ const KeyFeatures = () => {
 
         <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
           {/* Left Side - Circle Element */}
-          <div 
+          <div
             className="flex-shrink-0 mb-10 lg:mb-0"
             data-aos="zoom-in"
             data-aos-duration="1000"
           >
-            <div 
+            <div
               className="relative w-64 h-64 md:w-80 md:h-80 rounded-full flex items-center justify-center shadow-2xl group cursor-pointer transition-all duration-700 hover:scale-105"
               style={{
                 background: `linear-gradient(135deg, ${PRIMARY} 0%, ${SECONDARY} 100%)`,
@@ -136,20 +137,20 @@ const KeyFeatures = () => {
               }}
             >
               {/* Inner circle effect */}
-              <div 
+              <div
                 className="absolute inset-4 rounded-full opacity-20"
-                style={{ 
-                  background: `radial-gradient(circle, ${ACCENT} 0%, transparent 70%)` 
+                style={{
+                  background: `radial-gradient(circle, ${ACCENT} 0%, transparent 70%)`
                 }}
               ></div>
-              
-              <h3 
+
+              <h3
                 className="text-2xl md:text-3xl font-bold text-center relative z-10 leading-tight tracking-wide transition-all duration-500 group-hover:scale-110"
                 style={{ color: LIGHT }}
               >
                 KEY<br />FEATURES
               </h3>
-              
+
               {/* Animated orbiting dots */}
               <div className="absolute inset-0 rounded-full">
                 {[0, 1, 2, 3].map((i) => (
@@ -183,16 +184,16 @@ const KeyFeatures = () => {
                 }}
               >
                 {/* Hover effect background */}
-                <div 
+                <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
                     background: `linear-gradient(135deg, ${PRIMARY}20 0%, ${ACCENT}20 100%)`
                   }}
                 ></div>
-                
+
                 <div className="flex items-center gap-4 relative z-10">
                   {/* Icon Container */}
-                  <div 
+                  <div
                     className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 shadow-lg"
                     style={{
                       backgroundColor: PRIMARY,
@@ -201,18 +202,18 @@ const KeyFeatures = () => {
                   >
                     {feature.icon}
                   </div>
-                  
+
                   {/* Text */}
-                  <span 
+                  <span
                     className="font-semibold text-lg transition-colors duration-300"
                     style={{ color: LIGHT }}
                   >
                     {feature.text}
                   </span>
                 </div>
-                
+
                 {/* Connecting line for visual flow */}
-                <div 
+                <div
                   className="absolute bottom-0 left-12 h-0.5 w-0 group-hover:w-40 transition-all duration-700 ease-out"
                   style={{ backgroundColor: ACCENT }}
                 ></div>
@@ -222,26 +223,28 @@ const KeyFeatures = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div 
+        <div
           className="text-center mt-12 md:mt-16"
           data-aos="fade-up"
           data-aos-delay="300"
         >
-          <p 
+          <p
             className="text-lg mb-6 max-w-2xl mx-auto"
             style={{ color: LIGHT }}
           >
             Experience the difference with our comprehensive Quran learning platform
           </p>
-          <button 
-            className="px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-white"
-            style={{
-              backgroundColor: ACCENT,
-           
-            }}
-          >
-            Start Learning Today
-          </button>
+          <Link to='/services'>
+            <button
+              className="px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-white"
+              style={{
+                backgroundColor: ACCENT,
+
+              }}
+            >
+              Start Learning Today
+            </button>
+          </Link>
         </div>
       </div>
     </section>
